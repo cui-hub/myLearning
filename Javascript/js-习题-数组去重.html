@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="fun()">点击</button>
+    <script>
+        function namespace(oNamespace, sPackage) {
+            var pointer = oNamespace;
+
+            function fn(oNamespace, sPackage) {
+                var list = sPackage.split('.');
+                if (list[0] === '') {
+                    return;
+                }
+                if (oNamespace[list[0]] instanceof Object) {
+                    namespace(oNamespace[list[0]], list.slice(1).join('.'));
+                } else {
+                    oNamespace[list[0]] = {};
+                    namespace(oNamespace[list[0]], list.slice(1).join('.'));
+                }
+            };
+            fn(oNamespace, sPackage);
+            return pointer;
+        }
+        console.log(namespace({
+            a: {
+                test: 1,
+                b: 2
+            }
+        }, 'a.b.c.d'))
+
+
+        // Array.prototype.uniq = function() {
+        //     var args = this;
+        //     var len = args.length;
+        //     var result = [];
+        //     //定义一个执行一次的函数：
+        //     function once(fn) {
+        //         var target = true;
+        //         return function() {
+        //             if (target) {
+        //                 fn();
+        //                 target = false;
+        //             }
+        //             return undefined;
+        //         }
+        //     };
+        //     const insertFunction = once(() => {
+        //         result.push(args[i]);
+        //     });
+        //     for (var i = 0; i < len; i++) {
+        //         if (args.indexOf(args[i]) != -1) { //NaN不等于任何，包括他自身,所以args.indexOf(args[i])遇到NaN永远返回-1
+        //             if (i === args.indexOf(args[i])) {
+        //                 result.push(args[i]);
+        //             }
+        //         } else {
+        //             insertFunction();
+        //         }
+
+        //     }
+        //     return result;
+        // }
+        Array.prototype.uniq = function() {
+            var args = this;
+            var len = args.length;
+            var result = [];
+            var flag = true;
+            for (var i = 0; i < len; i++) {
+                if (args.indexOf(args[i]) != -1) { //NaN不等于任何，包括他自身,所以args.indexOf(args[i])遇到NaN永远返回-1
+                    if (i === args.indexOf(args[i])) {
+                        result.push(args[i]);
+                    }
+                } else if (flag) {
+                    result.push(args[i]);
+                    flag = false;
+                }
+
+            }
+            return result
+        }
+        console.log([false, true, undefined, null, NaN, 0, 1, {}, {}, 'a', 'a', NaN].uniq());
+        console.log([1, 2, 3, 4, 5, 6, 5, 2, 1, 4, 3, 5, NaN].uniq());
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oDiv = document.getElementById('div1');
+            alert('原生弹出'+oDiv);
+        };
+        //ready 比window.onload要快，原因是后者是等待标签加载完后，再渲染完后再运行，前者是标签加载完后就运行
+        //ready的完整写法：
+        $(document).ready(function () {
+            var $div = $('#div1');
+            alert('jquery弹出'+$div);
+        });
+        //ready简写版：
+        $(function () {
+             var $div = $('#div1');
+            alert('jquery弹出'+$div);
+        });
+    </script>
+</head>
+<body>
+    <div id="div1">这是一个div元素</div>
+</body>
+</html>

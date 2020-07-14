@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>使用</h3>
+    <p>在全局或者函数第一句加上：'use strict'</p>
+    <h3>语法和行为改变</h3>
+    <li>1.必须使用var声明变量，否则会报错（非严格模式会添加到全局变量window内）</li>
+    <li>2.禁止自定义函数中this指向window</li>
+    <li>3.创建eval作用域,独立于全局作用域，防止污染全局作用域</li>
+    <li>4.对象不能有重名属性</li>
+    <script>
+        'use strict';
+        //3、创建eval作用域
+        var str = 'NBA';
+        eval('var str = "CBA";console.log(str)'); //CBA
+        console.log(str); //非严格模式下：CBA；严格模式下：NBA
+
+        //4、对象不能有重名属性
+        var obj = {
+            user: 'nnn',
+            user: 'jjj'
+        };
+        console.log(obj.user); //严格虽然不报错，但是会有书写提示（webstorm）
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!--v-model可以实现双向数据绑定,可以省下一个dom操作步骤，不用读取文本框内容，只能用在表单元素上，否则会报错-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <p>{{msg}}</p>
+        <input type="text" v-model:value="username">
+    </div>
+    <script type="text/javascript">
+// <!--        vue默认情况下单向数据绑定，修改msg会立刻同步页面上，但是修改innerHtml（）内容，则不会影响msg值-->
+        var vm =new Vue({
+            el:'#app',
+            data:{
+                msg:'这是一个段落',
+                username:'提示信息',
+            }
+        })
+    </script>
+</body>
+</html>

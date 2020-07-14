@@ -1,0 +1,44 @@
+<!--移动端和PC端页面布局的区别
+    视口：
+    视口是移动设备上用来显示网页的区域，一般比移动设备的可视区域大，宽度可能是980px
+    或者1024px，目的是显示下整个为PC端设计的网页，这样带来的后果可能是移动端会出现横向滚动条，为了避免这种情况，
+    移动端会将视口缩放到移动端窗口大小。这样会让网页不容易观看，可以用meta标签，name=“viewport”
+    来设置视口大小，将视口的大小设置为和移动设备可视区一样的大小。
+    流体布局：
+    用百分比来设置元素宽度，元素高度按照实际高度写固定值。在流体布局中，元素边线不能用百分比，可以用样式当中的计算函数calc（）设置宽度，或者使用box-sizing将盒子属性设置为从边线计算盒子尺寸-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>流体布局</title>
+    <style type="text/css">
+        .con a{
+            display: block;
+            width: 25%;
+            /*方式1：宽采用calc（）函数*/
+            /*width: calc(25% - 4px);*/
+            height: 100px;
+            background-color: gold;
+            text-align: center;
+            float: left;
+            text-decoration: none;
+            color: #333333;
+            font-size: 14px;
+            border: 2px solid black;
+            /*方式2：将盒子尺寸计算方式设置为包含边框和padding在内的总尺寸*/
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <a href="#">菜单文字</a>
+        <a href="#">菜单文字</a>
+        <a href="#">菜单文字</a>
+        <a href="#">菜单文字</a>
+    </div>
+</body>
+</html>

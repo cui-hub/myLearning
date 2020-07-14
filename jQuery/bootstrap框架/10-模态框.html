@@ -1,0 +1,85 @@
+<!--模态框（弹框）：
+    1、modal 声明一个模态框
+    2、modal-dialog 定义模态框尺寸
+    3、modal-lg,modal-sm 定义大，小尺寸模态框
+    4、modal-header
+    5、modal-body
+    6、modal-footer-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!--    因为字体图标不仅仅要css，还要font字体配置文件，所以将bootstrap-3.3.7-dist引入，从内部引入即可加载出来-->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css">
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"> </script>
+    <style type="text/css"></style>
+</head>
+<body>
+<div class="container" data-toggle="modal" data-target="#modal01">
+    <button class="btn btn-primary">弹出大模态框</button>
+</div>
+<div class="container" data-toggle="modal" data-target="#modal02">
+    <button class="btn btn-primary">弹出中模态框</button>
+</div>
+<div class="container" data-toggle="modal" data-target="#modal03">
+    <button class="btn btn-primary">弹出小模态框</button>
+</div>
+
+<!--div.modal>div.modal-dialog>div.modal-content>(.modal-header+.modal-body+.modal-footer)-->
+<div class="modal fade" id="modal01"> <!--.fade使弹框出现时淡出-->
+    <div class="modal-dialog modal-lg"> <!--.modal大尺寸弹框-->
+        <div class="modal-content">
+            <div class="modal-header">
+                提示的弹框
+            </div>
+            <div class="modal-body">
+                <p>文字内容</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">确定</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button><!-- data-dismiss="modal"点击取消，隐藏modal-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal02"> <!--.fade使弹框出现时淡出-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                提示的弹框
+            </div>
+            <div class="modal-body">
+                <p>文字内容</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">确定</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button><!-- data-dismiss="modal"点击取消，隐藏modal-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal03"> <!--.fade使弹框出现时淡出-->
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                提示的弹框
+            </div>
+            <div class="modal-body">
+                <p>文字内容</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">确定</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button><!-- data-dismiss="modal"点击取消，隐藏modal-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

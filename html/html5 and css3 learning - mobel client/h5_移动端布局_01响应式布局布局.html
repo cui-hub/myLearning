@@ -1,0 +1,47 @@
+<!--响应式布局：
+    使用媒体查询的方式，通过查询浏览器宽度，不同宽度适应不同的的样式块，每个样式对应的是该宽度下的布局方式，从而实现响应式布局，可以适配多种终端-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>响应式布局</title>
+    <style type="text/css">
+        body{
+            margin: 0;
+        }
+        .con div{
+            float: left;
+            width: 23%;
+            border: 2px solid black;
+            background-color: gold;
+            height: 200px;
+            margin: 1%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 800px) {
+            .con div{
+                width: 46%;
+                margin:2%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .con div{
+                width: 94%;
+                margin: 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="con">
+    <div>这是菜单</div>
+    <div>这是菜单</div>
+    <div>这是菜单</div>
+    <div>这是菜单</div>
+</div>
+</body>
+</html>

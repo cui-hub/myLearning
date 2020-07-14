@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let name = 'stephen curry';
+        let age = 29;
+        //ES5老式写法：
+        let obj = {
+            name: name,
+            age: age,
+            getName: function() {
+                return this.name;
+            }
+        }
+        console.log(obj);
+        console.log(obj.getName());
+
+        //ES6简化写法：
+        let obj2 = {
+            name,
+            age,
+            getName() {
+                return this.name;
+            }
+        }
+        console.log(obj2);
+        console.log(obj2.getName());
+    </script>
+</body>
+
+</html>

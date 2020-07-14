@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box1{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+            /*border: 1px solid black;第一种解决重叠top塌陷的方法*/
+            /*overflow: hidden;第二种解决办法*/
+        }
+            /*.clearfix:before{*/
+            /*    content:"";*/
+            /*    display:table;*/
+            /*}*/
+
+        .box2{
+            width: 200px;
+            height: 100px;
+            background-color:green ;
+            margin-top: 100px;
+            margin-left: 50px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box1 clearfix">
+    <div class="box2"></div>
+</div>
+
+</body>
+</html>

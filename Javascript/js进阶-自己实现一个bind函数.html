@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.bind = function() {
+            var selfPointer = this; //保存原函数作用域
+            var obj = Array.prototype.shift.call(arguments); //保存指向的作用域，有此步骤不需要再传入obj参数;
+
+
+            var args = Array.prototype.slice.call(arguments); //剩余的参数转为数组
+            var bound = function() {
+                selfPointer.apply(obj, [].concat(args, Array.prototype.slice.call(arguments)));
+            }; //需要返回的函数通过apply实现,参数通过concat拼接数组实现;
+            //Array.prototype.slice.call(arguments, 1)是指的bound函数的参数对象转化的数组
+
+            //因为在new 一个bind过生成的新函数的时候，必须的条件是要继承原函数的原型
+            var f = function() {};
+            f.prototype = selfPointer.prototype;
+            bound.prototype = new f();
+            return bound;
+        }
+
+        function test(b) {
+            console.log(this.a);
+            console.log(b);
+        };
+        test.bind({
+                a: 122
+            }, )(321) //122 321
+    </script>
+</body>
+
+</html>

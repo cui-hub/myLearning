@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+
+</head>
+<body>
+    <!--vue可以管理和渲染数据-->
+    <div id="app">
+<!--        写入插值表达式：-->
+        <p>{{msg1+msg2}}</p>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            //实例化vue时必须设定固定参数el，代表即将操作的html元素
+            el:'#app',
+            //定义固定参数data，用于保存要渲染的数据
+            data:{
+                msg1:'hollow world',
+                msg2:'hellow vue'
+            }
+        });
+    </script>
+</body>
+</html>

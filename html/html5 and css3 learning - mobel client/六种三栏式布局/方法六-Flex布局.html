@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CSS三栏布局</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+        }
+        
+        .left {
+            flex-grow: 1;
+            height: 200px;
+            background-color: #DC698A;
+        }
+        
+        .middle {
+            flex-grow: 3;
+            height: 800px;
+            background-color: #8CB08B;
+        }
+        
+        .right {
+            flex-grow: 1;
+            height: 300px;
+            background-color: #3EACDD;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">左栏</div>
+        <div class="middle">中间栏</div>
+        <div class="right">右栏</div>
+    </div>
+</body>
+
+</html>

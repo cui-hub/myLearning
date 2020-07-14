@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //ES5
+        var obj = {
+            // data: 20
+        };
+        Object.defineProperty(obj, 'data', {
+            get: function() {
+                return data;
+            },
+            set: function(newVal) {
+                data = newVal
+                console.log('set:', newVal)
+
+            }
+        })
+        obj.data = 5; //set 5
+        console.log(obj.data); //如果没有get，就会显示undefined(不管obj定义时有没有data属性)
+
+
+        let handler = {
+            get: function(target, name) {
+                return name in target ? target[name] : 'Prop not defined'
+            },
+            set: function(obj, prop, value) {
+                if (prop === 'age') {
+                    if (!Number.isInteger(value)) {
+                        throw new TypeError('The age is not an integer');
+                    }
+                    if (value > 200) {
+                        throw new RangeError('The age seems invalid');
+                    }
+                }
+                console.log(`set:${prop}=${value}`)
+                    // The default behavior to store the value
+                obj[prop] = value;
+            }
+        };
+        let obj2 = new Proxy({}, handler);
+
+        obj2.a = 10; //
+        obj2.b = 20;
+        obj2.age = 100;
+        console.log(obj2.age);
+        console.log(obj2.c);
+        // 100
+        obj2.age = 'young';
+        // 抛出异常: Uncaught TypeError: The age is not an integer
+        obj2.age = 300;
+        // 抛出异常: Uncaught RangeError: The age seems invalid
+    </script>
+</body>
+
+</html>

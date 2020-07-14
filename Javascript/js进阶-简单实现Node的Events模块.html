@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Node.js中events模块用法：
+
+        // const EventEmitter = require('events').EventEmitter;
+        // var ee = new EventEmitter();
+        // ee.on('say', (arg) => {
+        //     console.log('say:', arg)
+        // });//可以绑定多个say事件：
+        //ee.on('say', (arg) => {
+        //     console.log('say2:', arg)
+        // });
+        // ee.emit('say', 'cuiyongliang');
+
+
+        // 简单实现：on和emit功能
+        function myEvents() {
+            this.handles = {}; //用来存储事件和回调函数：{eventName1:[callback1,callback2,...],eventName2:[callback1,callback2,...],...}
+            this.on = function(eventName, callback) {
+                if (!this.handles[eventName]) {
+                    this.handles[eventName] = [];
+                }
+                this.handles[eventName].push(callback); //可以给同一个事件绑定多个回调函数
+            }
+            this.emit = function(eventName, ...args) {
+                if (this.handles[eventName]) {
+                    this.handles[eventName].forEach((cb) => {
+                        cb.apply(this, args) //用了箭头函数，this和argumrnts都属于emit函数
+                    })
+                } else {
+                    throw `${eventName} is not published!`; //如果事件未定义，抛出错误
+                }
+            }
+        }
+
+        //测试代码：
+        var events = new myEvents();
+        events.on('say', (name) => {
+            console.log('say:', name)
+        });
+        events.on('show', (name) => {
+            console.log('show:', name)
+        });
+        // events.emit('say', 2);
+        events.emit('say', 'cuiyongliang');
+        events.emit('say');
+        // events.emit('show', 'cuiyongliang');
+        // console.log(events)
+
+        var events2 = new myEvents();
+        events2.on('act', (arg1, arg2) => {
+            console.log('act:', arg1, arg2)
+        });
+        events2.emit('act', 1, 'jjj');
+        events.emit('act');
+    </script>
+</body>
+
+</html>

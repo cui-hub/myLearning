@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box{
+            width: 200px;
+            height: 400px;
+            background-color:gold;
+        }
+    </style>
+    <script type="text/javascript">
+        var iNum01 = 2;
+        var sNum01 = '2';
+        // ==自带类型准换，不同类型自动转换为相同类型，准确要用===
+        if(iNum01===sNum01){
+            alert('相等');
+        }
+        else{
+            alert('不相等');
+        }
+        // !非，将逻辑结果取反：
+        if (!4>3){
+            alert('大于');
+        }
+        else{
+            alert('不大于');
+        }
+        // &&与
+        if (4>3&&5>4){
+            alert('正确');
+        }
+        else {
+            alert('错误');
+        }
+        // ||或：
+        if (4>3||5>6){
+            alert('正确');
+        }
+        else {
+            alert('错误');
+        }
+        window.onload = function () {
+            var oDiv = document.getElementById('box');
+            var oBtn = document.getElementById('btn');
+            oBtn.onclick = function () {
+                if (oDiv.style.display != 'none'){
+                    oDiv.style.display = 'none';
+                    oBtn.value = '显示'
+                }
+                else {
+                    oDiv.style.display = 'block';
+                    oBtn.value = '隐藏';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="button" name="" value="隐藏" id="btn">
+<div class="box" id="box"></div>
+</body>
+</html>

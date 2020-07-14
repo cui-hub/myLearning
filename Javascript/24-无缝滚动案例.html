@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .list_con {
+            width: 1000px;
+            height: 200px;
+            border: 1px solid black;
+            margin: 10px auto;
+            background-color: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+        .list_con ul{
+            list-style: none;
+            width: 2000px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .list_con li{
+            width: 180px;
+            height: 180px;
+            float: left;
+            margin: 10px;
+        }
+        .btns_con{
+            width: 1000px;
+            height: 30px;
+            margin: 50px auto 0;
+            position: relative;
+        }
+        .left,.right{
+            width: 30px;
+            height: 30px;
+            background-color: gold;
+            position: absolute;
+            left: -40px;
+            top: 124px;
+            font-size: 30px;
+            line-height: 30px;
+            color: #000000;
+            font-family: 'Arial';
+            text-align: center;
+            cursor: pointer;
+            border-radius: 15px;
+            opacity: 0.5;
+        }
+        .right{
+            left: 1010px;
+            top: 124px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oBtn01 = document.getElementById('btn01');
+            var oBtn02 = document.getElementById('btn02');
+            var oDiv = document.getElementById('slide');
+            var oUl = oDiv.getElementsByTagName('ul')[0];
+            var iLeft = 0;
+            var iSpeed = -2;
+            var iNowSpeed = 0;
+            //复制一份li
+            oUl.innerHTML = oUl.innerHTML + oUl.innerHTML ;
+            function moving() {
+                iLeft += iSpeed;
+                oUl.style.left = iLeft +'px';
+                //如果第一份图片列表全部到头，第二份刚好全部展现，此时让left归0，让图片拉回去，视觉不会出现间断
+                if (iLeft<-1000){
+                    iLeft = 0;
+                }
+                if (iLeft>0){
+                    iLeft = -1000;
+                }
+            }
+            var timer = setInterval(moving,30);
+            oBtn01.onclick = function () {
+                iSpeed = -2;
+            };
+            oBtn02.onclick = function () {
+                iSpeed = 2;
+            };
+            //鼠标放置，滚动停止：
+            oDiv.onmouseover = function () {
+                iNowSpeed = iSpeed;
+                iSpeed = 0;
+            };
+            oDiv.onmouseout = function () {
+                iSpeed = iNowSpeed;
+            };
+
+        }
+    </script>
+</head>
+<body>
+    <div class="btns_con">
+        <div class="left" id="btn01">&lt;</div>
+        <div class="right" id="btn02">&gt;</div>
+    </div>
+    <div class="list_con" id="slide">
+        <ul>
+            <li><a href="#"><img src="../html/web_项目_天天生鲜/images/goods001.jpg" alt="商品图"></a></li>
+            <li><a href="#"><img src="../html/web_项目_天天生鲜/images/goods002.jpg" alt="商品图"></a></li>
+            <li><a href="#"><img src="../html/web_项目_天天生鲜/images/goods003.jpg" alt="商品图"></a></li>
+            <li><a href="#"><img src="../html/web_项目_天天生鲜/images/goods012.jpg" alt="商品图"></a></li>
+            <li><a href="#"><img src="../html/web_项目_天天生鲜/images/goods018.jpg" alt="商品图"></a></li>
+        </ul>
+    </div>
+</body>
+</html>

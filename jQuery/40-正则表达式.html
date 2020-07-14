@@ -1,0 +1,76 @@
+<!--正则表达式写法：
+    var re =  new RegExp('规则','修饰参数')
+    var re = /规则/参数
+普通字符匹配：
+    如：/a/匹配字符a，/a,b/匹配字符'a,b'
+转义字符匹配：
+    \d 匹配一个数字 即0-9
+    \D 匹配一个非数字 即除了0-9
+    \w 匹配一个单词字符（字母、数字、下划线）
+    \W 匹配任何非单词字符
+    \s 匹配一个空白符
+    \S 匹配一个非空白符
+    \b 匹配单词边界
+    \B 匹配非单词边界
+    . 匹配任意字符
+量词匹配：
+    ? 最多一次或0次
+    + 至少一次
+    * 任意次
+    {n} n次
+    {n,m} n-m次
+    {n,} 至少n次
+任意一个或者范围：
+    [abc123] 匹配abc123中任意一个字符
+    [a-z0-9] 匹配a-z 0-9任意一个字符
+限制开头和结尾：
+    ^ 以后面紧挨元素开头
+    $ 以前面的紧挨元素结尾
+修饰参数：
+    g：global 全文搜索，默认搜到第一个结果停止
+    i：ignore 忽略大小写
+函数：
+    test：re.test(str) 匹配成功返回真，否则返回假
+    exec: re.exec
+    replace：newstr.replace(re,str) 匹配成功用str替换newstr匹配re成功的部分
+    splice: str.splice
+    match: str.match
+    search: str.search-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript">
+        var re01 = new RegExp('a','i');//i参数：不区分大小写
+        var re02 = /a/;
+        var re03 = /\d+/;//匹配多个数字
+        var re04 = /^\d+$/;//开头结尾都得是数字
+        var re06 = /^ab$/; //ab字符串
+
+        var reUser = /^\w{6,20}$/;//用户名规则6-20位数字、字母、下划线
+        var reEmail = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;//邮箱地址
+        var rePass = /^[\w!@#$%^&*]{6-20}$/;//6-20位密码验证
+        var rePhone = /^1[3458]\d{9}$/; //手机号验证
+
+        var sTr01 = 'abcdefg';
+        var sTr02 = 'cdefg';
+        var sTr03 = '1234abcd';
+        var sTr05 = 'Ab';
+        //alert(re01.test(sTr01)); //true
+        //alert(re01.test(sTr02));//false
+        alert(re03.test(sTr03));//true
+        //text()函数只要字符串包含有re的部分就返回true；
+        alert(re04.test(sTr03));//false
+        alert(re06.test(sTr05));//false
+
+
+    </script>
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>

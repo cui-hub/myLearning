@@ -1,0 +1,52 @@
+<!--axios.request(config)
+    axios.get(url[, config])
+    axios.delete(url[, config])
+    axios.head(url[, config])
+    axios.options(url[, config])
+    axios.post(url[, data[, config]])
+    axios.put(url[, data[, config]])
+    axios.patch(url[, data[, config]])-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="axios.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    //get请求方式1：
+    axios.get('./Domain.php?data=111')
+    .then(function (response) {
+        //响应返回的对象与v-r不同
+        console.dir(response)
+    });
+    //get请求方式2：
+    axios.get('./Domain.php',{
+        params:{
+            data:111,
+        }
+    })
+    .then(function (response) {
+        console.dir(response)
+    });
+    //post请求方式：
+    //注意post传输数据的方式
+    axios.post('./Domain.php','data=111',{
+        // 配置项要求使用post特殊请求头，查阅github上api文档：
+        headers:{'Content-Type':'application/x-www-form-urlencoded'}
+    })
+    .then(function (response) {
+        console.dir(response)
+    });
+    //axios本身不支持跨域，跨域技术：CORS（在服务器端设置响应头，允许某些源请求自己）；jsonp；代理请求（利用后端脚本没有同源策略的性质，利用改脚本跨域请求）
+    axios.get('./delegete.php?data=222')
+    .then(function (response) {
+        console.dir(response)
+    });
+</script>
+</body>
+</html>

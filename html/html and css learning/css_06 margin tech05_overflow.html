@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            width: 300px;
+            border: 1px solid #000;
+            background-color: gold;
+            line-height: 30px;
+            height: 200px;
+            overflow: auto;
+            /*visible显示；
+            scroll显示滚动条,不管是否溢出；
+            hidden隐藏；
+            auto自己判断是visable还是scroll
+            */
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    针对我想爬的文件进行修改，在这一过程里遇到了（不分先后）：
+1.正则表达式里‘_’的匹配问题，他应该是个特殊字符要加转义符‘\_’才能匹配；
+
+2. 解码时遇到不能识别的错误，这里我直接在decode时加上了忽略错误的参数‘ignore’；
+
+3. 匹配的url列表中有很多重复项，下载时有重复工作，这里我先用set把重复项去掉再转换成了list返回（不过这样list顺序就乱了，可以再sort一下）；
+————————————————
+版权声明：本文为CSDN博主「zhiang张」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/jonathanzh/article/details/78630587
+</div>
+</body>
+</html>

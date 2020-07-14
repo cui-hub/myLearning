@@ -1,0 +1,48 @@
+<!-- 用计算属性来包装表达式中的逻辑代码，可以减轻html模板重量，做法是在实例化vue对象时，添加一个computed属性，
+    computed：经过处理过的数据
+    计算属性与方法的不同：
+        虽然computed中计算属性和methods方法效果一样，但是
+        1、引用方法不同，前者当成普通数据使用，后者是方法，当做函数使用
+        2、执行原理不同。方法每调用一次就会执行一次函数体，计算属性只在依赖的数据（计算函数内部使用的数据，即原始数据）发生改变时，才会执行函数从新计算结果(计算缓存)-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+     <p>{{msg1()}}</p>
+     <p>{{msg2}}</p>
+     <p>{{msg1()}}</p>
+     <p>{{msg2}}</p>
+      <p>{{msg1()}}</p>
+     <p>{{msg2}}</p>
+    </div>
+    <script type="text/javascript">
+        var vm =new Vue({
+            el:'#app',
+            data:{
+                lang:'python',
+            },
+            methods:{
+                msg1:function () {
+                    console.log('调用方法');//显示三次
+                    return this.lang+'天下第一！';
+                    //如果函数没有返回值，那么返回undefined
+                }
+            },
+            computed:{
+                msg2:function () {
+                    console.log('引用计算结果');//显示一次
+                    return this.lang+'天下第一！';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        // 1、将数组中的数据分别弹出：
+        var aList = [1,2,3];
+        var iNum = aList.length;
+        for(var i =0;i<iNum;i++)
+        {
+            alert(aList[i]);
+        }
+        // 2、将数组中的数据放到页面的列表中：
+        window.onload = function () {
+            var aList2 = ['美人鱼','疯狂动物城','魔兽','美国队长3','湄公河行动'];
+            var iLength = aList2.length;
+            var sTr = '';
+            for (var i=0;i<iLength;i++){
+                sTr += '<li>' + aList2[i]+ '</li>';
+            }
+            //alert(sTr);
+            var oUl = document.getElementById('list');
+            oUl.innerHTML = sTr;
+        }
+
+    </script>
+    <style type="text/css">
+        .list{
+            list-style: none;
+            margin: 50px auto 0;
+            padding: 0;
+            width: 300px;
+            height: 300px;
+
+        }
+        .list li{
+            border-bottom: 1px dotted black;
+            font: normal 16px/60px 'Microsoft YaHei';
+        }
+    </style>
+</head>
+<body>
+<ul class="list" id="list">
+<!--    <li>1</li>-->
+<!--    <li>1</li>-->
+<!--    <li>1</li>-->
+<!--    <li>1</li>-->
+<!--    <li>1</li>-->
+</ul>
+</body>
+</html>

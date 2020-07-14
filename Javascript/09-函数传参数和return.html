@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+
+
+            function fnMyAlert(a) {
+                alert(a)
+            }
+
+            // fnMyAlert(123456);
+
+            function fnChangeStyle(mystyle, value) {
+                var oDiv = document.getElementById('div1');
+                oDiv.style[mystyle] = value;
+            }
+
+            fnChangeStyle('fontSize', '30px');
+            fnChangeStyle('backgroundColor','pink');
+
+            function fnAdd(a,b){
+                var c = a + b;
+                return c;
+                /* return作用：1返回执行结果；2结束函数运行；3阻止默认行为*/
+            }
+            /* 按照下列写并不会弹出结果，只会提示undefined，需要return关键字才能弹出5*/
+            var iResult = fnAdd(2,3);
+            alert(iResult);
+        }
+    </script>
+</head>
+<body>
+    <div id="div1">This is a div</div>
+</body>
+</html>

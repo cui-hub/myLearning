@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        var a = {
+            name: '小明',
+            age: 3,
+            sayName: function() {
+                console.log(this.name)
+            }
+        };
+        var b = {
+            name: '小红',
+            age: 1
+        };
+        a.sayName();
+        //小红也想说出自己的名字，但是没有这个能力，希望a具备的方法在b身上调用：
+        a.sayName.call(b); //小红 
+        a.sayName.apply(b); //小红 
+        //说明sayName方法中this指向对象b，
+        //apply 作用一样
+
+        //定义两个对象，用于保存计算结果：
+        var result = {
+            sum: 0
+        };
+
+        function add(a, b) {
+            this.sum = a + b;
+        } //window.add()
+        add(2, 3); //window.sum=5
+        //add()函数是全局方法，调用时this指window对象，想要给result，则要用到call和apply
+        add.call(result, 2, 3);
+        //apply 只是传参形式不同
+        add.apply(result, [5, 3]);
+        console.log(result.sum) //sum =5;
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

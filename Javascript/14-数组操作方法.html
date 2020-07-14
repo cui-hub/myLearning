@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        // 新建数组：1、通过类实例化创建，效率不高
+        var aList = new Array(1,2,3);
+        // 2、直接量创建（常用，效率高）：
+        var aList2 = [1,2,3];
+
+
+        /*常用操作数组的方法：*/
+        // 1、获取数组成员个数：
+        alert (aList2.length);
+        // 2、操作数组成员
+        alert(aList2[0]);
+        // 3、push()和pop()从数组中最后位置添加或删除成员：
+        aList2.push(4);
+        aList2.pop();
+        alert(aList2);
+        // 4、unshift()和shift()从数组中最前位置添加或删除成员：
+        aList2.unshift(0);
+        aList2.shift();
+        alert(aList2);
+        // 5、reverse翻转数组顺序
+        aList2.reverse();
+        alert(aList2);
+        // 6、indexOf()返回数组中元素第一次出现的索引值（位置）：
+        alert(aList2.indexOf(2));
+        // 7、splice()在数组中增加或者删除成员
+        var aList3 = ['a','b','c','d'];
+        aList3.splice(1,1,1,2,3);// 从第2个元素开始删除1个元素后，添加1,2,3三个元素，弹出['a',1,2,3,'c','d']
+        alert(aList3);
+        // 8、join()使用一个分隔符将数组拼接成字符串,数组本身不变：
+        alert(aList3.join('-'));
+
+        // 多维数组：
+        var aList4 = [[1,2,3],['a','b','c']]
+        alert(aList4[0][1]);
+        alert(aList4[1].length);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

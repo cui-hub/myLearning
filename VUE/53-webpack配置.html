@@ -1,0 +1,15 @@
+<!--优化配置webpack以实现以下功能：
+    1、希望在调用webpack时，不再需要传入 输入文件 输出文件 两个参数：
+        在项目路径中可以编写一个webpack.config.js文件：
+            模仿常规项目结构，创建webpack-config目录：
+                dist文件夹放置webpack的产出物
+                src文件夹放置css,images,js,index.html,main.js
+            index.html实现隔行换色，需要用到jquery，需要在项目中本地安装jquery npm管理依赖
+            用npm init -y 初始化当前项目:初始化后，在项目目录中产生package.json文件，是npm的配置文件
+            输入npm install jquery -s 本地化安装jquery，把jquery放到当前项目中node_modules文件夹内 (-D是开发环境，-s 是生产环境)
+
+            因为main.js中有require语句，浏览器不能接受，所以将main.js打包 >>>> C:\Users\Administrator\Desktop\webpack-test\webpack-config\src>webpack ./main.js ../dist/bundle.js
+
+            main.js里参数一旦改变就得打包一次，为了简化步骤，将webpack ./main.js ../dist/bundle.js 指令简化，通过配置文件webpack-config.js
+            然后在打包只要输入webpack即可：C:\Users\Administrator\Desktop\webpack-test\webpack-config>webpack
+-->

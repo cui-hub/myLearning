@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Generator 函数内部提供了一种可以暂停执行的函数，yield 语句就是暂停标志
+遍历器对象的 next 方法的运行逻辑如下：
+遇到 yield 语句就是暂停执行后面的操作，并将紧跟在 yield 后的表达式的值作为返回的对象的 value 值
+下次调用 next 方法继续向下执行后面的 yield 语句
+直到 return 为止，将 return 的值赋值给 value，若无 return 后面的值 value 都为 undefined，此时 done 值为 true，for of 遍历停止 -->
+    <script>
+        function* f() {
+            yield 'hello'
+            yield 'world'
+            return '!'
+        }
+        let fg = f()
+            // 调用遍历器对象的 next 方法，使得指针移向下一个状态，直到遇到下一条 yield 语句（或 return 语句）为止
+            // done 为 true 时遍历结束
+        console.log(fg.next()) // {value: "hello", done: false}
+        console.log(fg.next()) // {value: "world", done: false}
+        console.log(fg.next()) // {value: "!", done: true}
+        console.log(fg.next()) // {value: undefined, done: true}
+
+
+        // yield 表达式如果用在另一个表达式之中，必须放在圆括号里
+        function* f2() {
+            //console.log('hello' + yield) // error
+            //console.log('hello' + yield 123) // error
+
+            console.log('hello' + (yield)); // ok
+            console.log('hello' + (yield 123)); // ok
+        }
+        let fg2 = f2();
+        console.log(fg2.next());
+        console.log(fg2.next());
+
+
+        // yield 表达式用作函数参数或放在赋值表达式右边，可以不加括号
+        // function* f() {
+        //     foo(yield 'a', yield 'b') // ok
+        //     let input = yield // ok
+        // }
+
+        //任何数据只要具有 Iterator 接口，就可以被 yield* 遍历
+        function* f1() {
+            yield 'c'
+            yield 'd'
+        }
+
+        function* f2() {
+                yield 'a'
+                yield 'b'
+                // yield * ['c', 'd'] 会达到一样的效果
+                yield* f1()
+                yield 'e'
+            }
+            //a. for  in  便历出来的是属性
+            //b. for  of  遍历的是value
+        for (let i of f2()) {
+            console.log(i) // a  b  c  d  e
+        }
+
+
+        //next方法的参数表示上一个yield表达式的返回值！！不是函数中参数（如本例的x）的值！不可混淆！！！,且持续有效！！！
+        function* foo(x) {
+            var y = 2 * (yield(x + 1));
+            var z = yield(y / 3);
+            return (x + y + z);
+        };
+        var b = foo(5);
+        console.log(b.next()); //6
+        console.log(b.next(12)); //8
+        console.log(b.next(13)); //42
+
+
+        //斐波那契数列
+        function* f() {
+            let [oldVal, newVal] = [0, 1]
+            for (;;) {
+                [oldVal, newVal] = [newVal, oldVal + newVal];
+                yield newVal;
+            }
+
+        }
+        for (let i of f()) {
+            if (i > 1000) {
+                break
+            }
+            console.log(i)
+        }
+    </script>
+</body>
+
+</html>

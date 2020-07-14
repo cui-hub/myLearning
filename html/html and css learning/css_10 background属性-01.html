@@ -1,0 +1,42 @@
+<!--1. background-color 设置背景色
+    2. background-image 设置背景图片地址
+    3. background-repeat 设置背景图片如何重复平铺
+    4. background-position 设置背景图片的位置
+    5. background-attachment 设置背景图是固定还是随着页面滚动条滚动-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>background</title>
+    <style type="text/css">
+        .box{
+            width: 800px;
+            height: 400px;
+            border:5px solid #000000;
+            margin: 50px auto 0;
+            /*background-image:url("../images/bilibili.jpg") ;*/
+            /*background-repeat: no-repeat;*/
+            /*repeat-x: 只向x轴方向平铺
+              repeat-y: 只沿y轴方向平铺
+              no-repeat: 只平铺一次
+              repeat: 平铺所有（缺省值）*/
+            /*background-position: 10px 10px;*/
+            /*方位可以设置两个值：水平值：left、right，center；+垂直值：top、center、bottom
+            也可以设置数值:第一个值：与左边距离；第二个值;与上边的距离*/
+            /*background-color: cyan;*/
+            /*背景色填满未被图片占据的地方*/
+            background: url("../../images/bilibili.jpg") 10px 10px no-repeat cyan;
+            /*顺序可以乱,可以不用都设置*/
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+<!--        <img src="../images/bilibili.jpg" alt="bilibili"/> -->
+        bilibili图片
+    </div>
+</body>
+</html>

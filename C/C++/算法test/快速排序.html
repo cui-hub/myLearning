@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var list = [-2, 11, 2, 3, 99, -11, 0, 3, 6, -21, -2]
+        quickSort(list, 0, list.length - 1);
+        console.log(list);
+
+        function quickSort(list, low, high) {
+            let pos;
+            if (low < high) {
+                pos = foundPos(list, low, high);
+                if (low < pos) {
+                    quickSort(list, low, pos - 1);
+                };
+                if (pos < high) {
+                    quickSort(list, pos + 1, high);
+                }
+            }
+        }
+
+        function foundPos(list, low, high) {
+            let val = list[low];
+            while (low < high) {
+                while (low < high && list[high] >= val) {
+                    high--;
+                }
+                list[low] = list[high];
+                while (low < high && list[low] <= val) {
+                    low++;
+                }
+                list[high] = list[low];
+            }
+            list[high] = val; //也可以写成list[low]=val
+            return high; //也可以写成return low
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <calc :msg="'组件数据'"></calc>
+
+</div>
+<template id="temp">
+<!--    模板里只有一个根节点，得用div包起来-->
+    <div>
+        <p >我是子组件:{{msg}}</p>
+    </div>
+</template>
+<script>
+    var temp = {
+        template:'#temp',
+        //data通过函数定义组件数据：
+        data:function () {
+            return {
+                num:100,
+            }
+        },
+        //props通过数组形式把标签属性注册为数据：
+        props:['msg']
+
+    };
+    //组件之间数据独立维护，不会相互影响：
+    Vue.component('calc',temp);
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        }
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!--在单页面应用中，项目页面根据要访问的路径，没有发生真正的跳转，而是根据路径显示对应的面板（组件），并且还可能存在多级路由
+    vue-router下载：http://unpkg.com/vue-router@3.0/dist/vue-router.js
+
+    vue-router使用：
+    1、先引入vue在引入vue-router
+    2、创建路由要用到的组件,并注册
+    3、指定路由规则
+    4、把路由规则注册到vm实例中
+    5、定义路由的视图区域router-view标签-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#/article">推荐</a>
+        <a href="#/attention">关注</a>
+        <a href="#/comment">评论</a>
+        <!--5、定义路由的视图区域router-view标签-->
+        <router-view></router-view>
+    </div>
+
+    <template id="temp1">
+        <div class="panel">推荐文章</div>
+    </template>
+    <template id="temp2">
+        <div class="panel">我的关注</div>
+    </template>
+    <template id="temp3">
+        <div class="panel">我的评论</div>
+    </template>
+    <script>
+        var tempArticle = {
+            template: '#temp1'
+        };
+        var tempAttention = {
+            template: '#temp2'
+        };
+        var tempComment = {
+            template: '#temp3'
+        };
+        Vue.component('article', tempArticle);
+        Vue.component('attention', tempAttention);
+        Vue.component('comment', tempComment);
+        // 3、制定路由规则：
+        var routerRule = new VueRouter({
+            //routes属性定义规则,数组形式，每一个元素都是一个规则
+            routes: [
+                //一条路由规则含有两个信息,一个是路径，一个是组件：
+                {
+                    path: '/article',
+                    component: tempArticle
+                }, {
+                    path: '/attention',
+                    component: tempAttention
+                }, {
+                    path: '/comment',
+                    component: tempComment
+                },
+            ]
+        });
+        var vm = new Vue({
+            el: '#app',
+            //4、把路由规则注册到vm实例中：
+            router: routerRule,
+        })
+    </script>
+</body>
+
+</html>

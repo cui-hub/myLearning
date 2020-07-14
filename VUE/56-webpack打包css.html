@@ -1,0 +1,14 @@
+<!--为了减少二次请求的次数，要将index.css引入到main.js中：
+    在main.js中引入index.css：
+        import './css/index.css';
+    w-d-s提示需要用到css加载器：
+        1、style-loader
+        2、css-loader >>>>> npm i style-loader css-loader@0.28.7 -D
+     安装完成后，需要webpack.config.js中用module属性注册一下第三方模块：
+        module:{
+        //告诉webpack要处理后缀为???的文件，用???加载器处理，所以要定义文件的处理规则
+        rules:[
+            {test:/.css$/,use:['style-loader','css-loader']},//加载器顺序不要换
+        ]
+    重启w-d-s服务后，index.css生效
+        -->

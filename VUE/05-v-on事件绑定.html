@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" onclick="fnTest()" value="按钮">
+<!--    使用v-bind会优先在vue内部查找函数-->
+    <input type="button" v-on:click="test" value="按钮">
+ <!--    指令缩写-->
+    <input type="button" @click="test" :value="msg">
+
+</div>
+    <script type="text/javascript">
+        function fnTest() {
+            console.log('hello')
+        }
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                // data内部不可以定义函数，要放在methods里
+                // test:function () {
+                //     console.log('hellow');
+                // },
+                msg:'按钮'
+            },
+            methods:{
+                test:function () {
+                    console.log('hello');
+                },
+            }
+
+        });
+    </script>
+</body>
+</html>

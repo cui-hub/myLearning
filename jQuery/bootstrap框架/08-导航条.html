@@ -1,0 +1,63 @@
+<!--导航条：
+    1、navbar 声明导航条
+    2、navbar-default 声明默认的导航条样式
+    3、navbar-inverse 声明反白的导航条样式
+    4、navbar-static-top 去掉导航条的圆角
+    5、navbar-fixed-top 固定到顶部的导航条
+    6、mavbar-fixed-bottom 固定到底部的导航条
+    7、navbar-header 申明logo的容器
+    8、navbar-brand 针对logo等固定内容的样式
+    9、nav navbar-nav 定义导航条中的菜单
+    10、navbar-form 定义导航条内的表单
+    11、navbar-btn 定义导航条中的按钮
+    12、navbar-text 定义导航条中的文本
+    13、navbar-left 菜单靠左
+    14、navbar-right 菜单靠右
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<!--    因为字体图标不仅仅要css，还要font字体配置文件，所以将bootstrap-3.3.7-dist引入，从内部引入即可加载出来-->
+
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css">
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"> </script>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+   <div class="navbar navbar-inverse navbar-static-top"><!--黑底，去圆角-->
+       <div class="container">
+            <!--定义logo-->
+           <div class="navbar-header">
+               <a href="#" class="navbar-brand">LOGO</a>
+           </div>
+           <!--定义菜单-->
+           <ul class="nav navbar-nav">
+               <li class="active"><a href="#">首页</a></li>
+               <li><a href="#">公司简介</a></li>
+               <li><a href="#">解决方案</a></li>
+               <li><a href="#">产品</a></li>
+           </ul>
+           <!--插入表单-->
+           <form action="" class="navbar-form navbar-right">
+               <div class="form-group">
+                   <div class="input-group">
+                       <input type="text" class="form-control">
+                       <span class="input-group-btn">
+                           <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                       </span>
+                   </div>
+               </div>
+
+           </form>
+       </div>
+   </div>
+</body>
+</html>

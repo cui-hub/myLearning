@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function formatDate(date, style) {
+            //获取对应时间
+            const iYear = date.getFullYear();
+            const iMonth = date.getMonth() + 1;
+            const iDate = date.getDate();
+            const iDay = date.getDay();
+            const iHour = date.getHours();
+            const iMinute = date.getMinutes();
+            const iSec = date.getSeconds();
+
+            function fnToWeek(iDay) {
+                switch (iDay) {
+                    case 0:
+                        return '日';
+                        break;
+                    case 1:
+                        return '一';
+                        break;
+                    case 2:
+                        return '二';
+                        break;
+                    case 3:
+                        return '三';
+                        break;
+                    case 4:
+                        return '四';
+                        break;
+                    case 5:
+                        return '五';
+                        break;
+                    case 6:
+                        return '六';
+                        break;
+                }
+            };
+
+            function Double(num) {
+                if (num < 10) {
+                    return '0' + num;
+                } else {
+                    return num;
+                }
+            };
+            //根据style的格式输出格式时间
+            style = style.replace(/yyyy/, iYear);
+            style = style.replace(/yy/, iYear % 100);
+            style = style.replace(/MM/, Double(iMonth));
+            style = style.replace(/M/, iMonth);
+            style = style.replace(/dd/, Double(iDate));
+            style = style.replace(/d/, iDate);
+            style = style.replace(/HH/, Double(iHour));
+            style = style.replace(/H/, iHour);
+            style = style.replace(/hh/, Double(iHour % 12 === 0 ? iHour : iHour % 12));
+            style = style.replace(/h/, iHour % 12 === 0 ? iHour : iHour % 12);
+            style = style.replace(/mm/, Double(iMinute));
+            style = style.replace(/m/, iMinute);
+            style = style.replace(/ss/, Double(iSec));
+            style = style.replace(/s/, iSec);
+            style = style.replace(/w/, fnToWeek(iDay));
+            return style;
+        }
+        console.log(formatDate(new Date(), 'yy-M-d hh:m:s 星期w'));
+
+        //优化版：
+        function formatDate2(t, str) {
+            const Hour = t.getHours() % 12 === 0 ? t.getHours() : t.getHours() % 12; //中午12点xx分，而不是0点xx分
+            var obj = {
+                yyyy: t.getFullYear(),
+                yy: ("" + t.getFullYear()).slice(-2),
+                M: t.getMonth() + 1,
+                MM: ("0" + (t.getMonth() + 1)).slice(-2),
+                d: t.getDate(),
+                dd: ("0" + t.getDate()).slice(-2),
+                H: t.getHours(),
+                HH: ("0" + t.getHours()).slice(-2),
+                h: Hour,
+                hh: ("0" + Hour).slice(-2),
+                m: t.getMinutes(),
+                mm: ("0" + t.getMinutes()).slice(-2),
+                s: t.getSeconds(),
+                ss: ("0" + t.getSeconds()).slice(-2),
+                w: ['日', '一', '二', '三', '四', '五', '六'][t.getDay()]
+            };
+            return str.replace(/([a-z]+)/ig, function($1) {
+                return obj[$1]
+            });
+        }
+        console.log(formatDate2(new Date(), 'yy-M-d hh:m:s 星期w'));
+    </script>
+</body>
+
+</html>

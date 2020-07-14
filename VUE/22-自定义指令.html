@@ -1,0 +1,48 @@
+<!--除了过滤器和按键修饰符，vue中的指令也可以自定义：
+    Vue.directive(指令名,钩子函数(el,binding))  指令名不能带v-
+    调用时，在标签以v-开头调用指令。自定义指令也有全局和私有之分，私有时在实例化中调用directives对象
+
+    钩子函数形参：
+        el:代表调用指令的元素，下面例子中是p标签
+        binding：是重要的数据对象，其中包含：
+            binding.name 指令名，不含v-
+            binding.expression 指令后绑定的表达式字符串
+            binding.value 指令绑定的表达式结果（是解析变量/调用函数运算后的结果）
+            -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p v-color="color" v-weight="bold">这是一个段落</p>
+    <p v-weight="bold">这是一个段落</p>
+</div>
+<script type="text/javascript">
+    Vue.directive('color',function (el,binding) {
+        // 获取dom对象
+        //给他添加一个style样式 background-color
+        //读取指令中写明的样式
+        // el.style.backgroundColor=binding.expression; //.expression 只能读取字符串，所以指令内容必须填颜色，如果想调用vm.data里的color属性，则必须要用.value
+        el.style.backgroundColor = binding.value;
+    });
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            color:'green',
+        },
+        directives:{
+            weight:function (el,binding) {
+                el.style.fontWeight = binding.expression;
+            }
+        }
+    })
+</script>
+</body>
+</html>

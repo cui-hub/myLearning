@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    语法：arr.reduce(callback,[initialValue]) callback:函数中包含四个参数 - previousValue （上一次调用回调返回的值，或者是提供的初始值（initialValue）） - currentValue （数组中当前被处理的元素） - index （当前元素在数组中的索引) - array （调用的数组） initialValue （作为第一次调用 callback 的第一个参数。）
+    <script>
+        const str = 'jjsskcklllldjjzkkjiasdkadjkafqquwjfah';
+        var obj = str.split('').reduce((pre, item) => {
+            pre[item] ? pre[item]++ : pre[item] = 1;
+            return pre;
+        }, {})
+        console.log(obj);
+    </script>
+</body>
+
+</html>

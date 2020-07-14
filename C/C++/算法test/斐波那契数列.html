@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //递归：
+        function f(n) {
+            if (n === 1) {
+                return 1;
+            } else if (n === 2) {
+                return 1;
+            } else {
+                return f(n - 1) + f(n - 2)
+            }
+
+        };
+        //循环：
+        function g(n) {
+            var a = 1;
+            var b = 1;
+            for (let i = 1; i < n - 1; i++) {
+                var t = a;
+                a = b;
+                b = t + b;
+            }
+            return b;
+        }
+        console.log(f(1));
+        console.log(f(2));
+        console.log(f(3));
+        console.log(f(4));
+        console.log(f(5));
+        console.log(f(6));
+        console.log(f(7));
+        console.log(f(20));
+
+        console.log(g(1));
+        console.log(g(2));
+        console.log(g(3));
+        console.log(g(4));
+        console.log(g(5));
+        console.log(g(6));
+        console.log(g(7));
+        console.log(g(20));
+    </script>
+    </script>
+</body>
+
+</html>

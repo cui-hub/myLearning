@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        1. rest(可变)参数
+            用来取代arguments，但是比arguments灵活，只能是最后部分形参,不能取中间参数
+
+        2. 扩展运算符
+
+     -->
+    <script>
+        //1. rest(可变)参数
+        function fun(a, ...values) {
+            console.log(arguments);
+            // arguments.forEach((item, index) => {
+            //     console.log(item, index);
+            // }); //报错，因为arguments是伪数组，没有forEach方法，只有length属性
+            console.log(values);
+            values.forEach((item, index) => {
+                console.log(item, index); //2 0  3 1
+            }); //不报错，因为values为真数组
+        };
+        fun(1, 2, 3)
+
+        //2.扩展运算符
+        let arr = [1, 6];
+        let arr1 = [2, 3, 4, 5];
+        //将arr1插入arr中，形成[1,2,3,4,5,6]:
+        arr = [1, ...arr1, 6];
+        console.log(arr); //[1, 2, 3, 4, 5, 6]
+        console.log(arr1); //[2, 3, 4, 5]
+        console.log(...arr1); //2 3 4 5
+    </script>
+</body>
+
+</html>

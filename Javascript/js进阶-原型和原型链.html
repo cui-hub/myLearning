@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //创建构造函数
+        function Word(words) {
+            this.words = words;
+            this.show = function() {
+                console.log(this.words)
+            }
+        }
+        Word.prototype = {
+                alert() {
+                    alert(this.words);
+                }
+            }
+            //创建实例
+        var w = new Word("hello world");
+        w.print = function() {
+            console.log(this.words);
+            console.log(this); //Person对象
+        }
+        w.print(); //hello world
+        w.alert(); //hello world
+        w.show(); //hello world
+    </script>
+</body>
+
+</html>

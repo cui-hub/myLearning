@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $h = $('.para').outerHeight();
+            var $hide = $h-500;
+            $('.bar').css({'height':490*500/$h});
+
+            $('.bar').draggable({
+                axis:'y',
+                containment:'parent',
+                opacity:0.6,
+                drag:function (ev,ui) {
+                    var $top = ui.position.top;
+                    var nowscroll = parseInt($top/290*$hide);
+                    $('.para').css({'top':-nowscroll});
+                }
+            })
+
+
+        })
+
+
+    </script>
+    <style type="text/css">
+        .scroll_con{
+            width: 400px;
+            height: 500px;
+            border: 1px solid black;
+            overflow: hidden;
+            position: relative;
+            margin: 50px auto 0;
+        }
+        .para{
+            width: 360px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-family: 'Microsoft YaHei';
+            line-height: 32px;
+            text-indent: 2em;
+        }
+        .bar_con{
+            width: 10px;
+            height: 490px;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+        .bar{
+            width: 10px;
+            height: 200px;
+            background-color: #ccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll_con">
+        <div class="para">
+            常见的以葱入菜，有葱蛋、葱油饼以及各式葱烧、葱爆料理，如葱烧鸡、葱爆牛肉等，除了这些料理方式外，想增加葱的摄取量，还有以下4种料理方式。
+凉拌、腌渍 葱汆烫冰镇后，淋上特制的日式酱汁，就能完成冷葱小皿，上桌前加点柴鱼片，便是一道简易的清爽小菜。或是将葱白切段，烤至上色后再腌渍，做成渍烤葱，味道酸甜开胃，很适合当成冰箱常备菜。
+香煎、烧 将青葱切段，卷进猪肉、牛肉或鸡肉中，直接香煎或是烧烤，也是很经典的葱类料理方式，相较于葱蛋跟葱烧，葱肉卷的葱用量较大，搭配肉类一起品尝，可以中和油腻感，吃起来更鲜甜多汁。
+煮汤 喜欢日式汤品，就选用大葱，把葱白切段煎至上色后，放入味噌汤中一起煮。喜欢台式风味，则可参考料理达人詹姆士曾分享的葱鸡汤作法，把大量葱花放在碗中，淋上刚加热好的鸡汤，让葱的甜味瞬间释放，喝起来顺口又暖身，能预防感冒，或为生病的人补充营养。
+清炒 除了与其他食材搭配外，葱其实也能像其他蔬菜一样清炒，口感细致的珠葱及脆甜的三星葱，都很适合这样的料理方式，喜欢中式风味的只要加点盐、白胡椒调味即可，喜欢日式风味，可用酱油和味醂调味。
+            常见的以葱入菜，有葱蛋、葱油饼以及各式葱烧、葱爆料理，如葱烧鸡、葱爆牛肉等，除了这些料理方式外，想增加葱的摄取量，还有以下4种料理方式。
+凉拌、腌渍 葱汆烫冰镇后，淋上特制的日式酱汁，就能完成冷葱小皿，上桌前加点柴鱼片，便是一道简易的清爽小菜。或是将葱白切段，烤至上色后再腌渍，做成渍烤葱，味道酸甜开胃，很适合当成冰箱常备菜。
+香煎、烧 将青葱切段，卷进猪肉、牛肉或鸡肉中，直接香煎或是烧烤，也是很经典的葱类料理方式，相较于葱蛋跟葱烧，葱肉卷的葱用量较大，搭配肉类一起品尝，可以中和油腻感，吃起来更鲜甜多汁。
+煮汤 喜欢日式汤品，就选用大葱，把葱白切段煎至上色后，放入味噌汤中一起煮。喜欢台式风味，则可参考料理达人詹姆士曾分享的葱鸡汤作法，把大量葱花放在碗中，淋上刚加热好的鸡汤，让葱的甜味瞬间释放，喝起来顺口又暖身，能预防感冒，或为生病的人补充营养。
+清炒 除了与其他食材搭配外，葱其实也能像其他蔬菜一样清炒，口感细致的珠葱及脆甜的三星葱，都很适合这样的料理方式，喜欢中式风味的只要加点盐、白胡椒调味即可，喜欢日式风味，可用酱油和味醂调味
+        </div>
+        <div class="bar_con">
+            <div class="bar"></div>
+        </div>
+    </div>
+</body>
+</html>

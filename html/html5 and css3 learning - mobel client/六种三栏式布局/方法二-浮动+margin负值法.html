@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CSS三栏布局</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .middle {
+            width: 100%;
+            height: 500px;
+            background-color: #8CB08B;
+            float: left;
+        }
+        
+        .left {
+            width: 200px;
+            height: 500px;
+            background-color: #DC698A;
+            float: left;
+            margin-left: -100%;
+        }
+        
+        .right {
+            width: 300px;
+            height: 500px;
+            background-color: #3EACDD;
+            float: left;
+            margin-left: -300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="middle">中间栏</div>
+    <div class="left">左栏</div>
+    <div class="right">右栏</div>
+    注意：该方法在html布局时，要把中间栏放在第一个，但这种情况会出现左右列覆盖中间列的情况。
+</body>
+
+</html>

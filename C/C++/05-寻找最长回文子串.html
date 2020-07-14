@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+    <script>
+        /**
+         * @param {string} s
+         * @return {string}
+         */
+        //暴力解法
+        var longestPalindrome = function(s) {
+            function isPalindrome(str) {
+                return str.split('').reverse().join('') == str;
+            };
+            let str = s[0];
+            let maxLen = 0;
+            let len = s.length;
+            if (len <= 1) {
+                return s;
+            }
+            for (let i = 0; i < len; i++) {
+                let lastIndex = s.lastIndexOf(s[i]);
+                while (lastIndex > i) {
+                    if (isPalindrome(s.slice(i, lastIndex + 1))) {
+                        if (lastIndex - i + 1 > maxLen) {
+                            maxLen = lastIndex - i + 1;
+                            str = s.slice(i, lastIndex + 1);
+                        }
+                    }
+                    lastIndex = s.slice(0, lastIndex).lastIndexOf(s[i]);
+                }
+            }
+            return str;
+        };
+        console.log(longestPalindrome('jjabcdcbacdk'))
+
+
+
+        //动态规划找到回文串：
+        //首先确定状态和子问题：
+        //dp[i][j]代表回文，那么dp[i+1][j-1]也得是回文，并且s[i]===s[j]
+        //转移方程：
+        //dp[i][j] = (dp[i+1][j-1]||j-i<2) && s[i]===s[j]
+        //边界条件：j-i<2
+        //初始值：二维数组存储状态，默认为false或0
+        //因为知道dp[i]需要先知道dp[i+1],所以i需要从大到小开始遍历
+        // 因为知道dp[j]需要先知道dp[j-1],所以j需要从小到大开始遍历
+        var longestPalindrome2 = function(s) {
+            let str = '';
+            let len = s.length;
+            let dp = Array.from(new Array(len), () => new Array().fill(0));
+            for (let i = len - 1; i >= 0; i--) {
+                for (let j = i; j < len; j++) {
+                    dp[i][j] = s[i] == s[j] && (j - i < 2 || dp[i + 1][j - 1]);
+                    if (dp[i][j] && j - i + 1 > str.length) {
+                        str = s.slice(i, j + 1)
+                    }
+                }
+            }
+            return str;
+        }
+        console.log(longestPalindrome2('jjabcdcbacdk'));
+
+
+        //中心扩展法：
+        // 回文串一定是对称的:
+        // 每次选择一个中心，进行中心向两边扩展比较左右字符是否相等
+        // 中心点的选取有两种
+        // aba，中心点是b
+        // aa，中心点是两个a之间
+
+        var longestPalindrome3 = function(s) {
+
+            let len = s.length;
+            let maxLen = 0;
+            let str = '';
+            if (len < 2) {
+                return s;
+            }
+
+            function centerExpend(left, right) {
+                while (left >= 0 && right < len && s[left] == s[right]) {
+                    left--;
+                    right++;
+                }
+                return right - left - 1; //返回最长字符串长度
+            }
+            for (let i = 0; i < len; i++) {
+                let len1 = centerExpend(i, i);
+                let len2 = centerExpend(i, i + 1);
+                let max = Math.max(len1, len2);
+                if (max > maxLen) {
+                    maxLen = max;
+                    let left = i - Math.floor((max + 1) / 2) + 1;
+                    let right = i + Math.floor(max / 2);
+                    str = s.slice(left, right + 1)
+                }
+            }
+            return str;
+        }
+        console.log(longestPalindrome3('jjabcdcbacdk'))
+    </script>
+</body>
+
+</html>

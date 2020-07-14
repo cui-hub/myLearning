@@ -1,0 +1,73 @@
+<!--浮动特性：
+    1. 浮动元素有左浮动（float：left）和右浮动（float：right）
+    2. 浮动的元素会向左或向右浮动，碰到父元素边界、其他元素才停下来
+    3. 相邻浮动的块元素可以并在一起，超出父级宽度就换行
+    4. 浮动让行内元素或者块元素自动转化为行内块元素（不会有行内块元素的间隙问题）
+    5. 浮动元素后面没有浮动的元素会占据浮动元素的位置，没有浮动的元素内的文字会避开浮动的元素，形成文字饶图的效果
+    6. 父元素如果没有设置尺寸（一般是高度不设置），父元素内整体浮动的元素无法撑开父元素，父元素需要清除浮动：
+        .父级上增加overflow：hidden
+        ..最后一个子元素后面加一个div，给她样式属性clear both（不推荐）
+        ...使用成熟的清除浮动样式类clearfix
+    7. 浮动元素之间没有垂直margin的合并-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .list{
+            width: 210px;
+            /*height: 400px; 取消高度后，无法撑开ul*/
+            border:1px solid #000;
+            margin: 50px auto 0;
+
+            list-style: none;
+            padding: 0;
+            /*1. overflow: hidden;*/
+
+        }
+        .list li{
+            width: 50px;
+            height: 50px;
+            background-color: gold;
+            margin:10px;
+            float: left;
+        }
+        /*.clearfix:before{*/
+        /*    content: '';*/
+        /*    display: table;*/
+        /*}*/
+        /*.clearfix:after{*/
+        /*    content: '';*/
+        /*    display: table;*/
+        /*    clear:both;*/
+        /*} 前者消除margin塌陷，后者可以清除浮动，合并如下：*/
+        .clearfix:before, .clearfix:after{
+            content: '';
+            display: table;
+        }
+        .clearfix:after{
+            clear: both;
+        }
+        /*IE浏览器对上面不兼容，想要兼容需要加上下面一句话*/
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+<!--    ul.list>li{$}*8-->
+<ul class="list clearfix">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+<!--   2. <div style="clear: both"></div>-->
+</ul>
+</body>
+</html>
+

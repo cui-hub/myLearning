@@ -1,0 +1,111 @@
+<!--jquery特效：
+    fadeIn() 淡入
+    fadeOut() 淡出
+    fadeToggle() 切换淡入淡出
+    hide() 隐藏 元素
+    show() 显示 元素
+    toggle() 切换元素可见状态
+    slideUp() 向上卷起
+    slideDown() 向下展开
+    slideToggle() 依次展开或卷起某个元素-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body{
+            font-family: 'Microsoft YaHei';
+        }
+        body,ul{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .menu{
+            width: 200px;
+            margin: 20px auto 0;
+
+        }
+        .menu .level1,.menu li ul a{
+            display: block;
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            text-decoration: none;
+            background-color: #3366cc;
+            color: #ffffff;
+            font-size: 16px;
+            text-indent: 10px;
+        }
+        .menu .level1{
+            border-bottom: 1px solid #afc6f6;
+        }
+        .menu li ul a{
+            font-size: 14px;
+            text-indent: 20px;
+            background-color: #7aa1ef;
+        }
+        .menu li ul li{
+            border-bottom: 1px solid #afc6f6;
+        }
+        .menu li ul{
+            display: none;
+        }
+        .menu li .current{
+            display: block;
+        }
+        .menu li ul li a:hover{
+            background-color: #f6b544;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.level1').click(function () {
+                //$(this).next().slideToggle().parent().siblings().children('ul').slideUp(); //为了防止暴力频繁点击，导致持续slide特效延续，可加一段stop()函数：
+                $(this).next().stop().slideToggle().parent().siblings().children('ul').slideUp();
+            })
+
+        })
+
+
+    </script>
+</head>
+<body>
+<ul class="menu">
+    <li class="li">
+        <a href="#" class="level1">水果</a>
+        <ul class="current">
+            <li><a href="#">苹果</a></li>
+            <li><a href="#">梨子</a></li>
+            <li><a href="#">葡萄</a></li>
+            <li><a href="#">火龙果</a></li>
+        </ul>
+    </li>
+    <li class="li">
+        <a href="#" class="level1">海鲜</a>
+        <ul >
+            <li><a href="#">蛏子</a></li>
+            <li><a href="#">扇贝</a></li>
+            <li><a href="#">龙虾</a></li>
+            <li><a href="#">象拔蚌</a></li>
+        </ul>
+    </li>
+    <li class="li">
+        <a href="#" class="level1">肉类</a>
+        <ul >
+            <li><a href="#">内蒙古牛肉</a></li>
+            <li><a href="#">进口羊肉</a></li>
+            <li><a href="#">猪肉</a></li>
+            <li><a href="#">野猪肉</a></li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        1、通过class定义类、实现类的继承；
+        2、在类中通过constructor定义构造方法
+        3、通过new创建类的实例；
+        4、通过extend实现类的继承；
+        5、通过super调用父类的构造方法；
+        6、重写从父类继承的一般方法
+     -->
+    <script>
+        // ES5：
+
+        function Animal(name, age) {
+            this.name = name;
+            this.age = age;
+            this.showName = function() {
+                console.log(this.name)
+            }
+        };
+        Animal.prototype.showAge = function() {
+            console.log(this.age);
+        }
+        let snake = new Animal('snake', 1);
+        console.log(snake); //Animal {name: "snake", age: 1, showName: ƒ}
+        //showName()方法属于构造函数上实例对象方法，就在实例内部
+        snake.showName();
+        //showAge()方法在原型上：snake.__proto__上
+        snake.showAge();
+
+
+
+
+        //ES6:
+
+        //定义一个人物的类
+        class Person {
+            constructor(name, age) { //类的构造方法
+                    this.name = name;
+                    this.age = age;
+                }
+                //类的一般方法(放在实例对象的原型上):
+            showName() {
+                console.log(this.name)
+            }
+
+        }
+        let person = new Person('curry', 29);
+        console.log(person);
+        // showName()方法在实例对象原型上person.__proto__
+        person.showName();
+
+        class StarPerson extends Person { //子类
+            constructor(name, age, sex) { //类的构造方法
+                super(name, age); //调用父类的构造方法this.name = name;this.age = age;
+                this.sex = sex;
+            }
+            showName() {
+                console.log(this.name, this.age, this.sex)
+            }
+        }
+        let p1 = new StarPerson('kobe', 39, '男');
+        console.log(p1); //StarPerson {name: "kobe", age: 39, sex: "男"}
+        //调用原型链上的方法，因为showName()方法存在于p1.__proto__.__proto__上，所以可以使用
+        p1.showName(); //如果想打印sex，sex属于子类的实例属性，所以无法打印sex，可以重写showName()
+    </script>
+</body>
+
+</html>

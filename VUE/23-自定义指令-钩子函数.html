@@ -1,0 +1,40 @@
+<!--钩子函数是指在特定时间点，自动调用的函数：
+    自定义指令的钩子函数就是在调用指令的过程中特定时机触发的函数
+    自定义指令有一种完整的写法：
+    Vue.directive('指令名',{钩子函数对象}); 对象中可以放多个函数
+    可以在钩子函数对象中批量定义多个钩子函数，以便在不同时间点触发
+    bind 当指令被绑定到元素上时触发的函数，在网页元素插入到页面之前就触发
+    inserted 当网页元素被追加到Dom树后触发，也就是页面元素加载完成后再触发-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p v-hook>这是一个段落</p>
+</div>
+<script type="text/javascript">
+    Vue.directive('hook',{
+        inserted:function () {
+            console.log('触发inserted函数');
+        },
+        bind:function () {
+            console.log('绑定指令时触发的函数');
+        }, //先触发bind函数
+    });
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        }
+    })
+
+</script>
+</body>
+</html>

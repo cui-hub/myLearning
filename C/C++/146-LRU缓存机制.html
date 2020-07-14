@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1、使用数组
+        /**
+         * @param {number} capacity
+         */
+        var LRUCache = function(capacity) {
+            this.len = capacity;
+            this.keyArr = [];
+            this.valueArr = [];
+        };
+
+        /** 
+         * @param {number} key
+         * @return {number}
+         */
+        LRUCache.prototype.get = function(key) {
+            if (this.keyArr.indexOf(key) === -1) {
+                return -1;
+            } else {
+                let index = this.keyArr.indexOf(key);
+                let result = this.valueArr[index];
+                this.keyArr.splice(index, 1);
+                this.keyArr.push(key);
+                this.valueArr.splice(index, 1);
+                this.valueArr.push(result);
+                return result;
+            }
+        };
+
+        /** 
+         * @param {number} key 
+         * @param {number} value
+         * @return {void}
+         */
+        LRUCache.prototype.put = function(key, value) {
+            let index = this.keyArr.indexOf(key);
+            if (index !== -1) {
+                this.valueArr.splice(index, 1);
+                this.keyArr.splice(index, 1);
+            }
+            if (this.keyArr.length === this.len) {
+                this.keyArr.shift();
+                this.keyArr.push(key);
+                this.valueArr.shift();
+                this.valueArr.push(value);
+
+            } else {
+                this.keyArr.push(key);
+                this.valueArr.push(value);
+            }
+
+        };
+
+        /**
+         * Your LRUCache object will be instantiated and called as such:
+         * var obj = new LRUCache(capacity)
+         * var param_1 = obj.get(key)
+         * obj.put(key,value)
+         */
+
+        //2、使用Map
+        var LRUCache = function(capacity) {
+            this.map = new Map()
+            this.size = capacity
+        };
+
+        /** 
+         * @param {number} key
+         * @return {number}
+         */
+        LRUCache.prototype.get = function(key) {
+            let value = this.map.get(key) || -1
+            if (value !== -1) {
+                this.map.delete(key)
+                this.map.set(key, value)
+            }
+            return value
+        };
+
+        /** 
+         * @param {number} key 
+         * @param {number} value
+         * @return {void}
+         */
+        LRUCache.prototype.put = function(key, value) {
+            if (this.map.has(key)) {
+                this.map.delete(key)
+            }
+            this.map.set(key, value)
+            if (this.map.size > this.size) {
+                this.map.delete(this.map.keys().next().value)
+            }
+        };
+
+
+        //3、hashMap+双链表
+        class ListNode {
+            constructor(key, value) {
+                this.key = key
+                this.value = value
+                this.next = null
+                this.prev = null
+            }
+        }
+
+        class LRUCache {
+            constructor(capacity) {
+                this.capacity = capacity
+                this.hashTable = {}
+                this.count = 0
+                this.dummyHead = new ListNode()
+                this.dummyTail = new ListNode()
+                this.dummyHead.next = this.dummyTail
+                this.dummyTail.prev = this.dummyHead
+            }
+
+            get(key) {
+                let node = this.hashTable[key]
+                if (node == null) return -1
+                this.moveToHead(node)
+                return node.value
+            }
+
+            put(key, value) {
+                let node = this.hashTable[key]
+                if (node == null) {
+                    let newNode = new ListNode(key, value)
+                    this.hashTable[key] = newNode
+                    this.addToHead(newNode)
+                    this.count++
+                        if (this.count > this.capacity) {
+                            this.removeLRUItem()
+                        }
+                } else {
+                    node.value = value
+                    this.moveToHead(node)
+                }
+            }
+
+            moveToHead(node) {
+                this.removeFromList(node)
+                this.addToHead(node)
+            }
+
+            removeFromList(node) {
+                let tempForPrev = node.prev
+                let tempForNext = node.next
+                tempForPrev.next = tempForNext
+                tempForNext.prev = tempForPrev
+            }
+
+            addToHead(node) {
+                node.prev = this.dummyHead
+                node.next = this.dummyHead.next
+                this.dummyHead.next.prev = node
+                this.dummyHead.next = node
+            }
+
+            removeLRUItem() {
+                let tail = this.popTail()
+                delete this.hashTable[tail.key]
+                this.count--
+            }
+
+            popTail() {
+                let tailItem = this.dummyTail.prev
+                this.removeFromList(tailItem)
+                return tailItem
+            }
+        }
+    </script>
+</body>
+
+</html>

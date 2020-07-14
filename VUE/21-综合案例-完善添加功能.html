@@ -1,0 +1,167 @@
+<!--给品牌信息的输入框绑定键盘事件
+    按键修饰符：
+        1、.enter
+        2、.tab
+        3、.delete
+        4、.esc
+        5、.space
+        6、.up
+        7、.down
+        8、.left
+        9、.right
+    获得键值的方法：百度；键盘的码值是直接可以作为修饰符使用的
+    获取键值的函数keyCode：
+     test:function (event) {
+                console.log(event.keyCode)
+            },
+     如enter=13
+     自定义键盘修饰符：Vue.config.keyCodes.键盘修饰符名=键值;，要在实例化vue之前完成
+     -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <style type="text/css">
+        #tb{
+            width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        #tb th{
+            background-color: royalblue;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        #tb td{
+            text-align: center;
+            background-color: #9acfea;
+            color: black;
+            border: 1px solid black;
+        }
+        #funcs{
+            width: 800px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    功能面板：-->
+    <div id="funcs">
+        编号:<input type="text" v-model="ID">
+        品牌:<input type="text" v-model="NAME" @keydown.enter="add">
+        <button @click="add">添加数据</button>
+        搜索关键字：<input type="text" v-model="keyword">
+    </div>
+    <table id="tb">
+        <tr>
+            <th>编号</th>
+            <th>品牌名称</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        <tr v-if="empty"><td colspan="4">当前列表无数据</td></tr>
+        <tr v-for="item in search(keyword)">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.ctime | dateformat}}</td>
+            <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    Vue.filter('dateformat',function (date) {
+        var date = new Date(date);
+        var y = date.getFullYear();//2020
+        var m = (date.getMonth()+1).toString().padStart(2,'0');
+        var d = (date.getDate()).toString().padStart(2,'0');
+        var h = (date.getHours()).toString().padStart(2,'0');
+        var min= (date.getMinutes()).toString().padStart(2,'0');
+        var s = (date.getSeconds()).toString().padStart(2,'0');
+        //padStart padEnd 把字符串从前或后补充到足够长度，第一个参数：长度，第二个参数：填充物
+        return `${y}-${m}-${d} ${h}:${min}:${s}`;
+    });
+    var vm =new Vue({
+        el:'#app',
+        data:{
+            ID:'',
+            NAME:'',
+            keyword:'',
+            empty:false,
+            list:[
+                    {id:1,name:'霸王',ctime:new Date()},
+                    {id:2,name:'海飞丝',ctime:new Date()},
+                    {id:3,name:'丝蕴',ctime:new Date()},
+                    {id:4,name:'飘柔',ctime:new Date()},
+                    {id:5,name:'清扬',ctime:new Date()},
+            ]
+        },
+        methods:{
+            add:function () {
+                this.list.push({id:this.ID,name:this.NAME,ctime:new Date()});
+                this.ID='';
+                this.NAME='';
+            },
+            del:function (id) {
+                //方法1：some()
+                // this.list.some(function (item,index) {
+                //     if( item.id==id){
+                //         vm.list.splice(index,1);
+                //         return true
+                //     }
+                // })
+
+                //方法2：every()
+                // this.list.every(function (item,index) {
+                //     if( item.id==id){
+                //         vm.list.splice(index,1);
+                //         return false;
+                //     }
+                //     //如果没有else，发现一个不符合条件的元素，没有返回值，是undefined，也会是false，停止遍历
+                //     else{
+                //         return true;
+                //     }
+                // })
+
+                //方法3:filter()
+                // this.list = this.list.filter(function (item) {
+                //     return item.id!=id;
+                // })
+
+                //方法4：findIndex()
+                var index = this.list.findIndex(function (item) {
+                    return item.id == id;
+                });
+                this.list.splice(index,1);
+            },
+            search:function (word) {
+                var result =  this.list.filter(function (item) {
+                    //正则：
+                    var re = new RegExp(word,'g');
+                    if (re.test(item.name)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+                this.empty = result.length>0? false:true;
+                return result;
+            },
+            test:function (event) {
+                console.log(event.keyCode)
+
+            },
+        },
+    })
+</script>
+</body>
+</html>

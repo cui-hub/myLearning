@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        .con {
+            width: 1000px;
+        }
+        /* 1、使用float(left+center)+margin(.right{display:block;})： */
+        /* .left,
+        .center {
+            float: left;
+            width: 200px;
+            height: 500px;
+            background-color: burlywood;
+        }
+        
+        .left {
+            margin-right: 10px;
+        }
+        
+        .right {
+            margin-left: 420px;
+            background-color: blue;
+            height: 500px;
+        } */
+        /* 2、使用float(left+center)+BFC(.right{over-flow:hidden;})： */
+        /* .left,
+        .center {
+            float: left;
+            width: 200px;
+            height: 500px;
+            background-color: burlywood;
+        }
+        
+        .left {
+            margin-right: 10px;
+        }
+        
+        .right {
+            background-color: blue;
+            height: 500px;
+            overflow: hidden;
+        } */
+        /* 3、父级div设置position：relative，三个子级div设置position：absolute，这个要计算好盒子的宽度和间隔去设置位置，兼容性比较好， */
+        /* .con {
+            position: relative;
+        }
+        
+        .left,
+        .center,
+        .right {
+            position: absolute;
+        }
+        
+        .left,
+        .center {
+            float: left;
+            width: 200px;
+            height: 500px;
+            background-color: burlywood;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .center {
+            left: 210px;
+        }
+        
+        .con .right {
+            left: 420px;
+            background-color: blue;
+            height: 500px;
+            width: calc(100% - 420px);
+        } */
+        /* 4、parent的div设置display：flex；left和center的div设置margin-right；然后right 的div设置flex：1；这样子right自适应，但是flex的兼容性不好 */
+        
+        .con {
+            display: flex;
+        }
+        
+        .left,
+        .center {
+            float: left;
+            width: 200px;
+            height: 500px;
+            background-color: burlywood;
+            flex: 0 0 auto;
+        }
+        
+        .right {
+            height: 500px;
+            flex: 1;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        1、Array.from():将伪数组转化为真数组
+        2、Array.of(v1,v2,v3):将一系列值转化为数组
+        3、find(callback(item,index,arr)):找到第一个符合条件的元素
+        4、findIndex(callback(item,index,arr)):找到第一个符合条件的元素,并返回其下标
+
+
+        1、Object.is(v1,v2):判断两个数据是否完全相等：与===不同之处 +0 ！= -0；NaN == NaN
+        2、Object.assign(target,source1,source2..)
+        3、直接操作__proto__
+     -->
+    <script>
+        let obj = {};
+        let obj1 = {
+            name: 'ttttt',
+            age: 20
+        };
+        let obj2 = {
+            sex: 'male'
+        }
+        Object.assign(obj, obj1, obj2); //将obj1复制到obj内部
+        console.log(obj)
+    </script>
+</body>
+
+</html>

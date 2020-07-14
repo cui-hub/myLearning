@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./Promise.js"></script>
+    <script>
+        /*定义整体结构：
+        1、Promise构造函数的实现
+        2、promise.then()/catch()实现
+        3、promise.resolve()/reject()实现
+        4、promise.all()/race()的实现
+        5、promise.resolveDelay()/rejectDelay()实现
+        */
+        // new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve(1);
+        //         console.log('llllll')
+        //     }, 0)
+
+        // }).then(
+        //     value => {
+        //         console.log(value)
+        //     },
+        //     reason => {
+        //         console.log(reason)
+        //     }
+        // )
+        // console.log('同步') //同步 111111 1
+
+        // new Promise((resolve, reject) => {
+
+        //     // resolve(1);
+        //     reject(2);
+
+
+        // }).then(
+        //     value => {
+        //         console.log('成功1', value)
+        //     }
+        // ).then(
+        //     value => {
+        //         console.log('成功2', value)
+        //     }).catch(reason => {
+        //     console.log('失败3', reason)
+        // })
+
+        const p1 = Promise.resolve(1); //如果是一般值，成功
+        const p2 = Promise.resolve(Promise.resolve(2)); //如果是成功的promise，成功，value是成功的value
+        const p3 = Promise.resolve(Promise.reject(3)); //如果是失败的promise，失败
+        const p4 = Promise.reject(4);
+        // p1.then(value => {
+        //     console.log('p1', value)
+        // });
+        // p2.then(value => {
+        //     console.log('p2', value)
+        // });
+        // p3.catch(value => {
+        //     console.log('p3', value)
+        // });
+        const pAll = Promise.all([p1, p2, 7, 2]);
+        pAll.then(
+            values => {
+                console.log(values) //1 2 7 2
+            },
+            reason => {
+                console.log(reason)
+            }
+        )
+        const pRace = Promise.race([p2, p4, p1, p3, 7]);
+        pRace.then(
+            value => {
+                console.log(value)
+            },
+            reason => {
+                console.log(reason) //7,因为源码中传入数组的内容都得提前包上promise.resolve来兼容非promise值的输入，因此promise值会变成两层promise而慢于一层promise，所以数值会最先执行
+            }
+        )
+    </script>
+</body>
+
+</html>

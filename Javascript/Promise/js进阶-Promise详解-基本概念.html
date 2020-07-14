@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>promise表达：
+    </p>
+
+</body>
+<script>
+    // 从语法上讲：promise是一个构造函数
+    // 从功能上讲：promise对象用来封装一个异步操作并可以获取其结果
+    //promise状态改变：
+    // pending=>resolved，成功的数据结果一般称为value
+    // pending=>rejected,失败的结果数据一般称为result
+    //1. 创建一个promise对象：
+    const p = new Promise((resolve, reject) => { //执行器函数，同步回调
+        //2. 执行异步操作
+        setTimeout(() => {
+                const time = Date.now();
+                if (time % 2 === 0) {
+                    // 3.1 如果成功了，调用resolve（val）
+                    resolve('成功的数据 time=' + time)
+                } else {
+                    // 3.1 如果失败了，调用reject（reason）
+                    reject('失败的数据 time=' + time)
+                }
+                // 3.1 如果失败了，调用reject（reason）
+            }, 1000)
+            // 3.1 如果成功了，调用resolve（val）
+            // 3.1 如果失败了，调用reject（reason）
+    });
+    p.then(
+        value => {
+            //接收得到成功的数据 onResolved
+            console.log('成功的回调', value)
+        },
+        reason => {
+            //接收得到失败的数据 onRejected
+            console.log('失败的回调', reason)
+        }
+    )
+</script>
+
+</html>

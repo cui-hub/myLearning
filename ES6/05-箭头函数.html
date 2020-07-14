@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">按钮1</button>
+    <button id="btn2">按钮2</button>
+    <p>重要理解： 箭头函数没有自己的this，箭头函数的this不是函数执行的时候决定的，而是在定义的时候处在的对象就是它的this。 箭头函数this看外层是否有函数；如果有，外部函数的this就是箭头函数的this；如果没有，this指向window
+    </p>
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN箭头函数</a>
+    <script>
+        let btn1 = document.getElementById('btn1');
+        let btn2 = document.getElementById('btn2');
+        btn1.onclick = function() {
+            alert(this); //[object HTMLButtonElement]
+        };
+        btn2.onclick = () => {
+            alert(this); //[object Window]
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <style type="text/css">
+        .red{
+            color: red;
+        }
+        .thin{
+            font-weight: 200;
+        }
+        .italic{
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p :class="['red','italic']">测试段落</p>
+        <p :class="['red',flag ? 'italic':'']">{{msg}}</p><!--//如果flag为true，就加入斜体，否则不加-->
+        <p :class="style">测试段落</p>
+        <p :class="style2">测试段落</p>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'测试段落',
+                flag:true,
+                style:'red italic',
+                //下面这种绑定方式比较厉害，可以控制css样式的显示或隐藏
+                style2:{red:true,thin:true,italic:true}
+
+            }
+        })
+    </script>
+</body>
+</html>

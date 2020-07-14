@@ -1,0 +1,96 @@
+<!--vue的生命周期就是就是在vue的实例化和持续运行中，按照一定顺序，按部就班的完成分配的工作
+    最简单的vue应用-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p >{{msg}}</p>
+</div>
+<script type="text/javascript">
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'这是一个段落'
+
+        },
+        methods:{
+            test:function () {
+                console.log('调用test方法');
+
+            }
+        },
+        beforeCreate:function () {
+            console.log('调用了beforeCreate函数');
+            console.log(this.msg);
+            try{
+                this.test();
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('--------------------------------------------------------------')
+        },
+        created:function () {
+            console.log('调用了created函数');
+            console.log(this.msg);
+            try{
+                this.test();
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('--------------------------------------------------------------')
+        },
+        beforeMount:function () {
+            console.log('调用了beforeMount函数');
+            console.log(this.msg);
+            //查看网页中内容：
+            console.log(document.getElementById('app').innerHTML);
+            console.log('--------------------------------------------------------------')
+        },
+        mounted:function () {
+            console.log('调用了mounted函数');
+            console.log(this.msg);
+            //查看网页中内容：
+            console.log(document.getElementById('app').innerHTML);
+            console.log('--------------------------------------------------------------')
+        },
+        beforeUpdate:function () {
+            console.log('调用了beforeUpdate函数');
+            console.log(this.msg);
+            //查看网页中内容：
+            console.log(document.getElementById('app').innerHTML);
+            console.log('--------------------------------------------------------------')
+        },
+        updated:function () {
+            console.log('调用了updated函数');
+            console.log(this.msg);
+            //查看网页中内容：
+            console.log(document.getElementById('app').innerHTML);
+            console.log('--------------------------------------------------------------')
+        },
+    });
+    //vue的生命周期概要：
+        //1、执行new Vue({option})，传入配置对象
+        //2、初始化配置，吧传入的配置项参数真正的落实到vm对象上
+        //3、渲染模板，把数据渲染到页面中
+        //4、数据更新时，重新渲染
+    //vue生命周期中，经历了很多步骤，有很多特殊时间点，提供了很多生命周期的钩子函数：
+        //1、beforeCreate() 在创建实例之前，也就是执行newVue后，初始化配置之前，1-2之间。（不能访问data和methods）
+        //2、created()实例化对象完成，但是还没渲染模板，2-3之间
+        //3、beforeMount() 在数据渲染之前调用的钩子函数 created之后，3之前，网页上只有插值表达式
+        //4、mounted() 渲染完成之后
+    //除了上述讲到的创建实例对象过程中的钩子函数，网页持续运行中也有钩子函数
+        //5、beforeUpdate() 数据更新之后，网页渲染之前，mounted-4之间
+        //6、updated() 数据，网页更新后渲染后
+
+</script>
+</body>
+</html>

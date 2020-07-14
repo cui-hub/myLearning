@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+    1、includes(str),是否含有指定的字符串；
+    2、startwith(str):是否以指定字符串开头
+    3、endwith（str）：是否以指定字符串结尾
+    4、repeat(count):重复指定次数
+
+
+    1、二进制与八进制表示法：二进制用0b，八进制用0o
+    2、Number.isFinite(i):判断是否是有限大的数
+    3、Number.isNaN(i):判断是否是NaN
+    4、Number.isInteger(i)：是否是整数
+    5、Number.parseInt(str):将字符串转化为对应的数值
+    6、Math.trunc(i):去除小数部分
+
+     -->
+    <script>
+        console.log(parseInt('123cjjld456')); //123
+        console.log(parseInt('a123cjjld456')); //NaN
+        console.log(Number.parseInt('123cjjld456')); //123
+        console.log(Number.parseInt('a123cjjld456')); //NaN
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <calc></calc>
+    <calc></calc>
+    <calc></calc>
+
+</div>
+<template id="temp">
+<!--    模板里只有一个根节点，得用div包起来-->
+    <div>
+        <button @click="count">点我</button>
+        <p>计数：{{num}}</p>
+    </div>
+</template>
+<script>
+    var temp = {
+        template:'#temp',
+        //组建当中定义一个数据，data里必须是一个函数，返回一个对象.因为实例化后的div中放入模板组件时会调用一下data()函数，那时候会生成一个对象
+        data:function () {
+            return {
+                num:0,
+            }
+        },
+        methods:{
+            count:function () {
+                this.num++;
+            }
+        }
+    };
+    //组件之间数据独立维护，不会相互影响：
+    Vue.component('calc',temp);
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        }
+
+    })
+</script>
+</body>
+</html>

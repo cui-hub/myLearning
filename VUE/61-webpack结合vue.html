@@ -1,0 +1,11 @@
+<!--安装vue：
+    npm i vue -s
+    发现报错：因为vue是import引入的，会有查找顺序：node_modules >> vue >> package.json 中main属性，该属性记制定了包在加载时的入口文件
+    查找该文件，发现："main": "dist/vue.runtime.common.js","module": "dist/vue.runtime.esm.js",直接修改这两个属性，可能会出问题
+    建议直接修改引入路径：import Vue from '../node_modules/vue/dist/vue.js'--推荐方法
+    还可以在webpack.config.js中添加一个解析别名:
+        resolve:{
+        //alias属性 别名
+        alias:{'vue$':'vue/dist/vue.js'}
+        }
+    -->

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="https://leetcode-cn.com/problems/word-break/submissions/">leetcode139</a>
+  <script>
+    // var wordBreak = function(s, wordDict) {
+    //   let n = wordDict.length;
+    //   let result ;
+    //   for (let i = 0;i<n;i++){
+    //       let substr = s.split(wordDict[i]).join('');
+    //       if(substr.length == 0){
+    //           return true;
+    //       }
+    //       if(substr != s){
+    //           result = wordBreak(substr,wordDict);
+    //           if(result){
+    //             return result;
+    //           }
+    //       }
+    //   }
+    //   return result;
+    // };
+    // console.log(wordBreak("dogs",["dog","s","gs"]))
+
+    //动态规划
+    var wordBreak = function(s, wordDict) {
+      let dp = new Array(s.length+1).fill(false);
+      dp[0] = true;
+      for(let i = 0;i <s.length+1;i++){
+        for(let j = 0;j<i;j++){
+          if(dp[j] && wordDict.some(item => item == s.substring(j,i))){
+            dp[i] =true;
+          }
+        }
+      }
+      return dp[s.length]
+    };
+    console.log(wordBreak("dogs",["dog","s","gs"]))
+  </script>
+</body>
+</html>

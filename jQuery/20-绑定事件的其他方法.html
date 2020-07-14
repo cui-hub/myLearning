@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /*$('#btn').click(function () {
+                alert('click事件');
+            });*/
+            //等同于下面写法：
+            /*$('#btn').bind('click',function () {
+                alert('click事件');
+            })*/
+
+
+            //可以绑定多个事件：
+            $('#btn').bind('click mouseenter',function () {
+                alert('click事件');
+                //解绑：
+                $('#btn').unbind('mouseenter');
+            });
+
+        })
+    </script>
+</head>
+<body>
+<input type="button" name="" value="按钮" id="btn">
+</body>
+</html>

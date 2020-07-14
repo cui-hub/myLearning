@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oDiv = document.getElementById('div1');
+            var oA = document.getElementById('link');
+            var oDiv2 = document.getElementById('div2');
+            // 读属性
+            var sId = oDiv.id;
+            alert(sId);
+            // 写属性
+            oDiv.style.color = 'red';
+            oA.href = 'http://www.baidu.com';
+            oA.title = '百度';
+            oDiv2.className = 'box2';
+        }
+    </script>
+    <style type="text/css">
+        .box{
+            font-size: 20px;
+            color: red;
+        }
+        .box2{
+            font-size: 30px;
+            color: pink;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">divyuansu</div>
+<a href="#" id="link">lianjie</a>
+<div class="box" id="div2">diergediv</div>
+</body>
+</html>

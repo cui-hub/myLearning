@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    给定一个字符串，输出该字符串所有排列的可能。如输入“abc”，输出“abc,acb,bca,bac,cab,cba”。 7中排列算法：
+    <a href="http://www.lingchenliang.com/post/134.html">7中排列算法</a>
+    <script>
+        function fullpermutate(str) {
+            var result = [];
+            //如果长度为1，直接返回原字符串
+            if (str.length == 1) {
+                result.push(str)
+            } else if (str.length > 1) {
+                for (var i = 0; i < str.length; i++) {
+                    var baseLetter = str[i];
+                    var restStr = str.substring(0, i) + str.substring(i + 1, str.length);
+                    var restResult = fullpermutate(restStr); //递归
+                    for (var j = 0; j < restResult.length; j++) {
+                        result.push(baseLetter + restResult[j]);
+                    }
+                }
+            };
+            return Array.from(new Set(result)); //利用Set去重
+        };
+        console.log(fullpermutate('lekk'));
+    </script>
+</body>
+
+</html>

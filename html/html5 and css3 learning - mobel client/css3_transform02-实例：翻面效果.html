@@ -1,0 +1,69 @@
+<!--transform变换：
+    1. translate（x,y)设置盒子位移
+    2. scale（x,y)设置盒子缩放
+    3. rotate（deg）设置盒子旋转
+    4. skew(x-angle,y-angle)设置盒子斜切
+    5. perspective设置透视距离
+    6. transform-style flat|preserve-3d设置盒子是否按3d空间上显示
+    7. translateX，translateY，translateZ设置三维移动
+    8. rotateX、rotateY、rotateZ设置三维旋转
+    9. scaleX、scaleY、scaleZ设置三维缩放
+    10. transform-origin设置变形中心点
+    11. backface-visibility设置盒子背面是否可见-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box{
+            width:1000px;
+            height: 720px;
+            /*background-color: gold;*/
+            /*border: 3px solid black;*/
+            margin: 50px auto 0;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        .box img{
+            position: absolute;
+            left: 244px;
+            top: 0;
+            transform-style: preserve-3d;
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.5s ease;
+            /*设置背面透明不可见*/
+            backface-visibility: hidden;
+        }
+        .box:hover img{
+            transform: perspective(800px) rotateY(180deg);
+        }
+        .box .back{
+            width: 512px;
+            height: 720px;
+            background-color: pink;
+            position: absolute;
+            left: 244px;
+            top: 0;
+            font: bold 30px/720px 'Microsoft YaHei';
+            text-align: center;
+            backface-visibility: hidden;
+            transform: perspective(800px) rotateY(-180deg);
+            transition: all 0.5s ease;
+        }
+        .box:hover .back{
+            transform: perspective(800px) rotateY(0);
+        }
+
+    </style>
+</head>
+<body>
+     <div class="box"><img src="../../images/figure.jpg" alt="背景图">
+         <div class="back">图片说明文字</div>
+     </div>
+
+</body>
+</html>

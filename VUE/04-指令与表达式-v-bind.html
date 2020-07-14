@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--对链接的url属性进行动态控制：
+            1、渲染跳转url
+            2、控制url携带参数，如用户名，页码等-->
+        <a v-bind:href="url+'?id='+userid">链接</a>
+
+        <p v-text="parseInt(money)+50"></p>
+        <p v-text="money>100"></p>
+    </div>
+    <script type="text/javascript">
+        var vm =new Vue({
+            el:'#app',
+            data:{
+                url:'http://www.baidu.com',
+                userid:7,
+                money:'200',
+            }
+        })
+    </script>
+</body>
+</html>

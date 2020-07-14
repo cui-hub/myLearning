@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <img src="#" alt="轮播图" id="img">
+    </div>
+
+    <script>
+        var img = document.getElementById('img');
+        let images = [
+            'http://img5.imgtn.bdimg.com/it/u=2471723103,4261647594&fm=26&gp=0.jpg',
+            'http://img.mp.itc.cn/upload/20170724/cf678e09eb384401aa616ba134126357_th.jpg',
+            'http://img1.imgtn.bdimg.com/it/u=3015897202,919054029&fm=26&gp=0.jpg',
+            'http://img1.imgtn.bdimg.com/it/u=1305353222,2352820043&fm=26&gp=0.jpg'
+        ];
+        let count = 0;
+        var obj = new Image();
+        // 利用obj.onload = function() {}
+
+        function onloading1() {
+            var timer = null;
+            if (count === images.length) {
+                return;
+            };
+            clearTimeout(timer);
+            obj.src = images[count];
+            obj.onload = function() {
+                img.src = obj.src;
+                count++;
+                timer = setTimeout(onloading1, 2000);
+            }
+        };
+        onloading1();
+    </script>
+</body>
+
+</html>

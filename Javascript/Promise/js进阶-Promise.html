@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let fun = function() {
+            return new Promise(function(resolve, reject) {
+                resolve({
+                    data: {
+                        name: '张三',
+                        age: 20,
+                        hobbies: 'play games'
+                    }
+                })
+                reject('error')
+            })
+        }
+        fun().then(function(res) {
+            console.log(res.data.name);
+            return fun();
+        }).then(function(res) {
+            console.log(res.data.age);
+            return fun();
+        }).then(function(res) {
+            console.log(res.data.hobbies);
+        }).catch(function(err) {
+            console.log('err:' + err)
+        })
+
+        function promise(filePath) {
+            return new Promise(function(resolve, reject) {
+                fs.readFile(filePath, 'utf-8', function(err, data) {
+                    if (err) reject(err);
+                    resolve(data);
+                })
+            });
+        }
+
+        promise('./1.txt')
+            .then(function(data) {
+                console.log(data);
+                return promise('./2.txt')
+            })
+            .then(function(data) {
+                console.log(data);
+                return promise('./3.txt')
+            })
+            .then(function(data) {
+                console.log(data);
+            })
+            .catch(err => {
+                console.log('err:' + err)
+            })
+
+        let promise1 = Promise.resolve(setTimeout(() => {
+            console.log(123)
+        }, 3000))
+        promise1.then(res => {
+                console.log(res) // 3 秒后触发
+            })
+            // 等同于
+        new Promise(resolve => resolve(setTimeout(() => {
+                console.log(123)
+            }, 3000)))
+            // 同理 Promise.reject
+        Promise.reject('error').catch(err => {
+                console.log(err)
+            }) // error
+    </script>
+</body>
+
+</html>

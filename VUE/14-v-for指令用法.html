@@ -1,0 +1,51 @@
+<!--v-for指令的四种用法：
+    1、遍历普通数组 v-for="item in list"  v-for="(item,index) in list"
+    2、遍历二维/复合数组
+    3、遍历对象 v-for="(val,key,index) in obj"  属性值：val 属性名：key 索引：index
+    4、简单循环 v-for="count in 6" -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--    数据的输入框-->
+    <label for="">
+        <input type="text" v-model="id">
+        <input type="text" v-model="name">
+        <input type="button" value="添加" @click="add">
+    </label>
+<!--    数据的列表显示框-->
+<!--    在使用v-for时，要尽量在当前元素中使用v-bind绑定一个key属性，来区分每个循环中生成的元素，这样vue会识别不同元素，避免表单使用时，已经有的操作发生位置错乱-->
+    <p v-for="item in list" :key="item.id">
+        <input type="checkbox">
+        ID:{{item.id}}---姓名:{{item.name}}
+    </p>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            id:'',
+            name:'',
+            list:[{id:1, name:'马云'},
+                  {id:2, name:'马小刘'},
+                  {id:3, name:'马冬梅'},
+                  {id:4, name:'马屁'},
+            ]
+        },
+        methods:{
+            add:function () {
+                this.list.unshift({id:this.id,name:this.name})
+            }
+        }
+    })
+</script>
+</body>
+</html>

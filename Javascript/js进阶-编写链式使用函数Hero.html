@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 编写代码，满足以下条件： 
+        （1）Hero("37er");执行结果为 Hi! This is 37er 
+        （2）Hero("37er").kill(1).recover(30); 执行结果为 Hi! This is 37er Kill 1 bug Recover 30 bloods 
+        （3）Hero("37er").sleep(10).kill(2)执行结果为 Hi! This is 37er //等待10s后 Kill 2 bugs //注意为bugs （双斜线后的为提示信息，不需要打印） -->
+    <script>
+        function Hero(name) {
+            let obj = new Object();
+            obj.name = name;
+            obj.time = 0;
+            console.log(` Hi! This is${obj.name}`);
+            obj.kill = function(num) {
+                if (num <= 1) {
+                    setTimeout(() => {
+                        console.log(`Kill ${num} bug`)
+                    }, this.time * 1000)
+                } else {
+                    setTimeout(() => {
+                        console.log(`Kill ${num} bugs`)
+                    }, this.time * 1000)
+                };
+                return obj;
+            };
+            obj.recover = function(num) {
+                setTimeout(() => {
+                    console.log(`Recover ${num} bloods`)
+                }, this.time * 1000)
+                return obj;
+            };
+            obj.sleep = function(sleeptime) {
+                this.time = sleeptime;
+                return obj;
+            }
+            return obj;
+        };
+        // Hero("37er");
+        // Hero("37er").kill(1).recover(30);
+        // Hero("37er").sleep(10).kill(2);
+        Hero("37er").sleep(10).recover(20).sleep(15).kill(0); //sleep函数必须得是主线程，否则后面回调函数永远是time=0；
+    </script>
+</body>
+
+</html>

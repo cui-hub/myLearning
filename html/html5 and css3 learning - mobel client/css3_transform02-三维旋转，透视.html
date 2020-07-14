@@ -1,0 +1,64 @@
+<!--transform变换：
+    1. translate（x,y)设置盒子位移
+    2. scale（x,y)设置盒子缩放
+    3. rotate（deg）设置盒子旋转
+    4. skew(x-angle,y-angle)设置盒子斜切
+    5. perspective设置透视距离
+    6. transform-style flat|preserve-3d设置盒子是否按3d空间上显示
+    7. translateX，translateY，translateZ设置三维移动
+    8. rotateX、rotateY、rotateZ设置三维旋转
+    9. scaleX、scaleY、scaleZ设置三维缩放
+    10. transform-origin设置变形中心点
+    11. backface-visibility设置盒子背面是否可见-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box{
+            width: 300px;
+            height: 300px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid black;
+            color: red;
+            font: bold 36px/300px 'Microsoft YaHei';
+            text-align: center;
+            transform-style: preserve-3d;
+            /*一般三维旋转和透视一起使用会有明显的立体感，透视经验值是800px*/
+            /*一定设置初始值，否则容易出现跳变bug*/
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.2s ease;
+        }
+        .box:hover{
+            transform: perspective(800px) rotateY(45deg);
+        }
+        .box2{
+            width: 300px;
+            height: 300px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid black;
+            color: red;
+            font: bold 36px/300px 'Microsoft YaHei';
+            text-align: center;
+            /*一般三维旋转和透视一起使用会有明显的立体感，透视经验值是800px 数值越小对自己越近*/
+            /*一定设置初始值，否则容易出现跳变bug*/
+            transform-style: preserve-3d;
+            transform: perspective(800px) rotateX(0deg);
+            transition: all 0.2s ease;
+        }
+        .box2:hover{
+            transform: perspective(800px) rotateX(45deg);
+        }
+    </style>
+</head>
+<body>
+<div class="box">三维旋转</div>
+<div class="box2">三维旋转</div>
+</body>
+</html>

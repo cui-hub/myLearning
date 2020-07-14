@@ -1,0 +1,45 @@
+<!--/*设置一个角的圆角，比如设置左上角的圆角：*/-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box{
+            width: 300px;
+            height: 300px;
+            border: 3px solid black;
+            background-color: gold;
+            margin: 50px auto 0;
+            /*设置左上角圆角：一条边的半径长度 另一条边的半径长度 （两个相同写成一个）*/
+            border-top-left-radius: 60px 60px;
+            border-top-right-radius: 100px;
+        }
+        .box1{
+            width: 300px;
+            height: 300px;
+            border: 3px solid black;
+            background-color: gold;
+            margin: 50px auto 0;
+            border-bottom-left-radius: 150px;
+            border-top-right-radius: 50%;
+        }
+        .box2{
+            width: 300px;
+            height: 300px;
+            border: 3px solid black;
+            background-color: gold;
+            margin: 50px auto 0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="box1"></div>
+    <div class="box2"></div>
+</body>
+</html>

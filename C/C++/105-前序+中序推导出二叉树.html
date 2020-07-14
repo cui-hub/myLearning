@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val) {
+         *     this.val = val;
+         *     this.left = this.right = null;
+         * }
+         */
+        /**
+         * @param {number[]} preorder
+         * @param {number[]} inorder
+         * @return {TreeNode}
+         */
+
+        //递归:
+        var buildTree = function(preorder, inorder) {
+            if (preorder.length == 0) {
+                return null;
+            };
+            if (preorder.length == 1) {
+                return new TreeNode(preorder[0]);
+            }
+            let tree = new TreeNode(preorder[0]);
+            let curNode = tree;
+            let headIndex = inorder.indexOf(preorder[0]);
+            tree.left = buildTree(preorder.slice(1, headIndex + 1), inorder.slice(0, headIndex));
+            tree.right = buildTree(preorder.slice(headIndex + 1), inorder.slice(headIndex + 1));
+            return tree;
+
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<!--babel(语法转换器)用来处理不同版本的js语法
+    安装指令：
+        共5个包：cnpm i babel-core babel-loader@7.1.0 babel-preset-env babel-preset-stage-0 babel-plugin-transform-runtime -D
+    为了让webpack处理.js文件时，就要使用我们安装的语法转换器
+    在main.js内写一些高级js语言，浏览器无法处理，所以要用安装的语法转换器
+            class Person{
+            //静态属性
+            static info = {name:'张三',23};
+        }
+        console.log(Person.info);
+    在配置文件中添加一个文件处理规则：
+        //避开node_modules下的所有js文件
+        {test:/\.js$/,use:'babel-loader',exclude:/node_modules/}
+    但是，要使用babel-laoder需要在项目根目录创建一个.babelrc配置文件：json格式，目的是：1 把两个preset的语法包说明一下 2 一个plugin的插件声明一下
+        {
+          "presets": ["env","stage-0"],
+          "plugins":["transform-runtime"]
+        }-->

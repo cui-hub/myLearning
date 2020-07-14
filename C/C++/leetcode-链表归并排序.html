@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //方法一递归，时间复杂度O(nlogn),空间复杂度(n)
+        //摘抄讲解如下
+        // 1、把长度为n的输入序列分成两个长度为n/2的子序列
+        // 2、对这两个子序列分别采用归并排序
+        // 3、将两个排序好的子序列合并成一个最终的排序序列
+
+        //递归-链表：
+        var sortList = function(head) {
+            let mergeList = (left, right) => {
+                let res = new ListNode(0);
+                let pre = res;
+                while (left && right) {
+                    if (left.val <= right.val) {
+                        pre.next = left;
+                        left = left.next;
+                    } else {
+                        pre.next = right;
+                        right = right.next;
+                    }
+                    pre = pre.next;
+                }
+                pre.next = left ? left : right;
+                return res.next;
+            }
+            let mergeSort = (node) => {
+                if (!node || !node.next) return node;
+                let mid = node;
+                let fast = node.next;
+                while (fast && fast.next) {
+                    mid = mid.next;
+                    fast = fast.next.next;
+                }
+                let rightList = mid.next;
+                mid.next = null;
+                let left = node;
+                let right = rightList;
+                return mergeList(mergeSort(left), mergeSort(right));
+            }
+            return mergeSort(head);
+        };
+
+
+        //递归-数组：
+        var sortList = function(arr) {
+            //将两个链表合并排列算法：
+            let mergeList = (left, right) => {
+                let result = [];
+                let left_i = 0;
+                let right_j = 0;
+                while (left_i < left.length && right_i < right.length) {
+                    if (left[left_i] <= right[right_j]) {
+                        result.push(left[left_i]);
+                        left_i++;
+                    } else {
+                        result.push(right[right_j]);
+                        right_j++;
+                    }
+                }
+                result.concat(left ? left : right);
+                return result;
+
+            };
+            //将一个列表分成两个，并递归
+            let cutList = (arrList) => {
+                //出口：
+                if (arrList.length <= 1) {
+                    return arrList;
+                };
+                let mid = arrList.length % 2 == 0 ? arrList.length / 2 - 1 : (arrList.length + 1) / 2 - 1;
+                let left = cutList(arrList.slice(0, mid));
+                let right = cutList(arrList.slice(mid))
+                return mergeList(left, right)
+            }
+            return cutList(arr);
+        }
+
+        //方法二：非递归：
+
+        //非递归-数组：
+        let sortList = function(arr) {
+            let mergeArr = (left, mid, right) => {
+                let temp = [];
+                let i = left;
+                let j = mid + 1;
+                let sortedIndex = 0;
+                while (i <= mid && j <= right) {
+                    if (arr[i] <= arr[j]) {
+                        temp[sortedIndex] = arr[i];
+                        sortedIndex++;
+                        i++;
+                    } else {
+                        temp[sortedIndex] = arr[j];
+                        sortedIndex++;
+                        j++;
+                    }
+                }
+                while (i <= mid) {
+                    temp[sortedIndex] = arr[i];
+                    sortedIndex++;
+                    i++;
+                };
+                while (j <= right) {
+                    temp[sortedIndex] = arr[j];
+                    sortedIndex++;
+                    j++;
+                }
+                for (let i = 0; i < temp.length; i++) { //将arr中left-right部分进行二分合并
+                    arr[left + i] = temp[i]
+                }
+            }
+            let mergeSort = (arr) => {
+                let n = arr.length;
+                for (let i = 1; i < n; i = 2 * i) { //i代表每次合并的个数
+                    for (let j = 0; j + i < n; j += 2 * i) {
+                        let left = j;
+                        let mid = i + j - 1;
+                        let right = Math.min(j + 2 * i - 1, n - 1);
+                        mergeArr(left, mid, right)
+                    }
+                }
+                return arr;
+            }
+            return mergeSort(arr);
+        }
+
+        //非递归-链表
+        var sortList = function(head) {
+            // 哨兵节点
+            let preHead = new ListNode(0);
+            preHead.next = head;
+            // 求链表长度
+            let n = 0;
+            let curr = head;
+            while (curr) {
+                curr = curr.next;
+                n++;
+            }
+            // 分割i长度的链表，返回剩余的链表
+            let split = (node, i) => {
+                    while (i != 1 && node) {
+                        node = node.next;
+                        i--;
+                    }
+                    let rest = node ? node.next : null;
+                    if (node) node.next = null;
+                    return rest;
+                }
+                // 合并
+            let merge = (left, right, pre) => {
+                    let curr = pre;
+                    while (left && right) {
+                        if (left.val <= right.val) {
+                            curr.next = left;
+                            left = left.next;
+                        } else {
+                            curr.next = right;
+                            right = right.next;
+                        }
+                        curr = curr.next;
+                    }
+                    curr.next = left || right;
+                    while (curr.next) curr = curr.next;
+                    return curr;
+                }
+                // 合并 2*i 个
+            for (let i = 1; i < n; i *= 2) {
+                let pre = preHead;
+                let curr = preHead.next;
+                // 分割左右两部分链表，并合并
+                while (curr) {
+                    let left = curr;
+                    let right = split(left, i);
+                    curr = split(right, i);
+                    pre = merge(left, right, pre);
+                }
+            }
+            return preHead.next;
+        };
+    </script>
+</body>
+
+</html>

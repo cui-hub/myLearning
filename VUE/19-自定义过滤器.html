@@ -1,0 +1,63 @@
+<!--vue 当中的过滤器不修改原始数据，只修改显示效果
+    语法如下：
+        {{原始数据 | 过滤器(第二个及之后的参数)}}，第一个参数默认为原始数据
+       1、 '|'管道符
+       2、过滤器也是函数，会把管道符左侧的数据当做是参数传入
+
+       复杂应用场景：
+       {{表达式 | 过滤器1 | 过滤器2}}，过滤器2会把整个过滤器1的结果作为参数
+
+       过滤器也有全局和私有之分:
+            Vue.filter() 全局过滤器：不同的vue实例上都可以调用这个过滤器，私密性不高,要在实例化之前定义
+            私有过滤器需要定义在实例化的vue的filters属性中,只能在实例化vue管辖范围内使用-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app1">
+<!--    把所有的“智慧”替换成“快乐”：-->
+    <p>{{msg | rep1('快乐')}}</p>
+    <p>{{msg | rep1('菩提') | rep2(msg2)}}</p>
+</div>
+
+<div id="app2">
+    <p>{{msg | rep1('菩提')}}</p>
+    <p>{{msg2 | rep2('。。。。。。。。。。。。。。') | rep3}}</p>
+</div>
+<script type="text/javascript">
+    //过滤器定义语法：
+    Vue.filter('rep1',function (content,keyword) {
+        return content.replace(/智慧/g,keyword);//第一个参数得是re表达式，否知只会替换一次
+    });
+    Vue.filter('rep2',function(content,string){
+        return content+string;
+    });
+    var vm = new Vue({
+        el:'#app1',
+        data:{
+            msg:'智慧树上智慧果，智慧树下你和我',
+            msg2:'桃花仙人种桃树，又摘桃花换酒钱'
+        }
+    });
+    var vm2 = new Vue({
+        el:'#app2',
+        data:{
+            msg:'智慧树上智慧果，智慧树下你和我',
+            msg2:'桃花仙人种桃树，又摘桃花换酒钱'
+        },
+        filters:{
+            rep3:function (data) {
+                return data.split('').reverse().join('');
+            }
+        }
+    })
+</script>
+</body>
+</html>

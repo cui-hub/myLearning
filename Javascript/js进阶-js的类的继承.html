@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1、属性拷贝:存在问题：如果继承过来的成员是引用类型的话,那么这个引用类型的成员在父对象和子对象之间是共享的,也就是说修改了之后, 父子对象都会受到影响
+        var superObj = {
+            name: 'Li',
+            age: 25,
+            friends: ['小明', '小李'],
+            showName: function() {
+                alert(this.name)
+            }
+        }
+        var subObj = {};
+        for (var i in superObj) {
+            subObj[i] = superObj[i];
+        }
+        console.log(subObj);
+        console.log(superObj);
+
+        //2、原型式继承：
+        //存在问题：
+        // 1 父构造函数的原型对象和子构造函数的原型对象上的成员有共享问题
+        // 2 只能继承父构造函数的原型对象上的成员, 不能继承父构造函数的实例对象的成员
+
+        //创建父构造函数
+        function SuperClass(name) {
+            this.name = name;
+            this.age = 20;
+            this.showName = function() {
+                alert(this.name);
+            }
+        }
+        //设置父构造器的原型对象：
+        SuperClass.prototype.showAge = function() {
+                console.log(this.age);
+            }
+            //创建子构造函数：
+        function SubClass() {};
+        //设置子构造函数的原型对象实现继承
+        SubClass.prototype = SuperClass.prototype;
+
+        var child = new SubClass();
+        alert(child.showAge); //function() {console.log(this.age);
+        child.showAge(); //undefined 不能继承父构造函数的实例对象的成员
+        alert(child.showName) //undefined
+
+        // 3. 原型链继承：子构造函数.prototype = new 父构造函数()
+        // 特点：基于原型链，既是父类的实例，也是子类的实例
+        // 问题：无法实现多继承，不能给父构造函数传递参数，父子构造函数的原型对象之间有共享问题
+
+        // 创建父构造函数
+        function SuperClass() {
+            this.name = 'liyajie';
+            this.age = 25;
+            this.showName = function() {
+                console.log(this.name);
+            }
+        }
+        // 设置父构造函数的原型
+        SuperClass.prototype.friends = ['小名', '小强'];
+        SuperClass.prototype.showAge = function() {
+                console.log(this.age);
+            }
+            // 创建子构造函数
+        function SubClass() {}
+        // 实现继承
+        SubClass.prototype = new SuperClass();
+        // 修改子构造函数的原型的构造器属性
+        SubClass.prototype.constructor = SubClass;
+
+        var child = new SubClass();
+        console.log(child.name); // liyajie
+        console.log(child.age); // 25
+        child.showName(); // liyajie
+        child.showAge(); // 25 
+        console.log(child.friends); // ['小名','小强']
+
+        // 当我们改变friends的时候, 父构造函数的原型对象的也会变化
+        child.friends.push('小王');
+        console.log(child.friends); // ["小名", "小强", "小王"]
+        var father = new SuperClass();
+        console.log(father.friends); // ["小名", "小强", "小王"]
+
+        //4、借助构造函数：使用call和apply借用其他构造函数的成员, 可以解决给父构造函数传递参数的问题,可以实现多继承
+        //存在问题：是获取不到父构造函数原型上的成员.也不存在共享问题
+
+        // 创建父构造函数
+        function Person(name) {
+            this.name = name || 'tom';
+            this.friends = ['小王', '小强'];
+            this.showName = function() {
+                console.log(this.name);
+            }
+        }
+        Person.prototype.showAge = function() {
+                console.log(this.name);
+            }
+            // 创建子构造函数
+        function Student(name) {
+            // 使用call借用Person的构造函数
+            Person.call(this, name);
+        }
+        // 测试是否有了 Person 的成员
+        var stu = new Student('Li'); //参数传递给Person对象
+        stu.showName(); // Li
+        console.log(stu.friends); // ['小王','小强']
+        //stu.showAge(); //Uncaught TypeError: stu.showAge is not a function
+        console.log(stu.showAge); //undefined
+        console.log(stu instanceof Person) //false 子对象实例不属于父对象实例
+        console.log(stu instanceof Student) //true
+
+        //5、组合继承：借用构造函数 + 原型式（原型链）继承
+        // 解决了 父构造函数的属性继承到了子构造函数的实例对象上了,
+        // 并且继承了父构造函数原型对象上的成员
+        // 解决了给父构造函数传递参数问题
+        // 问题：共享问题
+
+        // 创建父构造函数
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.showName = function() {
+                console.log(this.name);
+            }
+        }
+        // 设置父构造函数的原型对象
+        Person.prototype.showAge = function() {
+                console.log(this.age);
+            }
+            //构造子函数
+        function Student(name) {
+            Person.call(this, name, 20);
+        }
+        //设置原型链或原型式继承
+        Student.prototype = Person.prototype;
+        //Student.prototype = new Person();//此方法（构造函数+原型链）的缺点是调用了两次父类构造函数，生成了两份实例，不推荐
+        Student.prototype.constructor = Student;
+        var stu = new Student('Tom');
+        console.log(stu.name); //Tom
+        console.log(stu.age); //20
+        console.log(stu.showAge); //ƒ () {console.log(this.age);}
+        console.log(stu.showName); //ƒ () {console.log(this.name);}
+        stu.showName(); //Tom
+        stu.showAge(); //20
+    </script>
+</body>
+
+</html>

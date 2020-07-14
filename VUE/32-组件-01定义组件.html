@@ -1,0 +1,47 @@
+<!--组件的概念：
+    我们可以把网页看成是功能模块的组合，vue的组件就是允许把一块网页元素当做模板，复制模板并注册成组件，能够批量使用
+    1、定义一个模板：
+        Vue.extend({template:'模板元素'})
+    2、把模板注册成组件：
+        Vue.component('组件名',模板)
+        -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--    定义的组件名可以作为html标签使用-->
+    <mycom></mycom>
+
+</div>
+<!--为了避免在字符串中定义大模板造成的可读性差，直接在html中写模板，用template标签,模板标签元素不会在页面显示-->
+<template id="temp">
+    <h3>这是一个组件</h3>
+</template>
+<script>
+    //定义模板
+    // var temp = Vue.extend({
+    //     template:'<h3>这是一个组件</h3>'
+    // });
+    //注册组件：
+    //Vue.component('mycom',temp);
+    //简化注册组件的代码：
+    Vue.component('mycom',{
+        template: '#temp',
+    });
+
+    //使用局部组件：
+    var vm = new Vue({
+        el:'#app',
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!--1、字符串合并：+
+2、parseInt()、parseFloat()将字符串转化为整数、小数类型
+3、split()把一个字符串分割成字符串组成的数组
+4、charAt()获取字符串中某一字符
+5、indexOf()查找字符串是否含有某字符,是：返回索引值；否：返回-1
+6、substring()截取字符串：substring(start,end)(不包括end)
+7、toUpperCase()、toLowerCase()字符转大写、小写-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        var sTr1 = 'abcdef,ghijk';
+        var iNum1 = 12;
+        var sNum2 = '12';
+        //alert(iNum1+sNum2);//含有字符串就是字符串拼接
+        //alert(iNum1+parseInt(sNum2));
+        //alert(iNum1+parseFloat(sNum2));
+        alert(sTr1.split(','));
+        //字符串翻转
+        alert(sTr1.split('').reverse().join(''));
+
+        alert(sTr1.charAt(2));
+        alert(sTr1.substring(1));//从第2个开始到末尾
+        alert(sTr1.indexOf('l'));//返回-1
+        alert(sTr1.indexOf('ef'));//4
+        alert(sTr1.indexOf('eg'));//-1
+        alert(sTr1.toUpperCase());
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

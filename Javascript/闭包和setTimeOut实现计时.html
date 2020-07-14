@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // for (var i = 1; i <= 5; i++) {
+        //     setTimeout(function timer() {
+        //         console.log(i)
+        //     }, i * 1000)
+        // }
+        // 正常情况下，我们对这段代码的预期是每隔一秒输出一个数字，1-5。但是实际上并不会这样，这段代码会每间隔一秒输出一个数字6。这是为什么？
+        // 首先6从哪里来，当timer执行时，for循环早已结束，终止条件是i=6。
+        // 有些小伙伴可能会不明白了，timer不是创建了闭包，保持了对i的引用吗？
+        // 没错。for循环了5次，创建了5个闭包，但是都是保持了对同一个i的引用（i是全局变量）。所以当timer执行时，i = 6，输出6，没毛病。
+        // 那么如何达到我们想要的效果，我们需要更多的闭包。循环过程中每个迭代都需要一个闭包
+
+        for (var i = 1; i <= 5; i++) {
+            (function(j) {
+                setTimeout(function timer() {
+                    console.log(j);
+                }, j * 1000)
+            })(i);
+
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

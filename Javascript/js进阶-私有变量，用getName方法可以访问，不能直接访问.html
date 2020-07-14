@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1、defineProperty
+        var obj = {
+            name: 'cuiyongliang',
+            getName: function() {
+                return this.name;
+            }
+        }
+        Object.defineProperty(obj, 'name', {
+            // set: function(value) {
+            //     name = value;
+            // }
+        });
+        console.log(obj.name); //cuiyongliang
+        console.log(obj.getName()); //cuiyongliang
+
+        //2、利用函数创建对象
+        function Person() {
+            var name = 'cuiyongliang';
+            this.getName = function() {
+                return name;
+            }
+        }
+        var obj2 = new Person();
+        console.log(obj2.name);
+        console.log(obj2.getName());
+    </script>
+</body>
+
+</html>

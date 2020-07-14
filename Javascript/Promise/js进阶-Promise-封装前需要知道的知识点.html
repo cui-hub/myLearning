@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+                                                                                                                                                                                                                                 1.如何改变promise状态：
+                                                                                                                                                                                                                                （1）resolve(val):如果当前是pending就变为resolved
+                                                                                                                                                                                                                                （2）reject（reason):如果当前是pending就变为rejected
+                                                                                                                                                                                                                                （3）抛出异常：如果当前是pending就变为rejected*/
+        const p = new Promise((resolve, reject) => {
+            throw new Error('出错了')
+        });
+        p.catch(reason => {
+            console.log(reason); //Error: 出错了
+        })
+
+        /*
+        2.如果一个promise的指定多个成功/失败的回调函数，都会调用
+        */
+        p.catch(reason => {
+            console.log(reason); //Error: 出错了
+        });
+        /*
+        3.promise状态的改变和指定回调函数哪一个先进行？都有可能！但是回调函数的执行一定是异步的
+            一般情况下是先指定回调函数再改变状态
+            1 如果先指定回调，回调函数会先保存到回调队列，当状态发生改变时再调用
+            2 如果先改变状态，指定回调函数后会立即执行回调函数
+        */
+
+        /*
+        4.promis.then()返回的新promise的结果状态是由什么决定的？
+            （1）简单表达：由then()指定的回调函数的执行结果决定
+            （2）详细表达：
+                ①如果抛出异常，新promise变为rejected，reason为抛出的异常
+                ②如果返回的是非promise的任意值，新promise变为resolved，value为返回的值
+                ③如果返回的是另一个promise，此promise的结果为新promise的结果
+        */
+        new Promise((resolve, reject) => {
+            resolve(1)
+        }).then(
+            value => {
+                console.log('onResolved1', value); //onResolved1 1
+                //return undefined;//return undefined不写也是返回一个undefined的值
+                //return 2;
+                //return Promise.resolve(3);
+                //return Promise.reject(4);
+                //throw new Error('error')
+            },
+            reason => {
+                console.log('onRejected1', reason);
+            }
+        ).then(
+            value => {
+                console.log('onResolved2', value); //onResolved2 undefined;  onResolved2 2;  onResolved2 3
+            },
+            reason => {
+                console.log('onRejected2', reason); //onRejected2 4 ;  onRejected2 Error: error
+            }
+        )
+
+        new Promise((resolve, reject) => {
+                reject(1)
+            }).then(
+                value => {
+                    console.log('onResolved1', value);
+
+                },
+                reason => {
+                    console.log('onRejected1', reason); //onRejected1 1
+                    //return undefined;//return undefined不写也是返回一个undefined的值
+                }
+            ).then(
+                value => {
+                    console.log('onResolved2', value); //onResolved2 undefined
+                },
+                reason => {
+                    console.log('onRejected2', reason);
+                }
+            )
+            /*5.promise异常穿透
+                （1）当使用promise的then链式调用时，可以最后指定失败的回调
+                （2）前面任何操作出现了异常，都会传到最后失败的回调中
+            6.中断promise链
+                （1）当使用promise的then链式调用时，在中间中断，不再调用后边的回调函数
+                （2）方法：在回调函数中返回一个pending状态的promise
+            */
+        new Promise((resolve, reject) => {
+            reject(1)
+        }).then(
+            value => {
+                console.log('onResolved1()', value)
+                return 2;
+            },
+            //如果没有定义失败的回调函数，默认抛出reason,这就是失败穿透的原理
+            reason => {
+                throw reason;
+            }
+            //还可以改写成：
+            // reason => Promise.reject(reason)
+        ).then(
+            value => {
+                console.log('onResolved2()', value)
+                return 3;
+            }
+        ).then(
+            value => {
+                console.log('onResolved3()', value)
+                return 4;
+            }
+        ).catch(reason => {
+            console.log('onRejected1()', reason); //如果想调传递失败的状态，调用失败的函数，得如下写：
+            //throw reason;
+            //return Promise.reject(reason)
+
+            //如果想在此中断then()链：
+            return new Promise(() => {}); //返回一个pending的promise可以阻断传递
+        }).then(
+            value => {
+                console.log('onResolved4()', value)
+            },
+            reason => {
+                console.log('onRejected2()', reason)
+            }
+        )
+    </script>
+</body>
+
+</html>

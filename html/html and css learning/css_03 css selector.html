@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css选择器</title>
+    <style type="text/css">
+        /*‘*’包含所有标签*/
+        *{
+            font-size: 20px;
+        }
+        div{
+            color: red;
+        }
+       /* id选择器，id号不能重复，因此只能针对一个标签设置样式*/
+        #div1{
+            color: green;
+        }
+        /*类选择器，最常用，先定义css 但是权重低于id*/
+        .green{
+            color: green;
+        }
+        .big{
+            font-size: 40px;
+        }
+        .box{
+            font-size: 20px;
+            color: blue;
+            line-height: 40px;
+            text-indent: 40px;
+        }
+        .box span{
+            color: red;
+            font-weight: bold;
+
+        }
+        /*.box em{
+            color: green;
+            text-decoration:underline ;
+        }*/
+        .box .span02{
+            color: gold;
+        }
+        .box.span02.span03{
+            color: blue;
+            text-decoration: none;
+        }
+        /*元祖选择器*/
+        .box01,.box02,.box03{
+            font-size: 20px;
+            text-indent: 40px;
+
+        }.box01{
+            /*font-size: 20px;
+            text-indent: 40px;*/
+            color: red;
+        }
+        .box02{
+            /*font-size: 20px;
+            text-indent: 40px;*/
+            color: blue;
+        }
+        .box03{
+            /*font-size: 20px;
+            text-indent: 40px;*/
+            color: green;
+        }
+        伪元素
+        .box01:before{
+            content:"前面的文字";
+            color:green;
+        }
+        .box02:after{
+            content: "...";
+            color: blue;
+        }
+    /*伪类和伪元素选择器*/
+        .link{
+            font-size: 30px;
+            text-decoration: none;
+            color: silver;
+        }
+        /*hover表示鼠标放上去的状态*/
+        .link:hover{
+            color: green;
+            font-weight: bold;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div id="div1" class="big">第一个div</div>
+    <div class="green">第二个div</div>
+    <div class="green big">第三个div</div>
+<p>
+    第一个p标签
+</p>
+    <div class="box">中新网北京11月3日电(郭超凯 赵金龙)北京时间
+        11月3日11时22分，中国在太原卫星发射中心用长征四号乙运载火箭
+        ，成功将高分七号卫星发射升空，卫星顺利进入预定轨道，任务获得
+        圆满成功。<em class="span02">高分<em class="span03">七号卫星</em></em>是中国首颗民用亚米级光学传输型立体测绘
+        卫星，主要用户部门是自然资源部、住房和城乡建设部、国家统计局。
+        卫星在轨运行后，将在<span>国土测绘、城乡建设、统计调查</span>
+        等方面发挥重 要作用，为城市群发展规划、农业农村建设提供有力保障，将进一步提
+        升中国测绘卫星工程水平，提高中国高分辨率立体测绘图像数据自给率。
+    </div>
+    <div class="box01">这是第一个div</div>
+    <div class="box02">这是第二个div</div>
+    <div class="box03">这是第三个div</div>
+    <a href="https:www.baidu.com" target="_blank" class="link">百度</a>
+    <div class="box01">这是第一个div</div>
+    <div class="box02">这是第二个div</div>
+</body>
+</html>

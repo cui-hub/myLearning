@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://leetcode-cn.com/problems/scramble-string/solution/miao-dong-de-qu-jian-xing-dpsi-lu-by-sha-yu-la-jia/">leetcode87</a>
+    <script>
+        var isScramble = function(s1, s2) {
+            if (s1 === s2) {
+                return true;
+            }
+            if (s1.length != s2.length) {
+                return false;
+            }
+            let n = s1.length;
+            let dp = Array.from(new Array(n), () => new Array(n).fill(new Array(n + 1).fill(false)));
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    dp[i][j][1] = s1[i] == s2[j];
+                }
+            }
+            for (let k = 2; k < n + 1; k++) {
+                for (let i = 0; i <= n - k; i++) {
+                    for (let j = 0; j <= n - k; j++) {
+                        for (let w = 1; w < k; w++) {
+                            if (dp[i][j][w] && dp[i + w][j + w][k - w]) {
+                                dp[i][j][k] = true;
+                                break;
+                            }
+                            if ((dp[i][j + k - w][w] && dp[i + w][j][k - w])) {
+                                dp[i][j][k] = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dp[0][0][n];
+        };
+
+        console.log(isScramble('great', 'rgeat'))
+    </script>
+</body>
+
+</html>

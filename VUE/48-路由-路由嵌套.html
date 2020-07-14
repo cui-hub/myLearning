@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-router.js" ></script>
+    <style>
+
+        div{
+            /*border: 1px solid black;*/
+            text-align: center;
+            overflow: hidden;
+        /*    解决top塌陷*/
+        }
+        div span{
+            cursor: pointer;
+            color: green;
+            font-weight: bold;
+        }
+        div h3{
+            font-weight: normal;
+            text-align: center;
+        }
+        #app{
+            width: 800px;
+            margin: 0 auto;
+            color: red;
+            background-color: #adadad;
+
+        }
+        .account {
+            text-align: center;
+            background-color: #9acfea;
+        }
+        .account .btn{
+            width: 400px;
+            margin: 0 auto;
+            background-color: lightpink;
+        }
+        .account .btn span{
+            padding: 0 80px;
+        }
+        .login{
+            width: 400px;
+            margin: 0 auto;
+            height: 500px;
+            background-color: lightgreen;
+        }
+        .register{
+            width: 400px;
+            margin: 0 auto;
+            height: 500px;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <router-link to="/account" tag="span">账户</router-link>
+    <!-- 账户面板一直占用的视图区域 -->
+    <router-view></router-view>
+</div>
+<template id="account">
+    <div class="account">
+        <h3>账户面板</h3>
+<!--        <a href="#">登录</a>-->
+<!--        <a href="#">注册</a>-->
+        <div class="btn">
+        <router-link to="/account/login" tag="span">登录</router-link>
+        <router-link to="/account/register" tag="span">注册</router-link>
+        </div>
+        <!-- 留给登录和注册面板的视图区域： -->
+        <router-view></router-view>
+    </div>
+</template>
+
+<!-- 制作登录注册组件：-->
+<template id="login">
+    <div class="login">
+        <h3>登录面板</h3>
+        用户名：<input type="text"><br>
+        密　码：<input type="text">
+    </div>
+</template>　
+<template id="register">
+    <div class="register">
+        <h3>注册面板</h3>
+        用 户 名：<input type="text"><br>
+        密　　码：<input type="text"><br>
+        确认密码：<input type="text">
+    </div>
+</template>
+<script>
+    var tempAccount = {
+        template:'#account'
+    };
+    var tempLogin = {
+        template:'#login'
+    };
+    var tempRegister = {
+        template:'#register'
+    };
+    Vue.component('account',tempAccount);
+    Vue.component('login',tempLogin);
+    Vue.component('register',tempRegister);
+    var routerRule = new VueRouter({
+        routes:[
+            {   //为新增加的子级路由组件添加路由规则(用children属性定义二级的路由规则)：
+                path:'/account',component:tempAccount,
+                //children也是一个数组，每个元素是一条二级的路由规则
+                children:[
+                    //次级面板path不需要加“/"
+                    {path:'login',component:tempLogin},
+                    {path:'register',component:tempRegister},
+                    // 默认显示登录面板：
+                    {path:'',redirect:'login'}
+                ]
+            },
+            // {path:'/account/login',component: tempLogin},
+            // {path:'/account/register',component: tempRegister}
+        ]
+    });
+    var vm = new Vue({
+        el:'#app',
+        router:routerRule,
+    });
+</script>
+</body>
+</html>

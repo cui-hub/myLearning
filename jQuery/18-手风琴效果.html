@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        div{
+            width: 280px;
+            height: 180px;
+            overflow: hidden;
+            margin: 50px auto;
+
+        }
+        div ul{
+            list-style: none;
+            position: relative;
+            margin: 0;
+        }
+        div ul li {
+            width: 200px;
+            height: 180px;
+            float: left;
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+        }
+        div ul li span{
+            width: 20px;
+            height: 180px;
+            float: left;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+        }
+        .bar01{
+            left: 0;
+            top: 0;
+            background-color: #4ab14e;
+        }
+        .bar02{
+            left: 200px;
+            top: 0;
+            background-color: gold;
+        }
+        .bar03{
+            left: 220px;
+            top: 0;
+            background-color: cyan;
+        }
+        .bar04{
+            left: 240px;
+            top: 0;
+            background-color: #7aa1ef;
+        }
+        .bar05{
+            left: 260px;
+            top: 0;
+            background-color: red;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $li = $('#accordion li');
+            $li.click(function () {
+                $(this).animate({'left':$(this).index()*20});
+                $(this).prevAll().each(function () {
+                    $(this).animate({'left':$(this).index()*20});
+                });
+                //each()方法是指选择多个元素后，里面的每一个元素，后面的$(this)是指其中某一个元素
+                $(this).nextAll().each(function () {
+                    $(this).animate({'left':$(this).index()*20+180})
+                })
+            })
+
+        })
+
+    </script>
+</head>
+<body>
+<div id="accordion">
+    <ul>
+        <li class="bar01"><span>食物种类01</span><img src="../html/web_项目_天天生鲜/images/goods001.jpg" alt=""></li>
+        <li class="bar02"><span>食物种类02</span><img src="../html/web_项目_天天生鲜/images/goods002.jpg" alt=""></li>
+        <li class="bar03"><span>食物种类03</span><img src="../html/web_项目_天天生鲜/images/goods012.jpg" alt=""></li>
+        <li class="bar04"><span>食物种类04</span><img src="../html/web_项目_天天生鲜/images/goods018.jpg" alt=""></li>
+        <li class="bar05"><span>食物种类05</span><img src="../html/web_项目_天天生鲜/images/goods019.jpg" alt=""></li>
+    </ul>
+</div>
+</body>
+</html>

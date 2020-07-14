@@ -1,0 +1,51 @@
+<!--vue中的指令就像html中标签中的的属性
+V-text:把数据按照文本内容的形式插入到元素中，替代原来内容
+v-html:把数据按照html内容的形式插入到元素中并解析，替代原来内容
+v-bind:给原生html标签属性绑定或更改内容的话，用到v-bind-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>123{{msg}}</p>
+    <p v-text="msg">123</p>
+</div>
+
+<div id="app2">
+    <p>{{msg2}}</p>
+    <p v-text="msg2"></p>
+    <p v-html="msg2"></p>
+</div>
+
+<div id="app3">
+    <input type="button" value='点我' v-bind:title="tips">
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'这是一个段落'
+        }
+    });
+    var vm2 = new Vue({
+        el:'#app2',
+        data:{
+            msg2:'<span>hellow</span>'
+        }
+    });
+    var vm3 = new Vue({
+        el:'#app3',
+        data:{
+            tips:'这是一个按钮'
+        }
+    })
+</script>
+</body>
+</html>

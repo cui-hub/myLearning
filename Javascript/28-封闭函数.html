@@ -1,0 +1,48 @@
+<!--封闭函数：匿名函数的另一种写法，创建自己的空间，定义的变量和函数不会影响外界，避免定义命名冲突-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        // function myAlert() {
+        //     alert('hello world');
+        // }
+        // myAlert();
+        // 写成封闭函数：
+        (function()
+        {
+
+            alert('hello world');
+         })();
+        var iNum01 = 12;
+        function myAlert() {
+            alert('iiiiiii');
+        }
+        (function () {
+            var iNum01 = 25;
+            function myAlert() {
+                alert('jjjjjjjj');
+            }
+            alert(iNum01);
+            myAlert();
+        })();
+        alert(iNum01);
+        myAlert();
+        // 先弹出25，jjjjjjjj，再弹出12，iiiiiiii
+        // 封闭函数另外的写法：
+        !function () {
+            alert('hellow');
+        }();
+        ~function () {
+            alert('hellow');
+        }();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

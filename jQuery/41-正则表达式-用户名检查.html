@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $username = $('#user_name');
+            var $reUsername = /^\w{6,20}$/;
+            $username.blur(function () {
+                check_username();
+            });
+            $username.focus(function () {
+                $username.next().hide();
+            });
+
+            function check_username() {
+                var $val = $username.val();
+                if ($val==''){
+                    $username.next().html('用户名不能为空！');
+                    $username.next().show();
+                    return;
+                }
+                if ($reUsername.test($val)){
+                    $username.next().hide();
+                }
+                else{
+                    $username.next().html('用户名格式为6-20位的数字、字母或下划线组合！');
+                    $username.next().show();
+                }
+            }
+
+        })
+
+    </script>
+    <style type="text/css">
+        .form_con{
+            width: 510px;
+            margin: 50px auto 0;
+        }
+        ul{
+            list-style: none;
+        }
+        ul li{
+             width: 510px;
+            font-size: 0;
+        }
+        ul li label{
+            color: gray;
+            font-size: 20px;
+            font-weight: bold;
+            width: 100px;
+            height: 32px;
+            line-height: 32px;
+            display: inline-block;
+
+        }
+        ul li input{
+            height: 40px;
+            width: 400px;
+            border: 1px solid gray;
+            padding: 0;
+
+        }
+        ul li span{
+            display: block;
+            margin-left: 100px;
+            margin-top: 5px;
+            width: 400px;
+            font-size: 14px;
+            color: red;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="form_con">
+    <form>
+        <ul>
+            <li>
+                <label for="user_name">用户名：</label>
+                <input type="text" name="user_name" id="user_name">
+                <span class="error_tip">提示信息</span>
+            </li>
+        </ul>
+    </form>
+</div>
+</body>
+</html>

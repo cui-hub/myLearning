@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //滑动窗口
+        var minWindow = function(s, t) {
+            let mapT = new Map();
+            let mapS = new Map();
+            let minStr = s;
+            let m = s.length;
+            let n = t.length;
+            let matchFlag = false;
+            if (m < n) {
+                return '';
+            }
+            let r = 0,
+                l = 0;
+            let isContainT = (maps, mapt) => {
+                let count = 0;
+                mapS.forEach((value, key) => {
+                    if (mapS.get(key) >= mapT.get(key)) {
+                        count++;
+                    }
+                })
+                if (count === mapT.size) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            for (let i = 0; i < n; i++) {
+                if (mapT.has(t[i])) {
+                    mapT.set(t[i], mapT.get(t[i]) + 1);
+                } else {
+                    mapT.set(t[i], 1);
+                }
+                mapS.set(t[i], 0);
+            };
+            while (r < m && l <= r) {
+                while (!isContainT(mapS, mapT) && r < m) {
+                    if (mapT.has(s[r])) {
+                        mapS.set(s[r], mapS.get(s[r]) + 1);
+                    };
+                    r++;
+                };
+                while (isContainT(mapS, mapT) && l <= r) {
+                    if (mapT.has(s[l])) {
+                        mapS.set(s[l], mapS.get(s[l]) - 1);
+                    }
+                    l++;
+                    matchFlag = true;
+                }
+                if (minStr.length > r - l + 1) {
+                    minStr = s.substring(l - 1, r);
+                }
+            }
+            if (matchFlag) {
+                return minStr;
+            } else {
+                return '';
+            }
+
+        };
+        console.log(minWindow("b", "a"));
+        console.log(minWindow("ab", "a"));
+        console.log(minWindow("ADOBECODEBANC", "ABC"));
+    </script>
+</body>
+
+</html>

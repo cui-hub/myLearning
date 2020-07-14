@@ -1,0 +1,43 @@
+<!--页面中，一个大组件包含几个小组件是常见的，如果在小组件中使用大组件的数据：
+    1、父组件中定义了msg数据
+    2、在#ap范围内使用数据，在子组件中v-bing绑定属性："msg"
+    3、子组件的template中利用props将该标签属性注册为组件数据
+    4、子组件template元素中使用该数据名（标签属性）-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <calc :pdata="msg"></calc>
+</div>
+<template id="temp">
+<!--    模板里只有一个根节点，得用div包起来-->
+    <div>
+        <!-- 此msg是temp对象中的数据，如果没有在该对象中定义，会报错。就算vue实例化app对象中有msg变量，仍然不能访问 -->
+        <p >我是子组件:{{pdata}}</p>
+    </div>
+</template>
+<script>
+    var temp = {
+        template:'#temp',
+        props:['pdata']//把标签属性注册为数据，可以实现数据从父组件传向子组件
+    };
+    //组件之间数据独立维护，不会相互影响：
+    Vue.component('calc',temp);
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'父组件数据'
+        },
+
+    })
+</script>
+</body>
+</html>

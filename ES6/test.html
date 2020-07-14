@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    function makeAnnotations(entities) {
+      let annotations = [];
+      let preLength = 0;
+      entities.forEach((entity) => {
+          let item = {
+              id: Math.floor(Math.random() * Math.floor(Number.MAX_SAFE_INTEGER)),
+              label: 1,
+              pinyin:entity.pinyin,
+              start_offset: preLength,
+              end_offset: preLength + entity.word.length
+          }
+          annotations.push(item);
+          preLength = preLength + entity.word.length;
+      })
+      return annotations;
+    }
+    function getResultTxt(entities,text){
+        let result = [];
+        let preCount = 0;
+        entities.forEach((item)=>{
+            if(preCount == item.start_offset){ // 标注连续
+                result.push({
+                    word:text.substring(item.start_offset,item.end_offset),
+                    pinyin:item.pinyin
+                })
+            }else{
+                result.push({
+                    word:text.substring(preCount,item.start_offset),
+                    pinyin:null
+                });
+                result.push({
+                    word:text.substring(item.start_offset,item.end_offset),
+                    pinyin:this.item.pinyin
+                })
+            }
+            preCount = item.end_offset;
+        })
+        if(preCount <text.length){
+            result.push({
+                    word:text.substring(preCount,this.currentDoc.text.length),
+                    pinyin:null
+                })
+        }
+        return result;
+    }
+    let text = "这是一段测试文本"
+    let annotations = [
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"zhe4",
+                            start_offset: 0,
+                            end_offset: 1,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"shi4",
+                            start_offset: 1,
+                            end_offset: 2,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"yi1",
+                            start_offset: 2,
+                            end_offset: 3,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"duan4",
+                            start_offset: 3,
+                            end_offset: 4,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"shi4",
+                            start_offset: 5,
+                            end_offset: 6,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"wen2",
+                            start_offset: 6,
+                            end_offset: 7,
+                        },
+                        {
+                            id: 1,
+                            label: 1,
+                            pinyin:"ben3",
+                            start_offset: 7,
+                            end_offset: 8,
+                        },
+                    ]
+    let prcessedTxt = [{"word":"额","pinyin":"e2 "},{"word":"度","pinyin":" du4 "},{"word":"最","pinyin":" zui4 "},{"word":"高","pinyin":" gao1 "},{"word":"能","pinyin":" neng2 "},{"word":"到","pinyin":" dao4 "},{"word":"二","pinyin":" er4 "},{"word":"十","pinyin":" shi2 "},{"word":"万","pinyin":" wan4 "},{"word":"，","pinyin":" ， "},{"word":"具","pinyin":" ju4 "},{"word":"体","pinyin":" ti3 "},{"word":"额","pinyin":" e2 "},{"word":"度","pinyin":" du4 "},{"word":"需","pinyin":" xu1 "},{"word":"要","pinyin":" yao4 "},{"word":"根","pinyin":" gen1 "},{"word":"据","pinyin":" ju4 "},{"word":"您","pinyin":" nin2 "},{"word":"的","pinyin":" de5 "},{"word":"综","pinyin":" zong1 "},{"word":"合","pinyin":" he2 "},{"word":"评","pinyin":" ping2 "},{"word":"分","pinyin":" fen1 "},{"word":"来","pinyin":" lai2 "},{"word":"评","pinyin":" ping2 "},{"word":"定","pinyin":" ding4 "},{"word":"。","pinyin":" 。 "}]
+    console.log(makeAnnotations(prcessedTxt))
+    console.log(getResultTxt(annotations,text))
+  </script>
+</body>
+</html>

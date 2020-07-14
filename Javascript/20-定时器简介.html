@@ -1,0 +1,41 @@
+<!--定时器的作用：-->
+    <!--1、制作动画-->
+    <!--2、异步操作-->
+    <!--3、函数缓冲和节流-->
+<!-- 定时器：
+    setTimeout:只执行一次的定时器
+    clearTimeout:关闭只执行一次的定时器
+    setInterval:反复执行的定时器
+    clearInterval:关闭反复执行的定时器-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        function myAlert() {
+            alert('hellow world!');
+        }
+        // 设置一次定时器，第一个参数函数名，第二个时间（毫秒）
+        //var Timer01 = setTimeout(myAlert,1000);//等1秒弹出弹框
+        //关闭一次定时器：
+        //clearTimeout(Timer01);//不会弹出任何弹框
+        //反复执行定时器：
+        var Timer02 = setInterval(myAlert,2000);
+        //关闭：
+        clearInterval(Timer02);
+        //匿名函数：
+        var Time03 = setTimeout(function () {
+            alert('ok');
+        },2000)
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

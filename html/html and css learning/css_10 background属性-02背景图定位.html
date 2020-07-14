@@ -1,0 +1,31 @@
+<!--1. background-color 设置背景色
+    2. background-image 设置背景图片地址
+    3. background-repeat 设置背景图片如何重复平铺
+    4. background-position 设置背景图片的位置
+    5. background-attachment 设置背景图是固定还是随着页面滚动条滚动-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>背景图定位</title>
+    <style type="text/css">
+        .box{
+            width: 100px;
+            height: 100px;
+            border: 5px solid black;
+            margin: 50px auto 0;
+
+            background-image: url("../../images/figure.jpg");
+            background-position: -225px -232px;
+            /*想要定位到背景图的某个部位：在浏览器中打开检查，选中背景图像素值，按上下键移动来找某位置*/
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+</body>
+</html>

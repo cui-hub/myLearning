@@ -1,0 +1,71 @@
+<!--vue 中动画也有生命周期的：
+    根据vue提供的类样式名可以定义这些状态：
+        动画名-enter ：元素进入页面之前的状态
+        动画名-enter-active：中间状态
+        动画名-enter-to ：元素进入页面之后的状态
+
+        动画名-leave ：元素离开页面之前的状态
+        动画名-leave-active：中间状态
+        动画名-leave-to ：元素离已经离开页面的状态-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <style type="text/css">
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+        }
+        .toggle-enter{
+            /*透明度为0*/
+            opacity: 0;
+        }
+        .toggle-enter-active{
+            /*渐变处理透明度*/
+            transition: opacity 1s ease;
+        }
+        .toggle-enter-to{
+            opacity: 1;
+        }
+        .toggle-leave{
+            /*透明度为0*/
+            opacity: 1;
+
+        }
+        .toggle-leave-active{
+            /*渐变处理透明度*/
+            transition: all 2s ease;
+        }
+        .toggle-leave-to{
+            opacity:0;
+
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="切换" @click="flag=!flag">
+    <transition name="toggle">
+        <div id="box" v-if="flag"></div>
+    </transition>
+</div>
+    <script>
+    //1、确定动画主角，transition标签包住
+    //2、给动画起名 name属性
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+        }
+
+    })
+    </script>
+</body>
+</html>

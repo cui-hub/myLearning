@@ -1,0 +1,97 @@
+<!--url中经常带有get参数，所以要获取该参数 this.$route.query 包含了get参数信息-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-router.js"></script>
+    <style>
+        /*.router-link-active{*/
+        /*    color: blue;*/
+        /*    font-weight: bold;*/
+        /*}*/
+        
+        .aaa {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!--        <a href="#/article">推荐</a>-->
+        <!--        <a href="#/attention">关注</a>-->
+        <!--        <a href="#/comment">评论</a>-->
+        <router-link to="/article">推荐</router-link>
+        <router-link to="/attention">关注</router-link>
+        <router-link to="/comment">评论</router-link>
+        <!--5、定义路由的视图区域router-view标签-->
+        <router-view></router-view>
+    </div>
+
+    <template id="temp1">
+        <div class="panel">推荐文章</div>
+    </template>
+    <template id="temp2">
+        <div class="panel">我的关注</div>
+    </template>
+    <template id="temp3">
+        <div class="panel">{{this.$route.query.name}}的评论</div>
+    </template>
+    <script>
+        var tempArticle = {
+            template: '#temp1'
+        };
+        var tempAttention = {
+            template: '#temp2'
+        };
+        var tempComment = {
+            template: '#temp3'
+        };
+        Vue.component('article', tempArticle);
+        Vue.component('attention', tempAttention);
+        Vue.component('comment', tempComment);
+        // 3、制定路由规则：
+        var routerRule = new VueRouter({
+            //routes属性定义规则,数组形式，每一个元素都是一个规则
+            routes: [
+                //一条路由规则含有两个信息,一个是路径，一个是组件：
+                {
+                    path: '/article',
+                    component: tempArticle
+                }, {
+                    path: '/attention',
+                    component: tempAttention
+                }, {
+                    path: '/comment',
+                    component: tempComment
+                },
+                //为了实现页面一打开就默认选择推荐文章模块，设定一个重定向路由规则：
+                {
+                    path: '/',
+                    redirect: '/article'
+                }
+            ],
+            linkActiveClass: 'aaa'
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            //4、把路由规则注册到vm实例中：
+            router: routerRule,
+            created: function() {
+                console.dir(this.$route.query.name)
+            }
+        })
+    </script>
+</body>
+
+</html>

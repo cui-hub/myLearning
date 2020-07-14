@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            // 通过标签名获取li元素,生成选择集：
+            var aLi = document.getElementsByTagName('li');
+            alert(aLi.length);
+            //aLi.style.backgroundColor = 'pink';//不可行，选择集不是指某一个具体标签
+            aLi[0].style.backgroundColor = 'pink';
+            for (var i=0;i<aLi.length;i++){
+                aLi[i].style.backgroundColor = 'pink';
+            }
+            //为了区别不同ul，可以先根据id筛选，在标签选择：
+            var oUl = document.getElementById('list1');
+            var aLi1 = oUl.getElementsByTagName('li');
+            alert(aLi1.length);
+             for (var j=0;j<aLi1.length;j+=2){
+                aLi[j].style.backgroundColor = 'green';
+            }
+        }
+    </script>
+</head>
+<body>
+<ul id="list1">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+</ul>
+<ul id="list2">
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--一、document：
+        1、document.getElementById //按照元素名获取对象
+        2、document.getElementsByTagName//通过标签名获取元素
+        3、document.referrer//获取上一个跳转页面的地址（需要服务器环境：如购物界面购买时须先登录，登陆完返回上一个商品界面）
+    二、location：
+        1、window.location.href//获取或者重定url地址
+        2、window.location.search//获取地址部分参数---?和后的参数
+        3、window.location.hash//获取页面锚点或者叫哈希值---#和后的参数
+    三、Math：
+        1、Math.random//获取0-1的随机数
+        2、Math.floor //向下取整数
+        3、Math.ceil//向上取整数
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            //var sUrl = document.referrer; //实际开发中，在服务器环境中存储上一个页面的地址
+            var oBtn = document.getElementById('btn');
+            oBtn.onclick = function () {
+                window.location.href = 'http://www.baidu.com'; //sUrl
+            };
+
+            // 通过地址栏参数改变背景色：
+            var sData = window.location.search;
+            var oBody = document.getElementById('body');
+            if (sData !=''){
+                var aData = sData.split('=');
+                // alert(aData);
+                var iNum = aData[1];
+                var sHsh = window.location.hash;
+                // alert(sHsh);
+                switch(iNum){
+                    case '1':
+                        oBody.style.backgroundColor = 'pink';
+                        break;
+                    case  '2':
+                        oBody.style.backgroundColor = 'green';
+                        break;
+                    case  '3':
+                        oBody.style.backgroundColor = 'gold';
+                        break;
+                    default:
+                        oBody.style.backgroundColor = 'white';
+                }
+            }
+        }
+
+    </script>
+</head>
+<body id="body">
+<input type="button" name="" value="跳转" id="btn">
+</body>
+</html>

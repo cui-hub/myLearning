@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oInput1 = document.getElementById('input1');
+            var oInput2 = document.getElementById('input2');
+            var oBtn = document.getElementById('btn');
+            oBtn.onclick = function () {
+                var iVal1 = parseInt(oInput1.value);
+                var iVal2 = parseInt(oInput2.value);
+                // input里获取的是字符串，需要转换类型
+                alert(iVal1+iVal2)
+            }
+            var iNum01 = 11;
+            var iNum02 = 2;
+            alert(iNum01%iNum02);
+        }
+    </script>
+</head>
+<body>
+<input type="text" name="" id="input1"> +
+<input type="text" name="" id="input2">
+<input type="button"name="" value="相加" id="btn">
+</body>
+</html>

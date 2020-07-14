@@ -1,0 +1,50 @@
+<!--可以把样式的应用方式分为几个等级，按照等级来计算权重：
+    1. ！important，加在属性值后，权重为10000
+    2. 内联样式，如style=""，权重为1000
+    3. ID选择器，如#content，权重为100
+    4. 类，伪类和属性选择器，如：content:hover权重为10
+    5. 标签类选择器和伪元素选择器，如：div、p、:before权重为1
+    6. 通用选择器（*）、子选择器（>）、相邻选择器（+）、同胞选择器（~）权重为0-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box{
+            color: red!important;
+        }
+
+
+
+        /*权重112：*/
+        body #content .main_content h2{
+            color: blue ;
+        }
+        /*权重112：
+        新写法：content下面的一个叫main_content的div 下面的h2*/
+        #content div.main_content h2{
+            color: yellow;
+        }
+        /*权重111：*/
+        #content .main_content h2{
+            color: red;
+        }
+         #content .main_content h2{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" style="color: blue">123458789</div>
+
+    <div id="content">
+        <div class="main_content">
+            <h2>这是一个标题</h2>
+        </div>
+    </div>
+</body>
+</html>

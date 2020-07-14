@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var nan = NaN;
+        var date = new Date();
+        var re = new RegExp();
+        // var math = new Math();
+        var map = new Map();
+        var obj = {
+            a: 'jjj',
+            k: '5555'
+        };
+        var set = new Set();
+        var num = new Number(2);
+        var string = new String('kkkjhfgf');
+        var bool = new Boolean(true);
+        var arr = new Array(2);
+        var num2 = 2;
+        var str = 'love';
+        var boolean = false;
+        var n1 = null;
+        var n2 = undefined;
+        var arr2 = [1, 2, 3, 4];
+
+        console.log(Object.prototype.toString.call(nan));
+        console.log(Object.prototype.toString.call(date));
+        console.log(Object.prototype.toString.call(re));
+        // console.log(Object.prototype.toString.call(math));
+        console.log(Object.prototype.toString.call(map));
+        console.log(Object.prototype.toString.call(obj));
+        console.log(Object.prototype.toString.call(set));
+        console.log(Object.prototype.toString.call(num));
+        console.log(Object.prototype.toString.call(string));
+        console.log(Object.prototype.toString.call(bool));
+        console.log(Object.prototype.toString.call(arr));
+        console.log(Object.prototype.toString.call(num2));
+        console.log(Object.prototype.toString.call(str));
+        console.log(Object.prototype.toString.call(boolean));
+        console.log(Object.prototype.toString.call(n1));
+        console.log(Object.prototype.toString.call(n2));
+        console.log(Object.prototype.toString.call(arr2));
+
+        console.log(typeof(nan));
+        console.log(typeof(date));
+        console.log(typeof(re));
+        // console.log(typeof(math));
+        console.log(typeof(map));
+        console.log(typeof(obj));
+        console.log(typeof(set));
+        console.log(typeof(num));
+        console.log(typeof(string));
+        console.log(typeof(bool));
+        console.log(typeof(arr));
+        console.log(typeof(num2));
+        console.log(typeof(str));
+        console.log(typeof(boolean));
+        console.log(typeof(n1));
+        console.log(typeof(n2));
+        console.log(typeof(arr2));
+
+        console.log(nan instanceof Number); //false
+        console.log(date instanceof Date); //true
+        console.log(re instanceof RegExp); //true
+        console.log(map instanceof Map); //true
+        console.log(obj instanceof Object); //true
+        console.log(set instanceof Set); //true
+        console.log(num instanceof Number); //true
+        console.log(string instanceof String); //true
+        console.log(bool instanceof Boolean); //true
+        console.log(arr instanceof Array); //true
+        console.log(num2 instanceof Number); //false
+        console.log(str instanceof String); //false
+        console.log(boolean instanceof Boolean); //false
+        console.log(n1 instanceof Object); //false
+        console.log(n2 instanceof Object); //false
+        console.log(arr2 instanceof Array); //true
+    </script>
+</body>
+
+</html>

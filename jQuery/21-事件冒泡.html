@@ -1,0 +1,69 @@
+<!--
+什么是事件冒泡：
+    在一个对象上触发某类事件（click等），如果此对象定义了此事件的处理程序，那么此事件就会调用这个程序；
+    如果没有定义程序或事件处理程序返回true，那么这个事件就会像这个对象的父级传播，从里到外，直到他被处理（父级对象所有同类对象都被激活）
+    或者达到对象层次的最顶层，即document对象（有的浏览器是window）
+事件冒泡的作用：
+    可以实现多个操作被集中处理（把事件处理器添加到一个父级元素上，避免吧事件处理器添加到多个子级元素上）
+    它还可以可以让你在对象层的不同级别捕获事件
+阻止事件冒泡：
+    通过event.stopPropagation()来阻止-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //只点击.son后，click事件会被激活，会向父级传，父级有click事件就会运行(并不是因为重叠了)：
+            $('.son').click(function (event) {
+                alert('son');
+                 //阻止冒泡事件：默认匿名函数中第一个参数为event，是事件对象（pycharm可以不写）：
+                event.stopPropagation();
+                //或者：
+                //return false;
+            });
+            $('.father').click(function () {
+                alert('father');
+                return false;
+            });
+            $('.grandpa').click(function () {
+                alert('grandpa');
+            });
+
+        })
+    </script>
+    <style type="text/css">
+        .grandpa{
+            width: 300px;
+            height: 300px;
+            background-color: green;
+            position: relative;
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="grandpa">
+    <div class="father">
+        <div class="son"></div>
+    </div>
+</div>
+</body>
+</html>

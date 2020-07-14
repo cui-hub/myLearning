@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p :style="{'color':'red','font-weight':'bold'}">{{msg}}</p>
+        <p :style="style1">{{msg}}</p>
+        <p :style="[style1,style2]">{{msg}}</p>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'测试段落',
+                style1:{'font-style':'italic'},
+                style2:{'color':'red','font-weight':'bold'}
+            }
+        })
+    </script>
+</body>
+</html>

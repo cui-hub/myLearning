@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oDiv =document.getElementById('div1');
+            var sMyStyle = 'color';
+            var sValue = 'red';
+            // oDiv.style.sMyStyle = sValue;  这样写不行，sMyStyle不是内部函数，无法找到，从而跳过
+            // 属性用变量代替的话，用[]操作：
+            oDiv.style[sMyStyle] = sValue;
+        }
+    </script>
+</head>
+<body>
+    <div id="div1">这是一个div元素</div>
+</body>
+</html>

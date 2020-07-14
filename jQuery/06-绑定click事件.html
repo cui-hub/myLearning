@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $btn = $('#btn');
+            var $div = $('.box');
+            $btn.click(function () {
+                //$div.addClass('color01');//点击只加一次，再点还是绿的
+                /*if ($div.hasClass('color01'))
+                {
+                    $div.removeClass('color01');
+                }
+                else
+                {
+                    $div.addClass('color01');
+                }*/   //简化如下：
+                $div.toggleClass('color01');
+
+            });
+
+        });
+
+    </script>
+    <style type="text/css">
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+        }
+        .color01{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<input type="button" name="" value="切换样式" id="btn">
+<div class="box">div元素 </div>
+</body>
+</html>

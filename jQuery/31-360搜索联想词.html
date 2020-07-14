@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#input01').keyup(function () {  //keyup()事件，输入即激活
+                var $val = $(this).val();
+
+            $.ajax({
+                url:'https://sug.so.360.cn/suggest?',
+                type:'get',
+                dataType:'jsonp',
+                data:{'word':$val}
+            })
+            .done(function (data) {
+                $('#list').empty();//清空元素内的内容
+                //console.log(data);
+                var dat = data.s;
+                for (var i=0;i<dat.length;i++){
+                    var $newli = $('<li></li>');
+                    $newli.html(dat[i]);
+                    $('#list').append($newli);
+                }
+            });
+            });
+
+        })
+    </script>
+</head>
+<body>
+<!--https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=d&llbq=A5%2CB5%2CC5%2CD5-->
+<input type="text" name="" id="input01"></input>
+<ul id="list"></ul>
+</body>
+</html>

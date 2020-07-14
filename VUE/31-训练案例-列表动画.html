@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="animate.css" type="text/css">
+    <style type="text/css">
+        li{
+            border: 1px dashed black;
+            margin: 20px 5px;
+            line-height: 35px;
+            width: 50%;
+            font-weight: bold;
+            list-style: none;
+            transition: all 0.5s ease;
+        }
+        li:hover{
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            ID:<input type="text" v-model="id">
+            Name:<input type="text" v-model="name"@keydown.enter="add">
+            <button @click="add" >添加球星</button>
+        </div>
+<!--        transition只能包裹单个元素，所以要用transition-group标签-->
+        <transition-group enter-active-class="animated slideInUp" leave-active-class="animated slideOutRight">
+            <li v-for="item in list" :key="item.id" @click="del(item.id)">{{item.name}}</li>
+        </transition-group>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                id:'',
+                name:'',
+                list:[{id:1,name:'科比'},
+                    {id:2,name:'詹姆斯'},
+                    {id:3,name:'库里'},
+                    {id:4,name:'诺维斯基'},
+                    {id:5,name:'汤普森'},
+                        ]
+            },
+            methods:{
+                add:function () {
+                    this.list.push({id:this.id,name:this.name});
+                    this.id='';
+                    this.name = '';
+                },
+                del:function (id) {
+                    var index = this.list.findIndex(function (item) {
+                        return item.id == id;
+                    });
+                    this.list.splice(index,1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

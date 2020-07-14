@@ -1,0 +1,31 @@
+<!--jsonp：
+    ajax只能请求同一域下面的数据或资源，有时候需要跨域请求数据，就需要用到jsonp技术，jsonp原理是利用到了<script>标签，
+    jsonp和ajax原理完全不同，不过jquery将他们封装成同一个函数-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url:'data.js',
+                type:'get',
+                dataType:'jsonp',
+                jsonpCallback:'fnBack'
+            })
+            .done(function (data) {
+                alert(data.name);
+            })
+            //数据以data.js文件形式存储：fnBack({'name':'tom','age':30})
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" :value="start" @click="start_roll">
+    <input type="button" :value="end" @click="stop_roll">
+    <p v-text="content"></p>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            start:'开始',
+            end:'停止',
+            content:'队加油，LPL加油！中国',
+            intervalID:null
+        },
+        methods:{
+            start_roll:function () {
+                if (this.intervalID!=null){
+                    return;
+                }//methods内函数this指向vue，也就是vm，所以也可以写成vm.intervalID,但是下面setInterval()函数里不能用this，因为作用域变了，该this指向window，也就是全局作用域
+                vm.intervalID = setInterval(function () {
+                    //获取content文本内容：
+                    var str = vm.content;
+                    //把第一个文字放在最后：
+                    var first = str.substring(0,1);
+                    var left = str.substring(1);
+                    vm.content = left+first;
+                    //字符串处理后怎么显示，实际上修改content页面显示也会同步修改
+                },200)
+
+            },
+            stop_roll:function () {
+                clearInterval(vm.intervalID);
+                vm.intervalID=null;
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

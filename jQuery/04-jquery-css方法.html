@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $div = $('#box');
+            //读属性：
+            alert($div.css('font-size'));
+
+            var oDiv = document.getElementById('box');
+            alert(oDiv.style.fontSize);//原生js读不出来没有定义的属性
+
+            //写属性：
+            $div.css({'color':'red','backgroundColor':'pink','font-size':'20px'});
+
+        });
+
+
+    </script>
+</head>
+<body>
+    <div id="box">div元素</div>
+</body>
+</html>

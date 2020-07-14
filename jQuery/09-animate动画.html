@@ -1,0 +1,47 @@
+<!--animate动画：通过设置animate方法可以设置元素某属性值上的动画，可以设置一个或者多个属性值，动画执行完场后会执行一个函数-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#btn').click(function () {
+               // $('.box').animate({'width':'500px','height':400})//宽高同时变化
+                $('.box').animate({'width':'500px'},1000,'swing',function () {
+                    $('.box').animate({'height':400},1000,function () {
+                        $('.box').animate({'opacity':0.5});
+
+                    });
+                }) //利用回调函数来实现宽先变，高后变,1000代表动画变化时长（默认400ms），’swing‘代表动画形式
+            });
+            $('#btn2').click(function () {
+                $('.box2').stop().animate({'width':'+=100'}) //每点击一次宽度增加100px
+
+            })
+
+
+        })
+
+    </script>
+    <style type="text/css">
+        .box,.box2{
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+<input type="button" name="" value="动画1" id="btn">
+<div class="box"></div>
+<br/>
+<br/>
+<input type="button" name="" value="动画2" id="btn2">
+<div class="box2"></div>
+</body>
+</html>

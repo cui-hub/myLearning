@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rgba</title>
+    <style type="text/css">
+        body{
+            background: url("../../images/figure.jpg");
+        }
+        .box{
+            width: 300px;
+            height: 100px;
+            background-color: black;
+            color: white;
+            font-size:20px ;
+            text-align: center;
+            line-height: 100px;
+            /*设置透明度*/
+            opacity: 0.3;
+            /*兼容IE*/
+            filter: alpha(opacity=30);
+        }
+        .box2{
+            width: 300px;
+            height: 100px;
+            /*第二种设置透明度方法;优点是只有背景透明，文字不透明*/
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            font-size:20px ;
+            text-align: center;
+            line-height: 100px;
+            margin-top: 50px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="box">这额是一个div</div>
+    <div class="box2">这额是一个div</div>
+</body>
+</html>

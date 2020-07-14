@@ -1,0 +1,15 @@
+<!--在webpack中一个vue组件单独一个文件，而且后缀为.vue 如./src/app.vue
+    需要装加载器对应.vue：
+       npm i vue-loader@13.3.0 vue-template-compiler -D 
+    添加文件处理规则：{test:/\.vue/,use:'vue-loader'},
+    
+引入组件步骤：
+    1、在app.vue文件内创建模板，script标签内export default{} 抛出模板对象（不需要再给模板创建template:"#app"，因为文件本身就只有一个模板），style标签可以写模板样式
+    2、main.js 文件通过import app1 from './app.vue'引入文件,此时app1是个模板对象
+    3、在vue实例中创建局部组件：components:{组件名：app1}
+    4、在index.html中用app标签引入组件
+
+vue的render方法：
+    main.js的vue实例化中，绑定一个render方法，传入参数（回调函数callback），需要渲染那个组件回调函数就传入那个组建的模板对象
+    
+    render方法渲染有一个不同点，其渲染组件内容会全部占据vue实例化管控的范围，且不需要app标签，也就是#app的div内只有app1模板内容，不会有其他东西p标签不见了-->

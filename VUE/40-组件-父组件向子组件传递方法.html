@@ -1,0 +1,66 @@
+<!--页面中，一个大组件包含几个小组件是常见的，如果在小组件中使用大组件的数据：
+    1、父组件中定义了方法show
+    2、在#app范围内使用方法，在子组件中v-on绑定自定义事件 @func='show'
+    3、子组件的template中利用this.$emit()调用方法
+    4、子组件template元素中使用函数名（标签自定义方法名）-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 用v-on绑定自己命名，原生不存在的事件类型
+        这种类型的事件无法触发，可以在子组件中通过this.$emit方法手动调用任意事件-->
+    <calc :pdata="msg" @func="show"></calc>
+</div>
+<template id="temp">
+<!--    模板里只有一个根节点，得用div包起来-->
+    <div>
+        <!-- 此msg是temp对象中的数据，如果没有在该对象中定义，会报错。就算vue实例化app对象中有msg变量，仍然不能访问 -->
+        <p >我是子组件:{{test()}}</p>
+    </div>
+</template>
+<script>
+    var temp = {
+        template:'#temp',
+        props:['pdata'],
+        data:function () {
+            return {
+                param1:'参数1',
+                param2:'参数2'
+            }
+
+        },
+        //把标签属性注册为数据，可以实现数据从父组件传向子组件
+        methods:{
+            test:function () {
+                //console.log(this.$emit);
+                //$emit(触发的事件,实参)
+                this.$emit('func',this.param1,this.param2)
+            }
+        },
+
+    };
+    //组件之间数据独立维护，不会相互影响：
+    Vue.component('calc',temp);
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'父组件数据'
+        },
+        methods:{
+            show:function (param1,param2) {
+                console.log(`调用了父组件方法:接收到参数:${param1},${param2}`)
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

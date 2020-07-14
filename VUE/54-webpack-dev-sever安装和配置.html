@@ -1,0 +1,16 @@
+<!--主要指令：
+    1、本地安装webpack-dev-sever: npm i webpack-dev-server@2.9.7 -D
+    2、本地安装webpack支持w-d-s：npm i webpack@3.12.0 -D
+    3、运行npm脚本：npm run 脚本名
+
+    webpack-dev-server因为不是全局安装指令,不能直接运行，可以在package.json中加入脚本命令'dev':"webpack-dev-server"，通过npm run dev运行对应脚本
+
+    运行结果中有一行：webpack output is served from / 表示安装w-d-s后的开发环境bundle.js文件被保存在当前目录下，虽然看不到，但是仍然可以引用到index.html中，并且会同步main.js内的修改，不用打包
+    看不到bundle.js是因为，w-d-s要自动频繁进行打包操作，为了避免浪费磁盘开销，把这一过程放在内存中完成
+
+详细参数配置：
+    当执行webpack-dev-server时，自动打开默认浏览器 参数 --open >>> "dev":"webpack-dev-server --open"
+    每次访问到服务器时直接看到index主页 --contentBase 主页路径(src)
+    8080端口容易冲突主流服务端口，可以自定义 --port xxxx
+
+    d当设置了--contentBase src 后让服务器的根目录变成了src ，这就导致的src的上级目录无法访问了（如../dist/bundle.js访问不到)，但是问题不带，开发时用不太到访问其他目录-->

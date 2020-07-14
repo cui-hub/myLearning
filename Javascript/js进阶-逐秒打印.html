@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 使用 let 变量，再也不用担心内层变量泄露为外层变量的问题了
+        // for (let i = 1; i <= 5; i++) {
+        //     setTimeout(() => {
+        //         console.log(i)
+        //     }, i * 1000)
+        // }
+
+        //如果坚持使用var声明；可以加上一层闭包：j依赖于外层的i，因此每一次i都会被存起来
+        for (var i = 1; i <= 10; i++) {
+            (function(j) {
+                setTimeout(() => {
+                    console.log(j)
+                }, j * 1000)
+            })(i)
+        }
+    </script>
+</body>
+
+</html>

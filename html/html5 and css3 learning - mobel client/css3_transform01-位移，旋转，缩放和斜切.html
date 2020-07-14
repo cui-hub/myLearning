@@ -1,0 +1,102 @@
+<!--transform变换：
+    1. translate（x,y)设置盒子位移
+    2. scale（x,y)设置盒子缩放
+    3. rotate（deg）设置盒子旋转
+    4. 切skew(x-angle,y-angle)设置盒子斜
+    5. perspective设置透视距离
+    6. transform-style flat|preserve-3d设置盒子是否按3d空间上显示
+    7. translateX，translateY，translateZ设置三维移动
+    8. rotateX、rotateY、rotateZ设置三维旋转
+    9. scaleX、scaleY、scaleZ设置三维缩放
+    10. transform-origin设置变形中心点
+    11. backface-visibility设置盒子背面是否可见-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid #000000;
+            /*transform的translate性能比定位高*/
+            transform: translate(0px, 0px);
+            transition: all 0.5s ease;
+            color: black;
+            font: normal 36px/200px 'Microsoft YaHei';
+            text-align: center;
+        }
+        
+        .box:hover {
+            transform: translate(30px, 30px);
+        }
+        
+        .box2 {
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid #000000;
+            color: black;
+            font: normal 36px/200px 'Microsoft YaHei';
+            text-align: center;
+            /*放大一倍*/
+            transform: scale(1, 1);
+            transition: all 0.5s ease;
+        }
+        
+        .box2:hover {
+            transform: scale(2, 2);
+        }
+        
+        .box3 {
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid #000000;
+            color: black;
+            font: normal 36px/200px 'Microsoft YaHei';
+            text-align: center;
+            transform: rotate(0deg);
+            transition: all 0.5s ease;
+        }
+        
+        .box3:hover {
+            transform: rotate(45deg);
+        }
+        
+        .box4 {
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+            margin: 50px auto 0;
+            border: 3px solid #000000;
+            color: black;
+            font: normal 36px/200px 'Microsoft YaHei';
+            text-align: center;
+            transform: skew(0, 0);
+            transition: all 0.5s ease;
+        }
+        
+        .box4:hover {
+            transform: skew(45deg, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">位移</div>
+    <div class="box2">缩放</div>
+    <div class="box3">旋转</div>
+    <div class="box4">斜切</div>
+
+</body>
+
+</html>

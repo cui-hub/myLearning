@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        // function定义函数
+        function fnMyAlert(){
+            alert('hello world')
+        }
+        function fnChange() {
+            var oDiv = document.getElementById('div1');
+            oDiv.style.color = 'red';
+            oDiv.style.fontSize = '30px';
+        }
+        // fnMyAlert();
+    </script>
+</head>
+<body>
+<!--标签内调用函数-->
+<div id="div1" onclick="fnMyAlert()">this is a div </div>
+<input type="button" name="" value="改变div" onclick="fnChange()">
+</body>
+</html>

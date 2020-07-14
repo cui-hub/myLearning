@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+    Generator函数：
+        概念：
+            1、Generator函数是一个状态机，内部封装了不同状态的函数；
+            2、用来生成遍历器iterator对象（一个可以通过next方法获取数据的对象，参考08-遍历器.html）；
+            3、可暂定函数（惰性请求），yield可暂停，next方法可以启动，每次返回时yield后面表达式结果；
+            4、解决异步编程方案之一
+
+     -->
+    <script>
+        function* myGenerator() {
+            console.log('开始执行');
+            let name = yield 'hello';
+            console.log(name);
+            console.log('执行中。。。');
+            yield 'last';
+            return 0;
+        }
+        let iteratorObj = myGenerator(); //返回了一个遍历器对象
+        console.log(iteratorObj); //myGenerator {<suspended>}
+        console.log(iteratorObj.next()); //开始执行 {value: "hello", done: false}
+        //next()传入的参数相当于一个yield执行的结果；不传则为undefined，即name为undefined
+        console.log(iteratorObj.next('kobe')); //kobe 执行中。。。  {value: "last", done: false}
+        console.log(iteratorObj.next()); //{value: 0, done: true}
+
+
+        //我们知道：对象的Symbol.iterator属性，指向该对象默认遍历器方法，所以可以通过Generator给普通对象增加Symbol.iterator属性使其可遍历
+        let obj = {
+            name: 'stephen curry',
+            age: 29,
+            sex: 'male'
+        };
+        obj[Symbol.iterator] = function* myIter() {
+            for (let i in obj) {
+                yield this[i];
+            }
+        }
+        for (let i of obj) {
+            console.log(i); //stephen curry 29 male
+        }
+    </script>
+</body>
+
+</html>

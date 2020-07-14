@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function once(fn) {
+            var tag = true;
+            return function() {
+                if (tag) {
+                    fn.apply(this, arguments);
+                    tag = false;
+                }
+                return undefined;
+            }
+        };
+
+        function alertName() {
+            this.name1 = '1111';
+            age = 20;
+            console.log('测试');
+            console.log(this.name1);
+            console.log(age);
+        };
+
+        function alertName2() {
+            this.name2 = '222';
+            age = 22;
+            console.log('测试2');
+            console.log(this.name2);
+            console.log(age);
+        };
+        let fn = once(alertName);
+        fn();
+        fn();
+        let fn2 = once(alertName2);
+        fn2();
+        fn2();
+        var name = 'window'
+        console.log(this.name, this.name1, this.name2, this.age)
+        const obj = new alertName();
+        console.log(obj.name, obj.name1, obj.age)
+    </script>
+</body>
+
+</html>

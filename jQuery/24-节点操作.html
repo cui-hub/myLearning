@@ -1,0 +1,58 @@
+<!--
+创建节点：
+    var $div = $('<div>');
+    var $div2 = $('<div>内容</div>')
+插入节点：
+    append()和appendTo()：在现存元素的内部，从后面插入元素（用法主宾倒置）
+    prepend()和prependTo()：在现存元素的内部，从前面插入元素
+    after()和insertAfter()：在现存元素的外部，在后面插入元素
+    before()和insertBefore():在现存元素的外部，在前面插入元素
+删除节点：
+    $('#div1').remove();
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //通过html()字符串添加节点，性能最高，但是会覆盖原有内容：
+            //$('#div1').html('<a href="#" >链接</a>');//完全覆盖，h标签被覆盖
+            var $a = $('<a href="#">链接</a>');
+            var $a2 = $('<a>');//插入空标签元素
+            $('#div1').append($a);
+            $('#div1').append($a2); // $a2.appendTo($('#div1'));
+
+            $('#div1').prepend($('<p>段落</p>'));
+
+
+            $('#div1').after($('<div id="div2">外部div</div>'));
+
+            $('#div2').before($('<h3>h3标题</h3>'));
+
+            //已有的节点操作：
+            //调换位置：
+            $('#p1').insertBefore($('#title01')); //= $('#title01').before($('#p1'))
+            //将一个插入另一个标签
+            $('#span01').appendTo($('#p1'));
+
+        });
+
+    </script>
+</head>
+<body>
+<div id="div1">
+    <h1>h1元素</h1>
+</div>
+<br>
+<br><br><br><br><br><br>
+<h1 id="title01">这是一个h1标签</h1>
+<p id="p1">这是一个p标签</p>
+<span id="span01">span 元素</span>
+</body>
+</html>

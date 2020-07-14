@@ -1,0 +1,60 @@
+<!--jquery选择器，选择规则和css相同，可以用length属性判断是否选择成功：
+    $('#myId')：选择id为myId的网业元素
+    $('.myclass')：选择class为myclass的元素
+    $('li')：选择所有li元素
+    $('#ull li span')：选择id为ull下li中的span元素
+    $('input[name=first]')：选择name属性等于first的input元素
+
+    对选择集进行过滤：
+    $('div').filter('.myclass');选择class等于myclass的div元素
+    $('div').not('.myclass');选择class不等于myclass的div元素
+    $('div').has('p');选择包含p元素的div元素
+    $('div').eq(5);选择第6个div元素
+
+    选择集转移：
+    $('div').prev();选择div前面紧挨的同辈元素
+    $('div).prevAll();选择div前面所有的同辈元素
+    $('div).next();选择div后面紧挨的同辈元素
+    $('div).nextAll();选择div后面所有的同辈元素
+    $('div').parent();选择div的父元素
+    $('div').children();选择div的所有子元素
+    $('div').siblings();选择div的同辈元素
+    $('div').find('.myclass');选择div内的class等于myclass的元素
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $div1 = $('div');
+            $div1.css({'backgroundColor':'red'});
+            alert($div1.length); //弹出8，说明选中了8个元素，如果弹出0则没有选中元素，（没选中不会报错！）
+            $('div').has('p').css({'color':'green','font-size':'30px'});
+            $('div').eq(4).css({'text-indent':'20px'});
+
+            $('div').eq(4).prev().css({'text-indent':'30px'});
+            $('div').find('.tip').css({'color':'white'});
+
+        })
+    </script>
+</head>
+<body>
+<div>1</div>
+<div><p>2</p></div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<div>6</div>
+<div>7</div>
+<div>
+    <span>8</span>
+    <span class="tip">9</span>
+</div>
+</body>
+</html>

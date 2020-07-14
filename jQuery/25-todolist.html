@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .list_con{
+            width: 505px;
+            margin: 50px auto;
+        }
+        .inputtxt{
+            width: 446px;
+            height: 18.4px;
+
+        }
+        .inputbtn{
+            width: 50px;
+        }
+        .list{
+            list-style: none;
+             padding-left:0 ;
+        }
+        .list li{
+            height: 30px;
+            border-bottom: 1px dotted black;
+            line-height: 30px;
+        }
+        .list li a{
+            float: right;
+            padding: 0 12px;
+            text-decoration: black;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $btn = $('#btn1');
+            var $inputtxt = $('#txt1');
+            var $ul = $('#list');
+            $btn.click(function () {
+                var $val = $inputtxt.val();
+                if ($val==''){
+                    alert('请输入内容');
+                    return;
+                }
+                var $li = $('<li>' +
+                    '<span>'+$val+'</span>' +
+                    '<a href="javascript:;" class="up">↑</a>' +
+                    '<a href="javascript:;" class="down">↓</a>' +
+                    '<a href="javascript:;" class="del">删除</a>' +
+                    '</li>');
+                $ul.append($li);
+                $inputtxt.val('');//重置文本框内容
+            });
+            // $($ul).delegate('.del','click',function () {
+            //     $(this).parent().remove();
+            // });
+            // $($ul).delegate('.up','click',function () {
+            //     $(this).parent().insertBefore($(this).parent().prev());
+            // });
+            // $($ul).delegate('.down','click',function () {
+            //     $(this).parent().insertAfter($(this).parent().next());
+            // });
+
+
+            //进一步简化和性能优化：↓
+             $($ul).delegate('a','click',function () {
+                var $handler = $(this).prop('class');
+                switch ($handler) {
+                    case 'del':
+                        $(this).parent().remove();
+                        break;
+                    case 'up' :
+                        if ($(this).parent().prev().length == 0 ){
+                            alert('已到顶部');
+                            return;
+                        }
+                        $(this).parent().insertBefore($(this).parent().prev());
+                        break;
+                    case 'down':
+                         if ($(this).parent().next().length == 0 ){
+                            alert('已到底部');
+                            return;
+                        }
+                        $(this).parent().insertAfter($(this).parent().next());
+                        break;
+                }
+            });
+        })
+
+
+
+    </script>
+</head>
+<body>
+    <div class="list_con">
+        <h2>To do list</h2>
+        <input type="text"  name="" class="inputtxt" id="txt1">
+        <input type="button" name="" value="增加" class="inputbtn" id="btn1">
+        <ul class="list" id="list">
+            <li>
+                <span>学习html</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+            <li>
+                <span>学习css</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+            <li>
+                <span>学习javascript</span>
+                <a href="javascript:;" class="up">↑</a>
+                <a href="javascript:;" class="down">↓</a>
+                <a href="javascript:;" class="del">删除</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

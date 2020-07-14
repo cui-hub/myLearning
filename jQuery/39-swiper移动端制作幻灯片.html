@@ -1,0 +1,97 @@
+<!--swiper参数使用：
+    1、initialSlide：初始索引值，1就是从第二张开始
+    2、direction：滑动方向horizont | vertical
+    3、speed：滑动速度 ms
+    4、autoplay：设置自动播放事件
+    5、autoplayDisableOnInteraction：用户操作swiper后是否还自动播放，默认true
+    6、pagination：分页圆点
+    7、paginationClickable：分页圆点是否可以点击
+    8、prevButton：上一页箭头
+    9、nextButton：下一页箭头
+    10、loop：是否首尾衔接-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="swiper.min.css">
+    <style type="text/css">
+        .box img{
+            width: 100%;
+        }
+        .swiper-button-next,.swiper-button-prev {
+            position: absolute;
+            top: 50%;
+            width: 14px;
+            height: 22px;
+            margin-top: -11px;
+            z-index: 10;
+            cursor: pointer;
+            -moz-background-size: 27px 44px;
+            -webkit-background-size: 27px 44px;
+            background-size: 14px 22px;
+            background-position: center;
+            background-repeat: no-repeat
+        }
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background:red
+        }
+        .swiper-pagination {
+            position: absolute;
+            text-align: right;
+            -webkit-transition: .3s;
+            -moz-transition: .3s;
+            -o-transition: .3s;
+            transition: .3s;
+            -webkit-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            z-index: 10
+        }
+
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../html/mobile_项目_天天生鲜/js/set_root.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var swiper = new Swiper('.swiper-container',{
+                pagination:'.swiper-pagination',
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
+                initialSlide:0,
+                paginationClickable:true,
+                loop:true,
+                autoplay:3000,
+                autoplayDisableOnInteraction:false
+            })
+
+        })
+
+
+    </script>
+</head>
+<body>
+   <div class="box">
+        <!-- Swiper -->
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><a href='javascript:;'> <img src="imges/scenery01.jpg" alt="风景"></a></div>
+          <div class="swiper-slide"><a href='javascript:;'> <img src="imges/scenery02.jpg" alt="风景"></a></div>
+          <div class="swiper-slide"><a href='javascript:;'> <img src="imges/scenery03.jpg" alt="风景"></a></div>
+          <div class="swiper-slide"><a href='javascript:;'> <img src="imges/scenery04.jpg" alt="风景"></a></div>
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+
+   </div>
+</body>
+</html>

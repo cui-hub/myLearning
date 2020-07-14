@@ -1,0 +1,149 @@
+<!--常用的5种事件修饰符：
+    1、.stop 阻止冒泡
+    2、.prevent 阻止默认行为
+    3、.capture 把事件传递模式切换成捕获模式，与冒泡模式相反，从外向内传递
+    4、.self 只允许事件由元素本事触发
+    5、.once 事件只触发一次-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <style type="text/css">
+        #box1{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+        #box2{
+            width: 200px;
+            height: 200px;
+            background-color: green ;
+        }#box3{
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+        }
+         #box4{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+        #box5{
+            width: 200px;
+            height: 200px;
+            background-color: green ;
+        }#box6{
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+        }
+        #box7{
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+        #box8{
+            width: 200px;
+            height: 200px;
+            background-color: green ;
+        }#box9{
+            width: 100px;
+            height: 100px;
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+<div id="box1" @click="divHandler">
+    <div id="box2" @click.stop="divHandler"> <!-- 事件修饰符放到事件后边-->
+        <div id="box3" @click="divHandler"></div>
+    </div>
+</div>
+<br>
+<div id="app">
+    <a href="http://www.baidu.com" @click="aHandler">百度一下</a>
+    <a href="#" @click.prevent="aHandler">空连接</a>
+</div>
+<br>
+<div id="box4" @click.capture="div3Handler">
+    <div id="box5" @click.capture="div4Handler"> <!-- capture修饰后，点击最内盒子，先弹最外盒子事件，与冒泡顺序相反-->
+        <div id="box6" @click.capture="div5Handler"></div>
+    </div>
+</div>
+<br>
+<div id="box7" @click="div7Handler">
+<!--    设置.self修饰后，只是box8事件只能自己触发，并不会阻止事件冒泡。子级事件会跳过自身向父级事件传递，自身事件也会向父级传递-->
+    <div id="box8" @click.self="div8Handler"> <!-- capture修饰后，点击最内盒子，先弹最外盒子事件，与冒泡顺序相反-->
+        <div id="box9" @click="div9Handler"></div>
+    </div>
+</div>
+<br>
+<input type="button" value="按钮" @click.once="btnHandler" id="btn">
+
+<br>
+<script type="text/javascript">
+    var vm1 = new Vue({
+        el:'#box1',
+        methods:{
+            divHandler:function () {
+                console.log('触发');
+            },
+            aHandler:function () {
+                console.log('触发');
+            }
+        }
+    });
+
+    var vm2 = new Vue({
+        el:'#app',
+        methods:{
+            aHandler:function () {
+                console.log('触发');
+            }
+        }
+    });
+    var vm3 = new Vue({
+        el:'#box4',
+        methods: {
+            div3Handler: function () {
+                console.log('box1');
+            },
+            div4Handler: function () {
+                console.log('box2');
+            },
+            div5Handler: function () {
+                console.log('box3');
+            },
+        }
+    });
+    var vm4 = new Vue({
+        el:'#box7',
+        methods: {
+            div7Handler: function () {
+                console.log('box1');
+            },
+            div8Handler: function () {
+                console.log('box2');
+            },
+            div9Handler: function () {
+                console.log('box3');
+            },
+        }
+    });
+    var vm5 = new Vue({
+        el:'#btn',
+        methods:{
+            btnHandler:function () {
+                console.log('点击')
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

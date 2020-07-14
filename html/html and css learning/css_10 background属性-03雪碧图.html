@@ -1,0 +1,53 @@
+<!--1. background-color 设置背景色
+    2. background-image 设置背景图片地址
+    3. background-repeat 设置背景图片如何重复平铺
+    4. background-position 设置背景图片的位置
+    5. background-attachment 设置背景图是固定还是随着页面滚动条滚动-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sprite</title>
+    <style type="text/css">
+        .list{
+            list-style: none;
+            width: 300px;
+            height: 305px;
+            margin: 50px auto 0;
+            padding: 0;
+            /*background: cyan ;*/
+        }
+        .list li{
+            height: 60px;
+            border-bottom: 1px dotted black;
+            line-height: 60px;
+            text-indent: 50px;
+            background: url("../../images/sprite.jpg")-39px -4px no-repeat;
+        }
+        .list .box02{
+            background: url("../../images/sprite.jpg")-39px -69px no-repeat;
+        }
+        .list .box03{
+            background: url("../../images/sprite.jpg")-39px -134px no-repeat;
+        }
+        .list .box04{
+            background: url("../../images/sprite.jpg")-39px -199px no-repeat;
+        }
+        .list .box05{
+            background: url("../../images/sprite.jpg")-39px -264px no-repeat;
+        }
+    </style>
+</head>
+<body>
+<ul class="list">
+    <li>1111</li>
+    <li class="box02">2222</li>
+    <li class="box03">3333</li>
+    <li class="box04">4444</li>
+    <li class="box05">5555</li>
+</ul>*5
+</body>
+</html>

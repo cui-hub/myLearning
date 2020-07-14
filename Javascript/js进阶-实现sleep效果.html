@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1、while循环：容易造成死循环
+        function sleep(ms) {
+            var start = new Date().getTime();
+            // console.log(start.getTime());
+            var expires = start + ms;
+            while (new Date().getTime() < expires) {
+
+            };
+            console.log('111')
+            return;
+        }
+        sleep(1000); //1000ms后111
+
+
+        //2、通过promise实现
+        function sleep2(ms) {
+            return new Promise(resolve => {
+                console.log('222');
+                setTimeout(resolve, ms);
+            })
+        }
+        sleep2(1000).then(function() {
+            console.log('333');
+        }); //先输出222，500ms后输出333
+
+        //3、async/await实现
+        function sleep3(ms) {
+            return new Promise(resolve => {
+                console.log('3.53.5')
+                setTimeout(resolve, ms)
+            })
+        };
+        async function test(ms) {
+            await sleep3(ms);
+            console.log('444')
+        };
+        test(1000);
+
+        //generator一个promise对象来实现
+        function* sleep4(ms) {
+            yield new Promise(resolve => {
+                console.log('555');
+                setTimeout(resolve, ms);
+            })
+        }
+        sleep4(1000).next().value.then(() => {
+            console.log('666')
+        })
+    </script>
+</body>
+
+</html>

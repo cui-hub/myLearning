@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/solution/zhu-zhuang-tu-zhong-zui-da-de-ju-xing-by-leetcode/">84-leetcode给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+求在该柱状图中，能够勾勒出来的矩形的最大面积。</a>
+</body>
+<script>
+    //1、优化的暴力解法-->时间复杂度O(n*n)
+    var largestRectangleArea = function(heights) {
+        let len = heights.length;
+        let maxArea = 0;
+        for (let i = 0; i < len; i++) {
+            let minHeight = heights[i];
+            for (let j = i; j < len; j++) {
+                minHeight = Math.min(minHeight, heights[j]);
+                maxArea = Math.max(maxArea, (j - i + 1) * minHeight)
+            }
+        }
+        return maxArea;
+    };
+    console.log(largestRectangleArea([6, 4, 5, 2, 4, 3, 9]))
+
+
+
+    //2、分治法：递归O(n*logn)
+    var calculateArea = function(heights, start, end) {
+        if (start > end) {
+            return 0;
+        }
+        let minindex = start;
+        for (let i = start; i <= end; i++) {
+            if (heights[minindex] > heights[i]) {
+                minindex = i;
+            }
+        }
+        return Math.max(heights[minindex] * (end - start + 1), Math.max(calculateArea(heights, start, minindex - 1), calculateArea(heights, minindex + 1, end)));
+    }
+    let largestRectangleArea2 = function(heights) {
+        return calculateArea(heights, 0, heights.length - 1);
+    }
+    console.log(largestRectangleArea2([2, 1, 5, 6, 2, 3]))
+
+
+
+    //3、优化分治法：O(logn)我们可以用线段树代替遍历来找到区间最小值
+    //4、单调栈：https://leetcode-cn.com/problems/largest-rectangle-in-histogram/solution/bao-li-jie-fa-zhan-by-liweiwei1419/
+    var largestRectangleArea3 = function(heights) {
+        heights.push(0);
+        heights.unshift(0);
+        let len = heights.length;
+        if (len == 0) {
+            return 0
+        };
+        if (len == 1) {
+            return heights[0];
+        }
+        let maxArea = 0;
+        let Stack = new Array();
+        Stack[0] = 0; // 先放入哨兵，在循环里就不用做非空判断
+        for (let i = 1; i < len; i++) {
+            while (heights[i] < heights[Stack[Stack.length - 1]]) {
+                let width = i - Stack[Stack.length - 2] - 1;
+                let height = heights[Stack[Stack.length - 1]];
+                maxArea = Math.max(maxArea, width * height);
+                Stack.pop();
+            }
+            Stack.push(i);
+        }
+        return maxArea;
+
+    };
+    console.log(largestRectangleArea3([6, 4, 5, 2, 4, 3, 9]))
+</script>
+
+</html>

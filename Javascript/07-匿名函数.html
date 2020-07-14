@@ -1,0 +1,35 @@
+   <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oButton = document.getElementById('button');
+            // 将事件属性和函数关联，不能加（），否则会马上执行：
+        //     oButton.onclick = fnChange;
+        //
+        // // function定义函数
+        // function fnChange() {
+        //     var oDiv = document.getElementById('div1');
+        //     oDiv.style.color = 'red';
+        //     oDiv.style.fontSize = '30px';
+        // }
+        //     匿名函数定义的事件绑定一次性执行：
+            oButton.onclick = function () {
+            var oDiv = document.getElementById('div1');
+            oDiv.style.color = 'red';
+            oDiv.style.fontSize = '30px';
+        }
+         }
+        // fnMyAlert();
+    </script>
+</head>
+<body>
+<div id="div1" >this is a div </div>
+<input type="button" name="" value="改变div"  id="button">
+</body>
+</html>

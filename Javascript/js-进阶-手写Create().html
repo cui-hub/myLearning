@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Object.create()函数的作用：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create">MDN</a>
+    <script>
+        //方法1：通过空对象+原型
+        function Create1(Fn) {
+            let obj = {};
+            obj.__proto__ = new Fn();
+            return obj;
+        }
+
+        //方法2：通过空函数+原型
+        function Create2(Fn) {
+            let F = function() {}
+            F.prototype = new Fn();
+            return new F();
+        }
+
+
+        //测试：
+        function Person() {
+            this.name = 'kobe';
+            this.age = 39;
+        }
+        let p1 = Create1(Person);
+        console.log(p1.name, p1.age);
+        let p2 = Create2(Person);
+        console.log(p2.name, p2.age);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function deepClone(something) {
+            //基础数据类型直接返回
+            if (typeof(something) != 'object') {
+                return e = something;
+            }
+            //null虽然是对象，但是可以直接复制
+            if (!something) {
+                return e = something;
+            }
+            if (Object.prototype.toString.call(something) === '[object Date]') { //如果是Date对象
+                return e = new Date(something);
+            }
+            if (Object.prototype.toString.call(something) === '[object RegExp]') { //如果是RegExp对象
+                return e = new RegExp(something);
+            }
+            if (Object.prototype.toString.call(something) === '[object Function]') { //如果是函数对象，直接返回
+                return e = something;
+            }
+            if (Object.prototype.toString.call(something) === '[object Map]') { //如果是Map对象
+                return e = new Map(something);
+            }
+            if (Object.prototype.toString.call(something) === '[object Set]') { //如果是Set对象
+                return e = new Set(something);
+            }
+            if (Object.prototype.toString.call(something) === '[object Array]') { //如果是数组对象
+                let arr = [];
+                for (var key in something) {
+                    arr[key] = deepClone(something[key]);
+                };
+                return arr;
+            }
+            if (Object.prototype.toString.call(something) === '[object Object]') { //如果是普通对象
+                let obj = {};
+                for (var key in something) {
+                    obj[key] = deepClone(something[key]);
+                };
+                return obj;
+            }
+
+        }
+        var obj = {
+            a: 1,
+            b: '2',
+            c: [1, 2, 3],
+            d: {
+                e: 'lll',
+                k: 55,
+                l: {
+                    p: 2,
+                    k: 'l'
+                }
+            },
+            e: new Date(),
+            f: function fn() {},
+            g: /^h[a-z]+/g,
+            h: new Map(),
+            i: new Set([1, 1, 2, 3, 5, 5, 5, 56, 7]),
+        };
+        var newObj = deepClone(obj);
+        console.log(newObj)
+        obj.a = 25;
+        obj.c[0] = '改变';
+        obj.d.l.p = 4545455;
+        obj.e = new Array;
+        obj.g = /jjjj/;
+        console.log(newObj)
+        console.log(obj)
+
+        //1.定义检测数据类型的功能函数
+        function checkType(target) {
+
+            return Object.prototype.toString.call(target).slice(8, -1);
+        }
+        //2.实现深度克隆
+        function clone(target) {
+            let result;
+            let targetType = checkType(target);
+            if (targetType === 'Object') {
+                result = {};
+            } else if (targetType === 'Array') {
+                result = [];
+            } else {
+                return target;
+            }
+            //3.遍历目标数据
+            for (let i in target) {
+                let value = target[i];
+
+                //4.判断目标结构里的每一值是否存在对象/数组
+                if (checkType(value) === 'Object' || checkType(value) === 'Array') {
+                    //对象或者数组里嵌套了对象或者数组
+                    //5.继续遍历获取到的value值
+                    result[i] = clone(value);
+                } else {
+                    result[i] = value;
+                }
+            }
+            return result;;
+        }
+        let arr3 = [1, 2, 3, {
+            userName: 'xsx',
+            age: 18,
+            wife: ['wife1', 'wife2', 'wife3'],
+            success: function() {
+                console.log('okok')
+            }
+        }]
+        let arr4 = clone(arr3);
+        arr3[3].userName = 'LY';
+        console.log(arr3);
+        console.log(arr4);
+    </script>
+</body>
+
+</html>

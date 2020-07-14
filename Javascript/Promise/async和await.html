@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //async function返回一个promise,promise 的状态决定于function的抛出异常或者返回值决定，与promise.then类似
+
+        async function fn1() {
+            return 1 //Promise {<resolved>: 1}
+                //throw 0; //Promise {<rejected>: 0}
+                //return Promise.reject(2);
+        };
+        const result = fn1();
+        //console.log(result); //Promise {<resolved>: undefined}
+        result.then(value => {
+                console.log('onResolved', value)
+            },
+            reason => {
+                console.log('onRejected', reason)
+            })
+
+        function fn2() {
+            return Promise.resolve(3);
+        };
+        async function fn3() {
+            //const p = fn2();//要想渠道fn2返回的promise结果，得p.then()
+            try {
+                const value1 = await fn1();
+                const value = await fn2(); //出现await必须与async同时使用,await后面不一定非是promise对象。await得到promise成功的值
+                // console.log(value);
+                console.log(value1); //1
+                console.log(value); //3
+            } catch (error) {
+                console.log('失败的结果', error);
+            }
+            //const value = await 6;
+        };
+        fn3()
+    </script>
+</body>
+
+</html>

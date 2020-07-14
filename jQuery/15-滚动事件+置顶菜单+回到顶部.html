@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body{
+            margin: 0;
+        }
+        .banner{
+            width: 960px;
+            height: 200px;
+            background-color: cyan;
+            margin: 0 auto;
+        }
+        .menu{
+            width: 960px;
+            height:80px;
+            background-color: gold;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 80px;
+            font-size: 30px;
+            font-weight: bold;
+            opacity: 0.3;
+        }
+        p{
+            text-align: center;
+            color: red;
+        }
+        .menuback{
+            width: 960px;
+            height:80px;
+            margin: 0 auto;
+            display: none;
+        }
+        .goback{
+            width: 100px;
+            height: 40px;
+            background-color: black;
+            color: white;
+            position: fixed;
+            right: 20px;
+            bottom: 50px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $banner = $('.banner');
+            var $menu = $('.menu');
+            var $menuback = $('.menuback');//此div是为了防止更改.menu的position时，突然飘在文档流之上时，造成部分内容跳跃
+            var $goback = $('.goback');
+            $(window).scroll(function () {
+                var iNum = $(document).scrollTop();
+                //document.title = iNum;
+                if (iNum>200){
+                    $menu.css({'position':'fixed','top':0,'left':($(window).width()-$menu.outerWidth())/2});
+                    $menuback.show();
+                }
+                else {
+                    $menu.css({'position':'static'});
+                    $menuback.hide();
+                }
+                if (iNum>400){
+                    $goback.fadeIn();//回到顶部按钮下拉一定程度才淡出
+                }
+                else {
+                    $goback.fadeOut();
+                }
+
+
+            });
+            $goback.click(function () {
+                $('html,body').animate({'scrollTop':0}); //html 和body 都写是为了兼容不同浏览器，有的认body有的只认html
+            });
+
+        })
+    </script>
+</head>
+<body>
+<div class="banner"></div>
+<div class="menu">菜单</div>
+<div class="menuback"></div>
+ <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+ <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+    <p>文档内容</p>
+    <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="goback">回到↑顶部</div>
+</body>
+</html>

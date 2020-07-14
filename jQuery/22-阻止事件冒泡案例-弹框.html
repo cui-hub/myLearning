@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .popup{
+            display: none;
+        }
+        .pop{
+            position: fixed;
+            width: 500px;
+            height: 300px;
+            border: 2px solid black;
+            background-color: white;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -150px;
+            z-index: 9999;
+        }
+        .mask{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.3;
+            filter: alpha(opacity=30);/*兼容IE*/
+            z-index: 9998;
+        }
+        .close{
+            float: right;
+            font-size: 30px;
+
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#btn').click(function () {
+                $('.popup').fadeIn();
+                //需要阻止事件冒泡：
+                return false;
+            });
+            $(document).click(function () {
+                $('.popup').fadeOut();
+            });
+            $('.pop').click(function () {
+                //为了防止input框输入时有click事件，回传到document层：
+                return false;
+            });
+            $('.close').click(function () {
+                $('.popup').fadeOut();
+            });
+
+        })
+    </script>
+</head>
+<body>
+<input type="button" name="" value="弹出" id="btn">
+<div class="popup">
+    <div class="pop">弹框文字<br />投资金额：
+        <input type="text">
+        <a href="#" id="close" class="close">×</a>
+    </div>
+
+    <div class="mask"></div>
+</div>
+</body>
+</html>

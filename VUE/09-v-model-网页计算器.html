@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model.number="num1">
+
+    <select name="" id="" v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text" v-model.number="num2">
+    <input type="button" value="=" @click="calc">
+    <input type="text" v-model="finalnum">
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            num1:0,
+            num2:0,
+            opt:'+',
+            finalnum:0,
+        },
+        methods:{
+            calc:function () {
+                //方法一：
+                // switch(this.opt){
+                //     case '+':
+                //         this.finalnum=Number(this.num1)+Number(this.num2);
+                //         break;
+                //     case '-':
+                //         this.finalnum=Number(this.num1)-Number(this.num2);
+                //         break;
+                //     case '*':
+                //         this.finalnum=Number(this.num1)*Number(this.num2);
+                //         break;
+                //     case '/':
+                //         this.finalnum=Number(this.num1)/Number(this.num2);
+                //         break;
+                // }
+
+                //方法二：
+                // eval()函数可以把字符串转化为代码执行，还可以用在json数据格式转换上
+                //this.finalnum=eval('Number(this.num1)'+this.opt+'Number(this.num2)');
+
+                //方法三：利用v-model.number直接获取数据类型
+                this.finalnum=eval('this.num1'+this.opt+'this.num2').toFixed(2);//toFixed()函数：结果保留小数点后两位
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

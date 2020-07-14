@@ -1,0 +1,10 @@
+import struct,base64
+byte = struct.pack('>I',123456)
+print(type(byte))
+print(byte)
+print(struct.pack('>IH',4042322160,32896))
+print('---------------------------------------------------------------------')
+f = open('C:/Users/Administrator/Desktop/test.bmp','rb')
+s = f.read(30)
+print(s)
+print(struct.unpack('<ccIIIIIIHH', s))

@@ -1,0 +1,50 @@
+<!--animation动画：
+    1. @keyframes 定义关键帧动画
+    2. animation-name 动画名称
+    3. animation-duration 动画时间
+    4. animation-timing-function 动画曲线linear|ease|step（步数）
+    5. animation-delay 动画延迟
+    6. animation-iteration-count 动画播放次数（）一来一回算两次 n|infinity
+    7. animation-direction 动画结束后是否反向还原normal|alternate
+    8. animation-play-state 动画状态paused（停止）|running（运动）
+    9. animation-fill-mode 动画前后的状态 none（缺省）|forward（结束时停留在最后一帧)|backwards(结束时停留在定义的开始帧）|both（前后都应用）
+    10. animation:name duration timing-function delay iteration-count direction 同时设置-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>走路动画</title>
+    <style type="text/css">
+        @keyframes walking {
+            from{
+                left: 0;
+            }
+            to{
+                left: -1200px;
+            }
+        }
+        .box{
+            width:100px;
+            height: 170px;
+            /*border: 1px solid gray;*/
+            margin: 50px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .box img{
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: walking 1.5s steps(12) infinite;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box"><img src="../../images/walking1.png" alt="walking">
+</div>
+</body>
+</html>

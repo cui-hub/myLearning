@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-resource.js"></script>
+    <style type="text/css">
+        #tb{
+            width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        #tb th{
+            background-color: royalblue;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        #tb td{
+            text-align: center;
+            background-color: #9acfea;
+            color: black;
+            border: 1px solid black;
+        }
+        #funcs{
+            width: 800px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    功能面板：-->
+    <div id="funcs">
+        编号:<input type="text" v-model="ID">
+        品牌:<input type="text" v-model="NAME" @keydown.enter="add">
+        <button @click="add">添加数据</button>
+        搜索关键字：<input type="text" v-model="keyword" v-focus>
+    </div>
+    <table id="tb">
+        <tr>
+            <th>编号</th>
+            <th>品牌名称</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        <tr v-if="empty"><td colspan="4">当前列表无数据</td></tr>
+        <tr v-for="item in search(keyword)">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.ctime | dateformat}}</td>
+            <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    Vue.filter('dateformat',function (date) {
+        var date = new Date(date);
+        var y = date.getFullYear();//2020
+        var m = (date.getMonth()+1).toString().padStart(2,'0');
+        var d = (date.getDate()).toString().padStart(2,'0');
+        var h = (date.getHours()).toString().padStart(2,'0');
+        var min= (date.getMinutes()).toString().padStart(2,'0');
+        var s = (date.getSeconds()).toString().padStart(2,'0');
+        //padStart padEnd 把字符串从前或后补充到足够长度，第一个参数：长度，第二个参数：填充物
+        return `${y}-${m}-${d} ${h}:${min}:${s}`;
+    });
+
+    //函数运行，但是不能聚焦，因为简单自定义指令时，钩子函数默认是bind,得等到元素加载完成后才触发函数
+    // Vue.directive('focus',function (el) {
+    //     el.focus();
+    //     console.log('触发')
+    // });
+    Vue.directive('focus',{
+        inserted:function (el) {
+            el.focus();
+        }
+    });
+    var vm =new Vue({
+        el:'#app',
+        data:{
+            ID:'',
+            NAME:'',
+            keyword:'',
+            empty:false,
+            list:[]
+        },
+        methods:{
+            add:function () {
+                // this.list.push({id:this.ID,name:this.NAME,ctime:new Date()});
+                // this.ID='';
+                // this.NAME='';
+                //重构add方法，利用前后端交互：
+
+                //1、获取id和name
+                //2、发起请求，把id和name交给服务器
+                //3、返回响应，返回参数status操作状态：0失败，1成功；msg提示信息；ctime创建时间(使用方法看后端给出的api说明书)
+                //4、判断status是否成功，成功就把新数据追加到本地list，失败则给出提示信息
+                    this.$http.jsonp(`http://www.api.com/add.php?id=${this.ID}&${this.NAME}`)
+                .then(function (response) {
+                    if(response.body.status){
+                        vm.list.push({id:vm.ID,name:vm.NAME,ctime:response.body.ctime});
+                    }
+                    else{
+                        alert(response.body.msg);
+                    }
+                })
+            },
+            del:function (id) {
+                //方法1：some()
+                // this.list.some(function (item,index) {
+                //     if( item.id==id){
+                //         vm.list.splice(index,1);
+                //         return true
+                //     }
+                // })
+
+                //方法2：every()
+                // this.list.every(function (item,index) {
+                //     if( item.id==id){
+                //         vm.list.splice(index,1);
+                //         return false;
+                //     }
+                //     //如果没有else，发现一个不符合条件的元素，没有返回值，是undefined，也会是false，停止遍历
+                //     else{
+                //         return true;
+                //     }
+                // })
+
+                //方法3:filter()
+                // this.list = this.list.filter(function (item) {
+                //     return item.id!=id;
+                // })
+
+                //方法4：findIndex()
+                var index = this.list.findIndex(function (item) {
+                    return item.id == id;
+                });
+                this.$http.jsonp(`http://www.api.com/del.php?id=${this.list[index].ID}`)
+                .then(function (response) {
+                    if(response.body.status){
+                        alert(msg);
+                        vm.list.splice(index,1);
+                    }
+                    else{
+                        alert('删除失败！')
+                    }
+                });
+            },
+            search:function (word) {
+                var result =  this.list.filter(function (item) {
+                    //正则：
+                    var re = new RegExp(word,'g');
+                    if (re.test(item.name)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+                this.empty = result.length>0? false:true;
+                return result;
+            },
+            test:function (event) {
+                console.log(event.keyCode)
+
+            },
+        },
+        //页面加载出来进行列表显示
+        created:function () {
+            this.$http.jsonp('http://www.api.com/getAll.php')//需要后端工程师制作getAll.php接口(api),功能是将数据库内所有数据读出来，发送前端，不用接收参数，前端在页面渲染前将数据放入页面
+            .then(function (response) {
+                //响应的response中body就是数组，bodyText是文本形式；可以在开发者工具console.dir()调试
+                vm.list = response.body;
+            })
+
+        },
+        //添加数据功能,改性add功能↑↑↑↑↑↑↑
+        //删除数据功能,改性del功能↑↑↑↑↑↑↑
+    })
+</script>
+</body>
+</html>

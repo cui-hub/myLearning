@@ -1,0 +1,10 @@
+<!--用less文件编写样式
+    在main.js中引入index.less：
+        import './css/index.less';
+    w-d-s提示需要用到less加载器：
+        安装less-loader ：npm i less-loader@4.0.5 -D
+        安装内部依赖less：npm i less -D
+
+    因为less是一门css预处理语言，这意味着less经过less-loader处理后会变成css语言，还需要style-loader css-loader的后续处理
+        {test:/\.less$/,use: ['style-loader','css-loader','less-loader']},
+    -->

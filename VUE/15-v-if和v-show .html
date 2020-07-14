@@ -1,0 +1,32 @@
+<!--v-if和v-show两个指令会判断条件来决定要不要显示当前元素
+    不同：
+    1、v-if通过操作该节点来实现元素显示或隐藏
+    2、v-show通过设置display样式值来控制元素显示，性能更高，如果一个元素需要重复切换显示隐藏用v-show-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+      <p v-if="flag">{{msg}}</p>
+      <p v-show="flag">{{msg}}</p>
+    </div>
+    <script type="text/javascript">
+// <!--        vue默认情况下单向数据绑定，修改msg会立刻同步页面上，但是修改innerHtml（）内容，则不会影响msg值-->
+        var vm =new Vue({
+            el:'#app',
+            data:{
+                msg:'这是一个段落',
+                username:'提示信息',
+                flag:true
+            }
+        })
+    </script>
+</body>
+</html>

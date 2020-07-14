@@ -1,0 +1,136 @@
+<!--表单：
+    1、form 声明一个表单域（默认单行排列）
+    2、form-inline 内敛表单域 （排列在一行）
+    3、form-horizontal 水平排列表单域（一个form-group排在一行）
+    4、form-group 表单组，包括表单文字和表单控件
+    5、form-control 文本输入框、下拉列表样式
+    6、checkbox checkbox-inline 多选框样式
+    7、radio radio-inline 单选框样式
+    8、input-group 表单控件组
+    9、input-group-addon 表单控件组样式
+    10、input-group-btn 表单控件组为按钮形式
+    11、form-group-lg 大尺寸表单控件
+    12、form-group-md 中尺寸表单控件（默认）
+    13、form-group-sm 小尺寸表单控件-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<!--    因为字体图标不仅仅要css，还要font字体配置文件，所以将bootstrap-3.3.7-dist引入，从内部引入即可加载出来-->
+
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css">
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"> </script>
+    <style type="text/css">
+        .glyphicon-search{
+            font-size: 14px;
+        }
+        .glyphicon-user{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+       <div class="row"><h2>表单</h2></div>
+   </div>
+<div class="container">
+       <div class="row">
+           <form action="">
+               <div class="form-group">
+                   <label for="username">用户名:</label>
+                   <input type="text" name="" class="form-control" id="username">
+               </div>
+               <div class="form-group">
+                   <label for="pwd">密码:</label>
+                   <input type="password" name="" class="form-control" id="pwd">
+               </div>
+           </form>
+           <br>
+            <!--↑文本和输入框各占一行-->
+
+
+            <form action="" class="form-inline"> <!--↑内联表单，排在一行-->
+               <div class="form-group">
+                   <label for="username2"><span class="glyphicon glyphicon-user"></span></label>
+                   <input type="text" name="" class="form-control" id="username2">
+               </div>
+               <div class="form-group">
+                   <label for="pwd2">密码:</label>
+                   <input type="password" name="" class="form-control" id="pwd2">
+               </div>
+           </form>
+           <br>
+
+
+           <form action="" class="form-horizontal"> <!--↑水平表单，一个form-group，排在一行，需要加栅格宽度-->
+               <div class="form-group">
+                   <label for="username2" class="col-sm-1">用户名:</label>
+                   <div class="col-sm-11">
+                   <input type="text" name="" class="form-control " id="username3">
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label for="pwd3" class="col-xs-1">密码:</label>
+                   <div class="col-xs-11">
+                   <input type="password" name="" class="form-control" id="pwd3">
+                   </div>
+               </div>
+           </form>
+           <br>
+
+
+           <form action="" class="form-horizontal"> <!--↑水平表单，一个form-group，排在一行，需要加栅格宽度-->
+               <div class="form-group form-group-lg"><!--大尺寸input框-->
+                   <label for="username4" class="col-sm-1">用户名:</label>
+                   <div class="col-sm-11">
+                   <input type="text" name="" class="form-control " id="username4">
+                   </div>
+               </div>
+               <div class="form-group form-group-md"><!--中尺寸input框，默认为中等尺寸-->
+                   <label for="pwd4" class="col-xs-1">密码:</label>
+                   <div class="col-xs-11">
+                   <input type="password" name="" class="form-control" id="pwd4">
+                   </div>
+               </div>
+               <div class="form-group form-group-sm"><!--小尺寸input框-->
+                   <label for="pwd5" class="col-xs-1">地址:</label>
+                   <div class="col-xs-11">
+                   <input type="password" name="" class="form-control" id="pwd5">
+                   </div>
+               </div>
+           </form>
+           <br>
+
+            <!--表单控件组-->
+           <form action="" >
+               <div class="input-group">
+                   <span class="input-group-addon">@</span> <!--span不能点击，需要可点击写法如下：-->
+                   <input type="text" class="form-control">
+               </div>
+               <br>
+               <div class="input-group">
+                   <input type="text" class="form-control">
+                   <span class="input-group-btn">
+                        <!--<input type="button" value="搜索" class="btn btn-default"></input>-->
+                       <button class="btn btn-primary">搜索</button>
+                   </span>
+               </div>
+               <br>
+               <div class="input-group">
+                   <input type="text" class="form-control">
+                   <span class="input-group-btn">
+                       <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                   </span>
+               </div>
+           </form>
+       </div>
+   </div>
+   <br><br><br><br><br><br><br>
+</body>
+</html>

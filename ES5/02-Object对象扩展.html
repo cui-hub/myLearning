@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        1. Object.create(prototype,[discriptors])
+            作用：以指定对象为原型创建新的对象
+            为新的对象指定新的属性，并对属性进行描述
+            - value：指定值
+            - writable：标识当前属性是否为可修改的，默认为false
+            - configurable：标识当前属性是否可以被删除，默认为false
+            - enumerable：标识当前属性是否能够用for in枚举，默认为false
+        2.Object.defineProperties(object,descriptors)
+            作用：为指定对象定义扩展多个属性
+            get：用来获取当前属性值的回调函数
+            set：修改当前属性触发的回调函数，并且实参为修改后的值
+            存取器属性：setter、getter一个用来存值，一个用来取值。
+        3.对象内部扩展属性
+            get propertyNmae(){};
+            set propertyNmae(){}
+     -->
+
+    <script>
+        //1. Object.create(prototype,[discriptors])
+        var obj = {
+            username: 'kobe',
+            age: 30
+        };
+        var obj1 = {};
+        obj1 = Object.create(obj, {
+            sex: {
+                value: 'male',
+                writable: true, //可以被修改
+                configurable: true, //可以被删除
+                enumerable: true, //可以被枚举
+            }
+        }); //obj1的__proto__隐式原型指向obj,并且当前对象扩展了属性sex
+        console.log(obj1);
+        for (var i in obj1) {
+            console.log(i); //username,age;如果设置sex的enumerable: true则可以被枚举
+        }
+
+
+        // 2.Object.defineProperties(object,descriptors)
+        var obj2 = {
+            firstName: 'cui',
+            lastName: 'yongliang'
+        };
+        Object.defineProperties(obj2, {
+            fullName: {
+                get: function() {
+                    console.log('调用get')
+                    return this.firstName + ' ' + this.lastName; //get方法返回值即为新属性的值,获取属性值，get方法自动调用
+                },
+                //想要修改扩展对象值，得用set
+                set: function(data) { //监听扩展属性，当扩展属性改变时自动调用，data为修改后的值
+                    console.log('调用set');
+                    this.firstName = data.split(' ')[0];
+                    this.lastName = data.split(' ')[1];
+                }
+            }
+        });
+        console.log(obj2); //log内容内fullName属性并没有展开，所以不会调用get方法 {firstName: "cui", lastName: "yongliang"}
+        console.log(obj2.fullName); //调用get方法：调用get cuiyongliang
+        obj2.fullName = 'Tim Duncan'; //调用set方法
+        console.log(obj2); //{firstName: "Tim", lastName: "Duncan"}
+        console.log(obj2.fullName) //调用get方法
+
+
+        //3.对象内部扩展属性-->实现上面效果
+        var obj3 = {
+            firstName: 'Stephen',
+            lastName: 'Curry',
+            get fullName() {
+                return this.firstName + ' ' + this.lastName;
+            },
+            set fullName(data) {
+                this.firstName = data.split(' ')[0];
+                this.lastName = data.split(' ')[1];
+            }
+        };
+        console.log(obj3); //log内容内fullName属性并没有展开，所以不会调用get方法 {firstName: "Stephen", lastName: "Curry"}
+        console.log(obj3.fullName); //调用get方法：调用get cuiyongliang
+        obj3.fullName = 'Lebron James'; //调用set方法
+        console.log(obj3); //{firstName: "Lebron", lastName: "James"}
+        console.log(obj3.fullName) //调用get方法
+    </script>
+</body>
+
+</html>

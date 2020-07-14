@@ -1,0 +1,134 @@
+<!--浮动特性：
+    1. 浮动元素有左浮动（float：left）和右浮动（float：right）
+    2. 浮动的元素会向左或向右浮动，碰到父元素边界、其他元素才停下来
+    3. 相邻浮动的块元素可以并在一起，超出父级宽度就换行
+    4. 浮动让行内元素或者块元素自动转化为行内块元素（不会有行内块元素的间隙问题）
+    5. 浮动元素后面没有浮动的元素会占据浮动元素的位置，没有浮动的元素内的文字会避开浮动的元素，形成文字饶图的效果
+    6. 父元素如果没有设置尺寸（一般是高度不设置），父元素内整体浮动的元素无法撑开父元素，父元素需要清除浮动：
+        .父级上增加overflow：hidden
+        ..最后一个子元素后面加一个div，给她样式属性clear both（不推荐）
+        ...使用成熟的清除浮动样式类clearfix
+    7. 浮动元素之间没有垂直margin的合并-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浮动</title>
+    <style type="text/css">
+        .con01{
+            width: 400px;
+            height: 80px;
+            border: 1px solid gold;
+            margin:50px auto 0;
+        }
+        .con01 div{
+            width: 60px;
+            height: 60px;
+        }
+        .box01{
+            background-color: green;
+            float: left;
+            margin: 10px;
+        }
+        .box02{
+            background-color: pink;
+            float: right;
+            margin: 10px;
+        }
+        .con02{
+            width: 400px;
+            height: 40px;
+            border-bottom: 1px solid gold;
+            margin: 50px auto 0;
+        }
+        .box03{
+            width: 80px;
+            height: 41px;
+            background-color: #ff8200;
+            color: white;
+            font-size: 16px;
+            float: left;
+            text-align: center;
+            line-height: 41px;
+        }
+        .box04{
+            color: #666;
+            /*font-size: 14px;*/
+            float: right;
+            /*line-height: 40px;*/
+            font:normal 14px/40px 'Microsoft YaHei';
+        }
+        .box04:hover{
+            color: blue;
+        }
+        .con3{
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin: 50px auto 0;
+
+        }
+        .con3 div {
+            background-color: gold;
+            width: 100px;
+            height: 100px;
+            margin: 15px;
+            /*display: inline-block; 转化为行内块 或者：*/
+            float:left;
+        }
+        .con4{
+            width: 700px;
+            height: 48px;
+            border: 1px solid gold;
+            margin:50px auto 0;
+        }
+        .con4 a{
+            width: 98px;
+            height: 48px;
+            border: 1px solid gold;
+            float: left;
+            color: pink;
+            font-size: 16px;
+            font-family: "Microsoft YaHei";
+            text-align: center;
+            line-height: 48px;
+            text-decoration: none;
+        }
+        .con4 a:hover{
+            color: white;
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="con01">
+        <div class="box01"></div>
+        <div class="box02"></div>
+    </div>
+    <div class="con02">
+        <div class="box03">新闻列表</div>
+        <div class="box04">更多></div>
+    </div>
+<!--    快捷键：.con3>div{$}*9-->
+    <div class="con3">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </div>
+    <div class="con4">
+        <a href="#">首页</a>
+        <a href="#">公司简介</a>
+        <a href="#">解决方案</a>
+        <a href="#">公司新闻</a>
+        <a href="#">行业动态</a>
+        <a href="#">招贤纳才</a>
+        <a href="#">联系我们</a>
+    </div>
+</body>
+</html>

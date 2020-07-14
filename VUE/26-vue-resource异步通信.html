@@ -1,0 +1,51 @@
+<!--vue.resouce的使用方法：
+    在引入vue.js 后再引入vue-resouce.js 后，全局调用：Vue.http.get()；实例调用：this.$http.get()
+    参数含义：
+    url 地址
+    [body] 可选参数，请求体，放入请求体，get请求数据放在url参数里，
+    [config] 可选参数，代表配置项，有特别需要的时候，如post请求时，使用post特殊请求头
+
+    get(url, [config])
+    head(url, [config])
+    delete(url, [config])
+    jsonp(url, [config])
+    post(url, [body], [config])
+    put(url, [body], [config])
+    patch(url, [body], [config])-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-resource.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var vm = new Vue();
+    //get请求：
+    vm.$http.get('./Domain.php?data=vr发起get请求')
+        //then 处理响应内容，then里传入处理响应数据的回调函数即可
+        .then(function (response) {
+            console.dir(response);
+        });
+    //post请求：
+    vm.$http.post('./Domain.php',{
+        data:'vr发起post请求'
+    },{//加入表单请求头格式(application/x-www-form-urlencoded)：使用post特殊请求头
+        emulateJSON:true
+    })
+    .then(function (response) {
+            console.dir(response);
+        });
+    //jsonp请求时 可以跨域请求数据，参数加在url中，属于get请求
+    vm.$http.jsonp('http://www.b.com')
+    .then(function (response) {
+        console.dir(response);
+    })
+</script>
+</body>
+</html>

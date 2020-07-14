@@ -1,0 +1,119 @@
+.navbar-brand{
+    padding: 1px 15px;
+}
+.navbar-brand img{
+    height: 50px;
+}
+.navbar-inverse{
+    background-color: #ff722b;
+    border-color:#ff722b;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color:white;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #c75922;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: white;
+}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #c75922;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: white;
+}
+.navbar {
+    margin-bottom: 0;
+}
+.jumbotron {
+    background: url(images/banner-bg.jpg) center center no-repeat;
+    padding: 25px 0;
+}
+.bannertitle{
+    margin-top: 47px;
+}
+@media (max-width: 1200px) {
+    .bannertitle{
+        margin-top: 30px;
+    }
+}
+@media (max-width: 992px) {
+    .bannertitle{
+        margin-top: 20px;
+    }
+}
+.banner-title{
+    font-size: 18px;
+    color: #ffff00;
+}
+.jumbotron .banner-detail{
+    font-size: 14px;
+    color: white;
+    line-height: 28px;
+}
+.active-info{
+    margin: 0;
+}
+.active-info h3{
+    margin-top: 0;
+    font-size: 30px;
+    color: #333;
+}
+.active-info p{
+    font-size: 14px;
+    color: #333;
+}
+.active-pic .thumbnail h4{
+    text-align: center;
+    font-size: 15px;
+    color: #333;
+}
+.active-pic .thumbnail{
+    max-width: 260px;
+    margin:0 auto 20px;
+}
+.bar001 {
+    background-color: #ff722b;
+    height: 30px;
+}
+.bar001 h5{
+    float: left;
+    color: white;
+    padding-left:5px ;
+    line-height: 30px;
+    margin: 0;
+}
+.bar001 a{
+    float: right;
+    line-height: 30px;
+    color: white;
+    padding-right: 5px;
+}
+.bar001 a:hover{
+    color: #c75922;
+}
+.good_con{
+    border: 1px solid gray;
+}
+.goods-list .col-lg-2{
+    width: 20%;
+    margin-top: 20px;
+}
+@media (max-width: 1200px) {
+    .goods-list .col-lg-2{
+        width: 20%;
+        float: left;
+    }
+}
+.good_con h4{
+    text-align: center;
+    font-size: 16px;
+}
+.good_con p{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}

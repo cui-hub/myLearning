@@ -1,0 +1,111 @@
+<!--事件函数表：
+    click() 鼠标点击事件 (input框常用)
+    scroll() 滚动条位置发生变化事件 (input框常用)
+    blur() 元素失去焦点
+    focus() 元素获得焦点
+    mouseover() 鼠标进入（进入子元素也触发）
+    mouseout() 鼠标离开（进入子元素也触发）
+    mouseenter() 鼠标进入（进入子元素不触发）
+    mouseleave() 鼠标离开（进入子元素不触发）
+    hover() 同事为mouseenter和mouseleave事件指定处理函数
+    ready() DOM加载完成
+    resize() 浏览器窗口大小发生变化
+    submit() 用户提交表单
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //在获得焦点的做事情：
+            /*$('#input01').focus(function () {
+                alert('获得焦点')
+            });*/
+
+            //focus()函数一般用来使文本框自动获得焦点：（类似于在input标签内加上autofocus属性）
+            $('#input01').focus();
+
+            $('#input01').blur(function () {
+                //alert('失去焦点');
+                var $value = $(this).val(); //val()获取input元素中的value值
+                //alert($value);
+
+
+            //鼠标移入，子元素也会触发：
+            $('.con').mouseover(function () {
+                alert('移入');
+            });
+            $('.con').mouseout(function () {
+                alert('移出');
+            });
+
+
+
+            //鼠标移入，子元素不会触发：
+            // $('.con2').mouseenter(function () {
+            //     alert('enter');
+            // });
+            // $('.con2').mouseleave(function () {
+            //     alert('leave');
+            // })  ;
+
+            //上面写法可以合并成下面写法：
+            $('.con2').hover(function () {alert('enter')},function () {alert('leave')});
+
+
+
+            $('#form').submit(function () {
+                //alert('submit');
+                return false;//阻止默认的表单提交
+            });
+
+             $(window).resize(function () {
+                 //alert('window size changed');
+                 var $w = $(window).width();
+                 document.title = $w;
+
+                 }
+             );
+            });
+        })
+    </script>
+    <style type="text/css">
+        .con{
+            width: 200px;
+            height: 200px;
+            background-color:gold ;
+        }
+        .box{
+            width: 100px;
+            height:100px;
+            background-color: green;
+        }
+        .con2{
+            width: 200px;
+            height: 200px;
+            background-color:gold ;
+        }
+    </style>
+</head>
+<body>
+<form action="http://www.baidu.com" id="form">
+<input type="text" name="dat01" id="input01">
+<input type="text" name="dat02" id="input02">
+    <input type="submit" name="" value="提交" id="submit">
+    <div class="con">
+        <div class="box"></div>
+    </div>
+    <br>
+    <br>
+    <div class="con2">
+        <div class="box"></div>
+    </div>
+</form>
+</body>
+</html>

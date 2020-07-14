@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        从对象或数组中提取数据，并赋值给变量
+        对象的解构赋值：
+            let{n, a} = {n:'toom',a:12},必须是已有的属性，但是不必须是所有属性
+        数组的解构赋值：
+            let [a,b] = [1,'kkkk']
+        
+     -->
+    <script>
+        let obj = {
+            name: 'curry',
+            age: 29
+        };
+
+        function showProfile({
+            name,
+            age
+        }) {
+            console.log(name, age)
+        };
+        showProfile(obj); //curry 29
+    </script>
+</body>
+
+</html>

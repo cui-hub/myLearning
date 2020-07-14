@@ -1,0 +1,205 @@
+<!--jquery中没有滚轮事件，原生js中滚轮事件不兼容，可以使用jquery的滚轮事件插件jquery.mousewheel.js
+函数节流：
+    有些事件触发非常频繁，如scroll，resize，mousemove事件，以及滚轮事件，在短期内触发多次，可以利用定时器来减少触发次数，实现函数节流
+    -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body,ul{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .pages_con{
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+        .pages{
+            height: 600px;
+            position: relative;
+        }
+        .page1{	background-color:orange;}
+        .page2{	background-color:lightgreen;}
+        .page3{	background-color:cyan;}
+        .page4{	background-color:pink;}
+        .main_con{
+            width:900px;
+	        height:400px;
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:-450px;
+            margin-top:-200px;
+            z-index: 9999;
+        }
+        .main_con .left_img{
+            width:363px;
+            height:400px;
+            float:left;
+            position:relative;
+            left:-50px;
+            opacity:0;
+            filter:alpha(opacity=0);
+            transition:all 1000ms ease 300ms;
+        }
+        .main_con .left_img img{
+            width: 363px;
+            position: absolute;
+            top: 50%;
+            margin-top:-120px;
+        }
+        .main_con .right_info{
+            width:500px;
+            height:300px;
+            margin-top:65px;
+            float:right;
+            font-family:'Microsoft Yahei';
+            font-size:20px;
+            line-height:40px;
+            color:#666;
+            text-indent:2em;
+            text-align:justify;
+            position:relative;
+            right:-50px;
+            opacity:0;
+            filter:alpha(opacity=0);
+            transition:all 1000ms ease 300ms;
+        }
+        .moving .main_con .left_img{
+            left:0;
+            opacity:1;
+            filter:alpha(opacity=100);
+        }
+
+        .moving .main_con .right_info{
+            right:0;
+            opacity:1;
+            filter:alpha(opacity=100);
+        }
+        .points{
+            width: 16px;
+            height: 130px;
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            margin-top: -65px;
+        }
+        .points li{
+            width:13px;
+            height:13px;
+            margin:16px 0;
+            border-radius:50%;
+            border:1px solid #666;
+            cursor:pointer;
+        }
+        .points .active{
+            background-color:#666;
+        }
+
+    </style>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="jquery.mousewheel.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $screen = $('.pages_con');
+            var $pages = $('.pages');
+            var $len = $pages.length;
+            var $h = $(window).height();
+            var timer = null;
+            var $points = $('.points li');
+
+            var $nowscreen = 0;
+            $pages.css({'height':$h});
+            $pages.eq(0).addClass('moving');
+
+            $('.points').delegate('li','click',function () {
+                $nowscreen = $(this).index();
+                $screen.animate({'top':-$h*$nowscreen},300);
+                $pages.eq($nowscreen).addClass('moving').siblings().removeClass('moving');
+                $points.eq($nowscreen).addClass('active').siblings().removeClass('active');
+            });
+
+            $(window).mousewheel(function (event,dat) {
+                //第二个参数dat是指鼠标滑轮滚动的方向，向下滚是 -1，向上滚是 1
+                clearTimeout(timer);//关键一步，进入时将计时器清掉。始终保证最后一次事件触发才会激活函数
+              timer = setTimeout(function () {
+                    if (dat==-1){
+                    $nowscreen++;
+                }
+                else {
+                    $nowscreen--;
+                }
+                if ($nowscreen<0){
+                    $nowscreen =0;
+                }
+                if ($nowscreen>$len-1){
+                    $nowscreen = $len-1;
+                }
+                $screen.animate({'top':-$h*$nowscreen},300);
+                $pages.eq($nowscreen).addClass('moving').siblings().removeClass('moving');
+                $points.eq($nowscreen).addClass('active').siblings().removeClass('active');
+
+                },200);
+
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="pages_con">
+        <div class="pages page1">
+            <div class="main_con">
+                <div class="left_img"><img src="imges/scenery01.jpg" alt=""></div>
+                <div class="right_info">
+                    易县位于保定市西北部，太行山北端东麓。地理坐标东经114°51'—115°37'，北纬39°02'—39°35'。易县总面积为2534平方公里。易县距北京120公里，天津160公里，保定60公里。易县总面积为2534平方公里。
+                </div>
+            </div>
+        </div>
+
+        <div class="pages page2">
+            <div class="main_con">
+                <div class="left_img"><img src="imges/scenery02.jpg" alt=""></div>
+                <div class="right_info">
+                    易县地处太行山区向华北平原过渡倾斜地带，十分之七为山地，与定兴县相邻的高陌乡是全县唯一平原乡，平均海拔324米，地势由西向东下降明显，流水落差大，易患水灾；山体多为侵蚀、剥蚀、岩溶地貌。
+                </div>
+            </div>
+        </div>
+
+        <div class="pages page3">
+            <div class="main_con">
+                <div class="left_img"><img src="imges/scenery03.jpg" alt=""></div>
+                <div class="right_info">
+                    易县属温带季风气候区，春秋干旱多风，夏季炎热多雨，春季平均气温3.2℃，夏季平均气温32.2℃，秋季平均气温-3.3℃，全年极端最低气温-23℃，极端最高气温41℃。冬季严寒少雪，四季分明。
+                </div>
+            </div>
+        </div>
+
+        <div class="pages page4">
+            <div class="main_con">
+                <div class="left_img"><img src="imges/scenery04.jpg" alt=""></div>
+                <div class="right_info">
+                    2018年，全县总户数208641户，年末总人口581244人。当年出生6130人，当年死亡2157人，人口自然增长率0.68%。全县常住人口564974人，较上年增长0.3%。其中，城镇人口195430人，城镇化率为34.59%。
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="points">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

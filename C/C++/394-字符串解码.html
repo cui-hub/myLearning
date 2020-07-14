@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var s = "2[abc2[d]]3[cd]ef";
+        console.log(s.match(/\d+\[\w*\]/g));//["2[d]", "3[cd]"]
+
+        var decodeString = function(s) {
+            let result = s.match(/\d+\[\w*\]/g);
+            console.log(result);
+            if(result){
+                let len = result.length;
+                for(let i = 0;i < len;i++){
+                    let str ='';
+                    let subStr = result[i].match(/\[\w*\]/)[0];
+                    let len = subStr.length;
+                    subStr = subStr.substring(1,len-1);
+                    for(let j = 0;j < parseInt(result[i].match(/\d*/)[0]);j++){
+                        str += subStr;
+                    }
+                    s = s.replace(result[i],str);
+                }
+                return decodeString(s);
+
+            }else{
+                return s;
+            }
+        };
+        console.log(decodeString(s));
+        console.log(decodeString("2[abc]3[cd]ef"));
+        console.log(decodeString('10[a]2[bc]'));
+        console.log(decodeString("3[a2[c]]"));
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!--页面中，一个大组件包含几个小组件是常见的，如果在小组件中使用大组件的数据：
+    1、父组件中定义了方法show
+    2、在#app范围内使用方法，在子组件中v-on绑定自定义事件 @func='show'
+    3、子组件的template中利用this.$emit()调用方法
+    4、子组件template元素中使用函数名（标签自定义方法名）-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p id="content" ref="myP">这是一个段落</p>
+    <input type="text" class="form-data" ref="myInput">
+    <h1 ref="myH1">标题</h1>
+    <button @click="test" >button</button>
+</div>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        methods:{
+            test:function () {
+                //希望获取p元素的文本内容，不用原生和jquery，vue提供了ref属性,只有在页面渲染完成后才能访问使用，钩子函数mounted或者绑定按钮事件等
+                console.log(this.$refs.myP.innerHTML)
+
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

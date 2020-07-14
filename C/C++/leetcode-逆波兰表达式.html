@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function evalRPN(token) {
+            let len = token.length;
+            let stack = []; //模拟栈
+            for (var i = 0; i < len; i++) {
+                if (token[i] == '+' || token[i] == '-' || token[i] == '*' || token[i] == '/') {
+                    if (stack.length < 2) return 0;
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    let c = 0;
+                    if (token[i] == '+') c = b + a;
+                    if (token[i] == '-') c = b - a;
+                    if (token[i] == '*') c = b * a;
+                    if (token[i] == '/') c = b / a;
+                    stack.push(c)
+                } else {
+                    stack.push(parseInt(token[i]));
+                }
+            };
+            return stack.pop();
+        }
+        console.log(evalRPN(["2", "1", "+", "3", "*"])); //9
+        console.log(evalRPN(["4", "+", "13", "5", "/", "+"])); //0
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 对于给定的n个位于同一二维平面上的点，求最多能有多少个点位于同一直线上
+                点共线，那么最容易想到的思路就是确定斜率，斜率相同不就共线了。但是还有两点特殊情况需要考虑，
+                一是当两个点重合时，无法确定一条直线，但这也是共线的情况，需要特殊处理。
+                二是斜率不存在的情况，由于两个点(x1, y1)和(x2, y2)的斜率k表示为(y2 - y1) / (x2 - x1)，那么当x1 = x2时斜率不存在，这种共线情况需要特殊处理*/
+
+
+        function maxPoints(pointsList) {
+            if (pointsList instanceof Array) { //检查传入的是不是数组
+                let len = pointsList.length;
+                if (len == 0) { //如果为空，返回0
+                    return 0;
+                };
+                if (len <= 2) { //不超过两个点，返回点的个数
+                    return len;
+                }
+                var map = new Map(); //创建map对象，来存储[斜率]:[个数]键值对
+                let result = 0; //最后返回的结果
+                for (var i = 0; i < len; i++) { //遍历点，作为基点
+                    let overlap = 0; // 与基点重合的点个数
+                    let vertical = 0; //与基点组成的斜率无穷大的点的个数
+                    let max = 0; //基点所在直线上最多的点数
+                    let rate = 0.0; //斜率
+                    for (var j = 0; j < len; j++) { //遍历另外一个点（包含基点），验证与基点的斜率
+                        let gapX = pointsList[i][0] - pointsList[j][0];
+                        let gapY = pointsList[i][1] - pointsList[j][1];
+                        if (gapX == 0 && gapY == 0) { //重合点
+                            overlap++;
+                            max = Math.max(max, overlap)
+                        } else if (gapX == 0 && gapY != 0) { //垂直线的点
+                            vertical++;
+                            max = Math.max(max, vertical);
+                        } else {
+                            rate = gapY / gapX;
+                            if (map.has(rate)) { //如果map中有rate，那么rate值+1
+                                map.set(rate, map.get(rate) + 1);
+                            } else {
+                                map.set(rate, 1);
+                            }
+                            max = Math.max(max, map.get(rate)) //每次遍历找出目前最多同直线的点数
+                        }
+
+                    }
+                    map.clear(); //更换基点前清空map，防止重复统计
+                    result = Math.max(result, max + overlap); //重复点也算上
+                }
+                return result;
+
+            } else {
+                throw new Error('请输入正确格式参数！')
+            }
+        };
+
+
+
+        //测试代码：
+        var count1 = maxPoints([
+            [1, 1],
+            [2, 2],
+            [3, 3]
+        ]);
+        var count2 = maxPoints([
+            [1, 2],
+            [3, 2],
+            [5, 3],
+            [4, 1],
+            [2, 3],
+            [1, 4]
+        ]);
+        console.log(count1); //3
+        console.log(count2); //4
+    </script>
+</body>
+
+</html>

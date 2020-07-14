@@ -1,0 +1,9 @@
+<!--webpack 学习见目录webpack-test/webpack-try！！！！！！
+
+    创建index.html main.js functions.js
+    functions.js创建一个函数，sum()，然后采用抛出的方式module.export = sum;
+    然后main.js 通过var sum = require('./functions');方式获取到sum函数，并console.log()处理
+    因为浏览器没办法接受require方式的js，所以采用打包，将main.js 打包成bundle.js，index.html中可以引用bundle.js不会出错
+    方法：选中目录打开终端：
+        C:\Users\Administrator\Desktop\webpack-test\webpack-try>webpack ./main.js ./bundle.js
+-->

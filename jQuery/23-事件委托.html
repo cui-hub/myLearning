@@ -1,0 +1,71 @@
+<!--
+事件委托：
+    利用事件冒泡的原理，把事件加到父级上，通过判断事件来源的子集，执行相应的操作。可以极大减少事件绑定次数，提高性能
+    还可以让其新加入的子元素也可以拥有相同的操作-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // alert($('.list #1').css('background-color'));
+            // $('.list li').click(function () {
+            //     if ($(this).css('background-color')==='rgb(0, 128, 0)'){
+            //         $(this).css({'background-color':'red'});
+            //     }
+            //     else{
+            //         $(this).css({'background-color':'green'});
+            //     }
+            // });
+
+            // 事件委托：
+            $('.list').delegate('li','click',function () {
+
+                if ($(this).css('background-color')==='rgb(0, 128, 0)'){
+                    $(this).css({'background-color':'red'});
+                }
+                else{
+                    $(this).css({'background-color':'green'});
+                }
+
+            });
+
+            var $li = $('<li>10</li>');
+            $('.list').append($li);//新建一个li标签，放入页面
+
+        })
+
+
+    </script>
+    <style type="text/css">
+        .list {
+            background-color: gold;
+            list-style: none;
+            padding: 10px;
+        }
+        .list li{
+            height: 30px;
+            background-color: green ;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<ul class="list">
+    <li id="1">1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+</ul>
+</body>
+</html>

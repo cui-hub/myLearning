@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var oDiv = document.getElementById('div1');
+            function Time() {
+                var sNow = new Date();
+                //alert(sNow);//Sun Feb 23 2020 19:41:16 GMT+0800 (中国标准时间),时间不可观
+                var iYear = sNow.getFullYear();
+                //alert(iYear);//2020
+                var iMonth = sNow.getMonth()+1;
+                //alert(iMonth);//弹出1，而现在是2月。因为月份是0-11，所以要+1
+                var iDate = sNow.getDate();
+                //alert(iDate);//23
+                var iWeek = sNow.getDay();
+                //alert(iWeek);//0
+                var iHour = sNow.getHours();
+                //alert(iHour);//19
+                var iMin = sNow.getMinutes();
+                //alert(iMin);//41
+                var iSec = sNow.getSeconds();
+                //alert(iSec);//16
+                function fnToweek() {
+                    switch (iWeek) {
+                        case 0:
+                            iWeek ='日';
+                            break;
+                        case 1:
+                            iWeek = '一';
+                            break;
+                        case 2:
+                            iWeek = '二';
+                            break;
+                        case 3:
+                            iWeek = '三';
+                            break;
+                        case 4:
+                            iWeek = '四';
+                            break;
+                        case 5:
+                            iWeek = '五';
+                            break;
+                        default:
+                            iWeek = '六';
+                    }
+            }
+            function fnToDouble(n) {
+                    if (n<10){
+                        return '0'+n;
+                    }
+                    else
+                    {
+                        return n;
+                    }
+            }
+
+            fnToweek();
+            var sTr = '当前时间：'+iYear+'年'+iMonth+'月'+iDate+'日 '+fnToDouble(iHour)+':'+fnToDouble(iMin)+':'+fnToDouble(iSec)+' 星期'+iWeek;
+                oDiv.innerHTML = sTr;
+            }
+            Time();//点进页面立刻显示时间，不用再等一秒
+            var Timer = setInterval(Time,1000);
+        }
+    </script>
+    <style type="text/css">
+        div{
+            text-align: center;
+            font-size: 30px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

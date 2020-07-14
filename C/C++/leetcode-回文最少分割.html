@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    给定一个字符串，返回把str全部切割成回文串的最少切割数。 输入描述:ABCBAEEE。 输出描述: 1
+    <script>
+        //思路1:闭包+递归
+        function cutStr(str) {
+            list = []; //用来存数分割后的字符串
+
+            function checkStr(str) { //检验str是否是回文
+                let rStr = str.split('').reverse().join('');
+                if (str === rStr) {
+                    return true;
+                }
+                return false;
+            }
+
+            var repeatCut = function(str) {
+                if (checkStr(str)) { //递归出口：本身是个回文，就添加到list并返回；
+                    list.push(str);
+                    return;
+                }
+                for (var i = str.length; i > 0; i--) { //找出最大回文，添加到list内，剩下的继续找
+                    if (checkStr(str.substring(0, i + 1))) {
+                        list.push(str.substring(0, i + 1));
+                        repeatCut(str.substring(i + 1, str.length));
+                    }
+                }
+            };
+
+            repeatCut(str);
+
+            var count = list.length - 1;
+            return {
+                list,
+                count
+            };
+        };
+
+
+        //测试：
+        console.log(cutStr('ABCBAEEE'));
+    </script>
+
+</body>
+
+</html>

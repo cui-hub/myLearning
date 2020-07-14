@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        .box{
+            background-color:gold;
+            width: 300px;
+            height: 200px;
+
+        }
+        body{
+            margin: 0;
+        }
+        .box2{
+            background-color: green;
+            width: 300px;
+
+        }
+    </style>
+</head>
+<body >
+    <div class="box">div元素</div>
+    <p class="box2">p元素</p>
+</body>
+</html>
+<!--元素类型：-->
+<!--1.块元素：div、p、ul、li、h1-h6、dl、dt 支持全部样式；没有设置宽度，默认父级宽度是我100%；盒子占据一行，即使设置宽度-->
+<!--2.内联元素：也称行内元素，包括a、span、em、b、strong、i
+    .支持部分样式（不支持宽、高、margin上下、padding上下）
+    . 宽高由内容决定
+    . 盒子并在一行
+    . 代码换行，盒子之间会产生间距
+    . 子元素是内联元素，父元素可以用test-align属性设置元素水平对齐方式-->
+<!--3.内联块元素:也叫内块元素，是新增的元素类型，没有元素属于此类别 display属性可以将块元素或者内联元素转化为内联块元素
+    . 支持全部样式
+    . 如果没有设置宽高，由内容决定
+    . 盒子并在一起
+    . 代码换行，盒子会产生间距
+    . 子元素是内联块元素，父元素可以用test-align属性设置元素水平对齐方式-->

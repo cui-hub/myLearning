@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            function fnTimeLeft() {
+                var oDiv = document.getElementById('div1');
+                //实际开发中，是服务器中的时间，否则会有人作弊（ajax）
+                var sNow = new Date();
+                //活动开始时间：
+                var sFuture = new Date(2020, 3, 30, 24, 0, 0);//四月要写3！！！
+                //alert(sFuture-sNow);//5800729019 ms
+                var sLeft = parseInt((sFuture - sNow) / 1000);
+                //alert(sLeft);//5800613 s
+                //计算天、时、秒：
+                var iDays = parseInt(sLeft / 86400);
+                var iHours = parseInt((sLeft % 86400) / 3600);
+                var iMins = parseInt(((sLeft % 86400) % 3600) / 60);
+                var iSecs = parseInt(sLeft % 60);
+
+                var sTr = '活动剩余时间：' + fnToDouble(iDays) + ':' + fnToDouble(iHours) + ':' + fnToDouble(iMins)+ ':' + fnToDouble(iSecs);
+                oDiv.innerHTML = sTr;
+            }
+            fnTimeLeft();//时间立即显示
+            setInterval(fnTimeLeft,1000);
+            function fnToDouble(n) {
+                if (n<10){
+                    return '0'+n;
+                }
+                else {
+                    return n;
+                }
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        div{
+            text-align: center;
+            font-size: 30px;
+            color: red;
+            margin-top:200px ;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

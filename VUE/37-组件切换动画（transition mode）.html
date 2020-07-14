@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="animate.css" type="text/css">
+    <style type="text/css">
+        .panel{
+            border: 1px solid black;
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- vue提供了新标签<component>,相当于万能组件，能够扮演任何组件，要搭配is属性使用
+    <component :is=要扮演的组件名></component>-->
+<div id="app">
+    <h3>技术文章</h3>
+    <a href="#" @click.prevent="com_name='php'">PHP</a>
+    <a href="#" @click.prevent="com_name='js'">前端</a>
+    <a href="#" @click.prevent="com_name='c'">c++</a>
+    <!-- transition 直接使用会导致动画堆叠的情况，要添加一个mode（动画过渡模式），out-in 上一个人组件已经out后，下一个再in -->
+    <transition mode="out-in" enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft">
+        <component :is="com_name"></component>
+    </transition>
+</div>
+
+<template id="php">
+    <div class="panel">php文章界面</div>
+</template>
+
+<template id="js">
+    <div class="panel">前端界面</div>
+</template>
+
+<template id="c">
+    <div class="panel">c++界面</div>
+</template>
+<script>
+    var tempphp = {
+        template:'#php'
+    };
+    var tempjs = {
+        template:'#js'
+    };
+    var tempc = {
+        template:'#c'
+    };
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            com_name:'php',
+        },
+        components:{
+            php:tempphp,
+            js:tempjs,
+            c:tempc
+        }
+    })
+</script>
+</body>
+</html>

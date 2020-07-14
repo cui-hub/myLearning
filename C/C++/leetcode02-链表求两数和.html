@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val) {
+         *     this.val = val;
+         *     this.next = null;
+         * }
+         */
+        /**
+         * @param {ListNode} l1
+         * @param {ListNode} l2
+         * @return {ListNode}
+         */
+        var addTwoNumbers = function(l1, l2) {
+            let node = new ListNode('head'); //哑节点
+            let curNode = node;
+            let add = 0;
+            let sum = 0;
+            while (l1 || l2) { //遍历最长
+                sum = add + (l1 ? l1.val : 0) + (l2 ? l2.val : 0);
+                curNode.next = new ListNode(sum % 10);
+                add = sum >= 10 ? 1 : 0;
+                if (l1) {
+                    l1 = l1.next;
+                }
+                if (l2) {
+                    l2 = l2.next;
+                }
+                curNode = curNode.next;
+            }
+            if (add == 1) {
+                curNode.next = new ListNode(add);
+            }
+            return node.next;
+        };
+        console.log(addTwoNumbers([5], [5]))
+    </script>
+</body>
+
+</html>
