@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="oDiv">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <li>5</li>
+    </div>
+    <script>
+        function myDelegate(supElement,selector,eventname,callback){
+            //考虑兼容性
+            if(supElement.addEventListener){
+                supElement.addEventListener(eventname,eventfn);
+            }else{
+                supElement.attachEvent('on'+eventname,eventfn);
+            }
+
+            function eventfn(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if(matchSelector(target,selector)){
+                    if(callback){
+                        callback.call(target,e);
+                    }
+                }
+            }
+
+            function matchSelector(element,selector){
+                // if id
+                if(selector.charAt(0) === '#'){
+                    return element.id === selector.slice(1);
+                }
+                if(selector.charAt(0) === '.'){
+                    return element.className === selector.slice(1);
+                }
+                return element.tagName.toLowerCase() === selector.toLowerCase();
+                
+            }
+        }
+
+        var odiv = document.getElementById('oDiv');
+        myDelegate(odiv,'a','click',function(){
+            console.log(this.innerText)
+        })
+
+    </script>
+</body>
+</html>
