@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Find(arr,num){
+            let m = arr.length;
+            let n = arr[0].length;
+            let i = 0;
+            let j = n-1;
+            while(arr[i][j] != num && i<m && j>=0){
+                if(arr[i][j] > num) {
+                    j--;
+                }else{
+                    i++;
+                }
+            }
+            if(i >= m || j < 0){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        let arr = [
+            [1,2,8,9],
+            [2,4,9,12],
+            [4,7,10,13],
+            [6,8,11,15]
+        ]
+        console.log(Find(arr,7))
+        console.log(Find(arr,5))
+    </script>
+</body>
+</html>

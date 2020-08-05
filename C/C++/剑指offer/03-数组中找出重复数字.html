@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 时间复杂度为O（n),空间复杂度为O（1）但是要改变数组
+        let checkRepeatedArr = function(arr){
+            let len = arr.length;
+            for(let i = 0;i < len;i++){
+                let m = arr[i];
+                if(m !== i){
+                    if(m !== arr[m]){
+                        arr[i] = arr[m];
+                        arr[m] = m;
+                    }else{
+                        return m;
+                    }
+                }
+            }
+        }
+        console.log(checkRepeatedArr([3,1,0,2,5,3,4,5,8,7,6,5]))
+
+        // 2. 如果要求空间复杂度为O（1）且不改变数组情况下，则可以用二分查找，时间复杂度O（nlogn）
+        let checkRepeatedArr2 = function(arr,start,end){
+            let middle =(start + end) % 2 == 0 ? (start + end)/2 : (start + end-1)/2;  
+            if(start == end && count(arr,start,end) > 1){
+                return start;
+            }
+            if(count(arr,start,middle) > middle-start+1 ){
+                return checkRepeatedArr2(arr,start,middle)
+            }else if(count(arr,middle+1,end) > end-middle){
+                return checkRepeatedArr2(arr,middle+1,end)
+            }
+               
+        }
+        let count = function(arr,start,end){
+                let count = 0;
+                for(let i = 0;i<arr.length;i++){
+                    if(arr[i]<=end && arr[i]>=start){
+                        count++;
+                    }
+                }
+                return count;
+            }
+        console.log(checkRepeatedArr2([1,3,5,4,3,2,6,7],1,7))
+    </script>
+</body>
+</html>

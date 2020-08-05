@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 先定义栈和堆结构
+        function Stack(){
+            this.arr = [];
+            this.push = function(val){
+                this.arr.unshift(val);
+            }
+            this.pop = function(){
+                if(this.arr.length == 0){
+                    return 'Empty !'
+                }
+                return this.arr.shift();
+            }
+            this.size = function(){
+                return this.arr.length;
+            }
+        }
+
+        function Queue(){
+            this.arr = [];
+            this.appendTail = function(val){
+                this.arr.unshift(val);
+            }
+            this.deleteHead = function(){
+                if(this.arr.length == 0){
+                    return 'Empty !'
+                }
+                return this.arr.pop();
+            }
+            this.size = function(){
+                return this.arr.length;
+            }
+        }
+        // 用两个栈实现队列：
+        function Cqueue(){
+            this.stack1 = new Stack();
+            this.stack2 = new Stack();
+            this.appendTail = function(val){
+                this.stack1.push(val);
+            }
+            this.deleteHead = function(){
+                if(this.size() <= 0){
+                    return 'Empty !'
+                }
+                if(this.stack2.size()<=0 ){
+                    while(this.stack1.size()>0){
+                        let val = this.stack1.pop();
+                        this.stack2.push(val)
+                    }
+                }
+                return this.stack2.pop();
+            }
+            this.size = function(){
+                return this.stack1.size() + this.stack2.size();
+            }
+        }
+
+        // 用两个队列实现栈：
+        function Cstack(){
+            this.queue1 = new Queue();
+            this.queue2 = new Queue();
+            this.push = function(val){
+                if(this.queue1.size() == 0){
+                    this.queue2.appendTail(val)
+                }else{
+                    this.queue1.appendTail(val)
+                }
+            }
+            this.pop = function(){
+                if(this.queue1.size() != 0){
+                    while(this.queue1.size() > 1){
+                        let val = this.queue1.deleteHead();
+                        this.queue2.appendTail(val);
+                    }
+                    return this.queue1.deleteHead();
+                }else if(this.queue2.size() != 0){
+                    while(this.queue2.size() > 1){
+                        let val = this.queue2.deleteHead();
+                        this.queue1.appendTail(val);
+                    }
+                    return this.queue2.deleteHead();
+                }else{
+                    return 'Empty !'
+                }
+            }
+            this.size = function(){
+                return this.queue1.size() + this.queue2.size()
+            }
+        }
+        let cstack = new Cstack();
+        cstack.push(1);
+        cstack.push(2);
+        cstack.push(3);
+        cstack.push(4);
+        cstack.push(5);
+        console.log(cstack.size());
+        console.log(cstack.pop());
+        console.log(cstack.pop());
+        console.log(cstack.pop());
+        console.log(cstack.pop());
+        console.log(cstack.pop());
+        console.log(cstack.pop());
+        console.log(cstack.size());
+
+
+
+    </script>
+</body>
+</html>
