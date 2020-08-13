@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./题目/05.PNG" alt="">
+    <script>
+        function catchElf(hp,skill){
+            let LowestAttackTimes = hp;
+            let lowestHp = hp;
+            let len = skill.length;
+            let combol = [];
+            function getRealCombol(combol){
+                let i = combol.length -1;
+                while(!combol[i] && i>=0){
+                    combol.pop()
+                    i--;
+                }
+                return combol;
+                
+            }
+            function dfs(x,hp){
+                if(hp <= 0){
+                    combol = getRealCombol(combol);
+                    let leftHp = hp + combol[combol.length-1];
+                    let attackTimes = combol.length - 1;
+                    if(lowestHp > leftHp){
+                        lowestHp = leftHp;
+                        LowestAttackTimes = attackTimes;
+                    }else if(lowestHp == leftHp){
+                        if(LowestAttackTimes > attackTimes){
+                            LowestAttackTimes = attackTimes
+                        }
+                    }
+
+                    return;
+                }
+                for(let i = 0;i<len;i++){
+                    if(hp > 0){
+                        combol[x] = skill[i];
+                        dfs(x+1,hp-skill[i]);
+                        combol[x] = null;
+                    }
+                }
+            }
+            dfs(0,hp);
+            console.log(lowestHp);
+            console.log(LowestAttackTimes);
+        }
+        catchElf(200,[33,50])
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./题目/04.PNG" alt="">
+    <script>
+        function findSubCollections(collection,sum){
+            let flag = false;
+            let len = collection.length;
+            let ans = new Array(len).fill(0);
+            function dfs(x,sum){
+                if(sum == 0){
+                    flag = true;
+                    console.log(ans);
+                    return;
+                }
+                for(let i = x; i < len ;i++){
+                    if(sum - collection[i] >=0 && !flag){
+                        ans[x] = collection[i];
+                        dfs(i+1,sum-collection[i]);
+                        ans[x] = 0;
+                    }
+                }
+            }
+            
+            dfs(0,sum);
+            if(!flag){
+                console.log('No solution!')
+            }
+        }
+        findSubCollections([3,2,6,3],10)
+    </script>
+</body>
+</html>

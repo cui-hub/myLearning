@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./题目/01.PNG" alt="">
+    <script>
+        function fullPermutation(n){
+            let ans = new Array(n+1).fill(0);
+            let status = new Array(n+1).fill(0);
+
+            function dfs(x){// x代表盒子数；n代表最大自然数
+
+                if(x>n){ // 出口条件
+                    console.log(ans)
+                    return;
+                }
+
+                for(let i = 1;i <= n;i++){
+                    if(!status[i]){
+                        status[i] = 1;
+                        ans[x] = i;
+                        dfs(x+1);
+                        status[i] = 0; // 最关键一步，回溯，恢复状态
+                    }
+                }
+            }
+
+            return dfs;
+        }
+        
+        fullPermutation(4)(1);
+    </script>
+</body>
+</html>

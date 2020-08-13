@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./题目/02.PNG" alt="">
+    <script>
+        function mazFindPath(maz,x,y){
+            let n = maz.length;
+            let pathNum = 0;
+            let dx = [1,-1,0,0,1,1,-1,-1];
+            let dy = [0,0,1,-1,-1,1,-1,1];
+            function dfs(x,y){
+                if(x == n-1 && y== n-1){
+                    pathNum ++;
+                    return;
+                }
+                for(let i = 0;i < 8 ;i++){
+                    let xx = x + dx[i];
+                    let yy = y + dy[i];
+                    if( xx>=0 && xx<n && yy>=0 && yy<n && maz[xx][yy] == 0 ){  // maz[xx][yy] == 0 条件放后面，否则报错
+                        maz[xx][yy] = 1;
+                        dfs(xx,yy);
+                        maz[xx][yy] = 0;
+                    }
+                }
+            }
+            dfs(x,y);
+            return pathNum;
+        }
+        let maz = [
+            [0,0,0],
+            [0,1,1],
+            [1,0,0]
+        ]
+        maz[0][0] = 1; // 先将初始位置设为1， 因为递归是从第二个位置开始的
+        console.log(mazFindPath(maz,0,0));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 二分查找
+        function min(arr){
+            let len = arr.length;
+            if(len ==1){
+                return arr[0];
+            }if(len == 0){
+                return null;
+            }
+            if(arr[0] < arr[len-1]){ // 顺序排列直接返回第一个值
+                return arr[0];
+            }
+            let left = 0;
+            let right = len-1;
+            let midIndex = Math.floor((left+right)/2);
+            while(left < right){
+                if(right - left == 1){
+                    midIndex = right;
+                    break;
+                };
+                if(arr[left] == arr[midIndex] == arr[right]){ // 只能顺序查找
+                    return minInOrder(arr);
+                }
+                if(arr[left] <= arr[midIndex]){
+                    left = midIndex;
+                }else if(arr[right] >= arr[midIndex]){
+                    right = midIndex;
+                }
+                midIndex = Math.floor((left+right)/2);
+            }
+            return arr[midIndex]
+
+        }
+        function minInOrder(arr){
+            let result = arr[0];
+            arr.forEach(item =>{
+                if(item < result){
+                    result = item;
+                }
+            })
+            return result;
+        }
+
+        console.log(min([3,4,5,1,2]));
+        console.log(min([3,4,5,1,2,3]));
+        console.log(min([1,2,3,4,5]));
+        console.log(min([1,0,1,1,1]));
+        console.log(min([1,1,1,0,1]));
+
+    </script>
+</body>
+</html>

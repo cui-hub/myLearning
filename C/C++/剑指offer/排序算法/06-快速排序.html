@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function quickSort(arr,low,high){
+            let len = arr.length,
+                left = typeof low == 'number' ? low : 0,
+                right = typeof high == 'number' ? high : len-1,
+                pos;
+            if(left < right){
+                pos = findPos(arr,left,right);
+                quickSort(arr,left,pos-1);
+                quickSort(arr,pos+1,right)
+            }
+            return arr
+        };
+        function findPos(arr,low,high){
+            let val = arr[low];
+            while(low < high){
+                while(arr[high] >= val && low < high){ // 判断条件中的>=千万不能写成>,否则死循环
+                    high--
+                }
+                arr[low] = arr[high];
+                while(arr[low] <= val && low < high){
+                    low++
+                }
+                arr[high] = arr[low]
+            }
+            arr[high] = val;
+            return high;
+        }
+        let a = [7,12,2,6,8,4,3,2,9,0,-1]
+        
+        console.log(quickSort(a,0,10))
+    </script>
+</body>
+</html>

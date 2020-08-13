@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="./题目/03.PNG" alt="">
+    <script>
+        function natureDivide(n,x,rest){
+            let ans = new Array(n+1).fill(0);
+            function dfs(x,rest){
+                if(rest <= 0){
+                    console.log(ans);
+                    return;
+                }
+                for(let i =1 ;i<=rest;i++){
+                    ans[x] = i;
+                    if(i != n && ans[x] >= ans[x-1]){ // 不能是4一个数 并且不能重复计数，例如1+2 和 2+1只能算一次
+                        dfs(x+1,rest-i)
+                    }
+                    ans[x] = 0;
+                }
+            }
+            return dfs(x,rest);
+        }
+        natureDivide(4,1,4)
+    </script>
+</body>
+</html>

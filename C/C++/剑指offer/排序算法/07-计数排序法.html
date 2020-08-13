@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 计数排序法 :不能排序含有负数，非整数的数列
+        function countSort(arr){
+            let max=0;
+            for(let i=0;i<arr.length;i++){
+                max = Math.max(max,arr[i])
+            }
+            let baseArr = new Array(max+1).fill(0);
+            for(let i=0;i<arr.length;i++){
+                baseArr[arr[i]] += 1;
+            }
+            arr = [];
+            for(let i = 0; i<baseArr.length;i++){
+                while(baseArr[i]){
+                    arr.push(i);
+                    baseArr[i]--
+                }
+            }
+            return arr;
+
+        }
+        console.log(countSort([7,12,2,6,8,4,3,2,9,0]))
+    </script>
+</body>
+</html>

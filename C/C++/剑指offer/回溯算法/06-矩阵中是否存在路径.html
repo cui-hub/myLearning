@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hasPath(matrix,str){
+            let res = false;
+            let dx = [1,-1,0,0];
+            let dy = [0,0,1,-1];
+            let rows = matrix.length;
+            let cols = matrix[0].length;
+            let len = str.length;
+            let visited = Array.from(new Array(rows),()=>new Array(cols).fill(0));
+            // console.log(visited)
+            function dfs(row,col,strLength){
+                if(strLength == len && !res){
+                    res = true;
+                    return ;
+                }
+                for(let i = 0; i<4 ;i++){
+                    let nextRow = row + dx[i];
+                    let nextCol = col + dy[i];
+                    if( nextRow < rows && nextRow >=0 &&nextCol < cols && nextCol >=0 &&matrix[nextRow][nextCol] == str[strLength]  && !visited[nextRow][nextCol] && !res){
+                        visited[nextRow][nextCol] = 1;
+                        dfs(nextRow,nextCol,strLength+1);
+                        visited[nextRow][nextCol] = 0;
+                    }
+                }
+            }
+            // 因为每个点都有可能是路径起点
+            for(let row = 0;row<rows;row++){
+                for(let col = 0;col<cols;col++){
+                    if(matrix[row][col] == str[0]){
+                        visited[row][col] = 1;
+                        dfs(row,col,1);
+                        visited[row][col] = 0;
+                    }
+                }
+            }
+            return res;
+        }
+        let matrix = [
+            ['a','b','t','g'],
+            ['c','f','c','s'],
+            ['j','d','e','h']
+        ]
+        console.log(hasPath(matrix,'bfce'))
+        console.log(hasPath(matrix,'abfb'))
+    </script>
+</body>
+</html>

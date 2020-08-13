@@ -6,6 +6,25 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <a href="https://blog.csdn.net/weixin_40596016/article/details/79711682">url</a>
+    <script>
+        // 冒泡排序 O(n2) + O(1)
+        function bubleSort(arr){
+            let len = arr.length;
+            for(let i = 0;i < len ;i++){
+                for(let j = 0; j<len-i-1;j++){
+                    
+                    if(arr[j] > arr[j+1]){
+                        let temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                        
+                    }
+                }
+            }
+            return arr;
+        }
+        console.log(bubleSort([12,2,6,8,4,3,2,9,0,-1]))
+    </script>
 </body>
 </html>
