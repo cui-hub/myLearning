@@ -80,11 +80,14 @@
         // 简单的节流函数-定时器锁
         function throttle(func, wait, mustRun) {
             var timer = null;
+            var timeout;
             return function() {
                 var context = this,
                     args = arguments;
                 // 如果达到了规定的触发时间间隔，触发 handler
                 if (!timer) {
+                    timer = true;
+                    clearTimeout(timeout)
                     timeout = setTimeout((func) => {
                         func.apply(context, args);
                         timer = null;

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent{
+            background-color: aqua;
+            width: 100px;
+            height: 100px;
+            padding: 50px;
+            border: solid 20px rgba(0,0,0,0.5);
+            margin: 50px auto;
+            position: relative;
+
+        }
+        .son{
+            height: 50px;
+            width: 50px;
+            background-color: red;
+            position: absolute;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="son"></div>
+    </div>
+    <script >
+
+        let xhr = new XMLHttpRequest();
+        let url = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597665853235&di=0706f5f499546438b4511fac68890491&imgtype=0&src=http%3A%2F%2Fimg2018.cnblogs.com%2Fblog%2F1613061%2F201903%2F1613061-20190313230733966-2135984356.png'
+        xhr.open('get',url)
+    </script>
+</body>
+</html>

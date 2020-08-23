@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Array.prototype._reduce = function(fn,initVal){
+            let res;
+            let hasInitVal = 0;
+            let arr = [].slice.call(this)
+            if(arguments.length == 2){
+                arr.unshift(initVal);
+                hasInitVal = -1;
+            }
+            res = arr[0];
+            for(let i = 1;i<arr.length;i++){
+                res = fn.call(null,res,arr[i],i+hasInitVal,this);
+            }
+            return res
+        }
+
+        let arr = [1,2,3,4,5,6];
+        let res = arr.reduce((x,y,i,t)=>{
+            console.log(i,t)
+            return x+y;
+        },1)
+        console.log(res)
+        let res2 = arr._reduce((x,y,i,t)=>{
+            console.log(i,t)
+            return x+y;
+        },1)
+        console.log(res2)
+    </script>
+</body>
+</html>

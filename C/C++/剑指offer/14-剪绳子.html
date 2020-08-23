@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 动态规划
+        // f(n) = f(i)*f(n-i)
+        function maxSolution(len){
+            let dp = new Array(len+1);
+            if(len < 2){
+                return 0;
+            }
+            if(len == 2){
+                return 1;
+            }
+            if(len == 3){
+                return 2;
+            }
+            dp[0] = 0;
+            dp[1] = 1;
+            dp[2] = 2;
+            dp[3] = 3;
+            let max = 0;
+            for (let i = 4; i <= len; i++) {
+               max = 0;
+               for(let j = 1; j <= Math.floor(i/2);j++){
+                   let res = dp[j] * dp[i-j];
+                   max = Math.max(max,res);
+               }
+               dp[i] = max;
+            }
+            return dp[len]
+        }
+        console.log(maxSolution(12))
+        console.log(maxSolution(20))
+
+        // 贪婪算法 可以发现，5是第一个出现乘积大于自身的数字，而且如果讲一个绳子切两刀，最大乘积出现在n/2处
+        function maxSolution2(len){
+            if(len < 2){
+                return 0;
+            }
+            if(len == 2){
+                return 1;
+            }
+            if(len == 3){
+                return 2;
+            }
+            if(len == 4){
+                return 4;
+            }
+            let squareTimes = Math.floor(len/3);
+            if(len%3 == 1){
+                return 3**(squareTimes-1) * 4;
+            }else if(len%3 == 0){
+                return 3**squareTimes;
+            }else{
+                return 3**squareTimes * (len%3);
+            }
+        }
+        console.log(maxSolution2(8));
+        console.log(maxSolution2(12));
+        console.log(maxSolution2(20));
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function _new(fn,...args){
+            let obj = {};
+            obj.__proto__ = fn.prototype;
+            // fn.apply(obj,args); // 等同于下面的写法
+            fn.prototype.constructor.apply(obj,args)
+            return obj;
+        }
+
+        function Dog(name,food){
+            this.name = name;
+            this.food = food;
+        }
+        Dog.prototype.cate='animal'
+        Dog.prototype.eat = function(){
+            console.log(`${this.name} likes eating ${this.food}`)
+        }
+        let a = new Dog('Lily','meat');
+        let b = _new(Dog,'Lily','meat');
+        a.eat()
+        b.eat()
+        console.log(a);
+        console.log(b)
+    </script>
+</body>
+</html>
