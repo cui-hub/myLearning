@@ -7,48 +7,23 @@
 </head>
 <body>
     <script>
-        function longestRobotPath(m,n,k){
-            let passed = Array.from(new Array(m),()=>new Array(n).fill(0))
-            let canReach = Array.from(new Array(m),()=>new Array(n).fill(0));
-            let dx = [1,-1,0,0];
-            let dy = [0,0,1,-1];
-            let boxNum = 0;
-            function sum(n){
-                let sum = 0;
-                while(n>0){
-                    sum += n % 10;
-                    n = (n -( n % 10)) / 10;
-                }
-                return sum;
+    let count = 0;
+    let ans = new Array(3);
+    function dfs(x,leftNum){
+        if(x==3 ){
+            if( leftNum == 0){
+                console.log(ans)
+                 count++;
             }
-            function dfs(x,y){
-                if(sum(x) + sum(y) > k){
-                    return;
-                }
-                for(let i = 0;i < 4; i++){
-                    let xx = x + dx[i];
-                    let yy = y + dy[i];
-                    if(xx>=0 && xx< m && yy>=0 && yy<n && sum(xx) + sum(yy) <= k && !passed[xx][yy]){
-                        passed[xx][yy] = 1;
-                        canReach[xx][yy] = 1;
-                        dfs(xx,yy);
-                        passed[xx][yy] = 0;
-                    }
-                }
-            }
-            passed[0][0] = 1;
-            canReach[0][0] = 1;
-            dfs(0,0);
-            // console.log(sum(589))
-            for(let i = 0; i< m; i++){
-                for(let j = 0; j< n;j++){
-                    boxNum += canReach[i][j];
-                }
-            }
-            console.log(canReach)
-            return boxNum;
+           return ;
         }
-        console.log(longestRobotPath(100,100,2))
+        for(let i = 0; i<=leftNum;i++){
+            ans[x] = i;
+            dfs(x+1,leftNum-i);
+        }
+    }
+    dfs(0,7);
+    console.log(count);
     </script>
 </body>
 </html>

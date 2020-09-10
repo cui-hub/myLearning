@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function NodeList(val){
+      this.val = val;
+      this.next = null;
+    }
+
+    function deleteNode(headList,deletednode){
+      // 如果链表或者需要删除的节点不存在
+      if(!headList || !deletednode){
+        return 'Illegal Input';
+      }
+      // 要删除的节点非尾结点
+      if(!headList.next){
+        let nextNode = deletednode.next;
+        deletednode.val = nextNode.val;
+        deletednode.next = nextNode.next;
+        nextNode = null;
+        // 如果头结点即为要删除的节点
+      }else if(headList == deletednode){
+        deletednode = null;
+        headList = null;
+      }
+      // 删除尾结点得找到前一个节点
+      else{
+        let curNode = headList;
+        while(curNode.next != deletednode){
+          curNode = curNode.next;
+        }
+        curNode.next = null;
+        deletednode = null;
+      }
+    }
+  </script>
+</body>
+</html>

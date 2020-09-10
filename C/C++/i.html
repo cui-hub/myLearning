@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div data-ppp="自定义属性" id='div'>ddd</div>
+    <script>
+        function show(val){
+            // console.log(val.getAttribute('data-ppp'))
+            console.log(val)
+        }
+        let div = document.getElementById('div');
+        div.onclick = function(e){
+            console.log(e)
+        }
+    </script>
+</body>
+</html>

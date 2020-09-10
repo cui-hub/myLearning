@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function power(base,exponent){
+      if(exponent == 0){
+        if(base == 0){
+          return 'NO sense'
+        }else{
+          return 1;
+        }
+      }
+      if(exponent<0){
+        exponent = -exponent;
+        let result = powerWithUnsignedExponent(base,exponent)
+        return 1/result;
+      }
+      if(exponent>0){
+        let result = powerWithUnsignedExponent(base,exponent)
+        return result;
+      }
+    }
+    function powerWithUnsignedExponent(base,exponent){
+      if(exponent == 0){
+        return 1;
+      }
+      if(exponent == 1){
+        return base;
+      }
+      let res = powerWithUnsignedExponent(base,exponent>>1);
+      res *= res;
+      if(exponent & 1){
+        res *= base;
+      }
+      return res;
+    }
+    console.log(power(2,-4));
+  </script>
+</body>
+</html>

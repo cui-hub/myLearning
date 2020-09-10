@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // dp[i][j]=max(dp[i-1][j],dp[i-1][j-w[i][k]]+v[i][k])
+    let line = readline().split(' ');
+    let money = parseInt(line[0])/10;
+    let n = parseInt(line[1]);
+    let primary = [];
+    let adhere = {};
+    for(let i = 0; i<n ;i++){
+        let arr = readline().split(' ');
+        if(arr[2] == 0){
+            primary.push(arr.slice(0,2));
+        }else{
+            if(adhere[parseInt(arr[2])-1]){
+                adhere[parseInt(arr[2])-1].push(arr.slice(0,2));
+            }else{
+                adhere[parseInt(arr[2])-1] = [];
+                adhere[parseInt(arr[2])-1].push(arr.slice(0,2));
+            }
+        }
+    }
+    let price = [];
+    let value = [];
+    primary.forEach((item,index)=>{
+        let priceTemp = [];
+        let valueTemp = [];
+        priceTemp.push(parseInt(item[0])/10);
+        valueTemp.push(parseInt(item[0]) * parseInt(item[1]));
+        if(adhere[index]){
+            priceTemp.push(priceTemp[0] + parseInt(adhere[index][0][0])/10);
+            valueTemp.push(valueTemp[0] + parseInt(adhere[index][0][0]) * parseInt(adhere[index][0][1]));
+            if(adhere[index].length>1){
+                priceTemp.push(priceTemp[0] + parseInt(adhere[index][1][0])/10);
+                valueTemp.push(valueTemp[0] + parseInt(adhere[index][1][0]) * parseInt(adhere[index][1][1]));
+                priceTemp.push(priceTemp[0] + parseInt(adhere[index][0][0])/10 + parseInt(adhere[index][1][0])/10);
+                valueTemp.push(valueTemp[0] + parseInt(adhere[index][0][0]) * parseInt(adhere[index][0][1]) + parseInt(adhere[index][1][0]) * parseInt(adhere[index][1][1]));
+            }
+        }
+        price.push(priceTemp);
+        value.push(valueTemp);
+    })
+    price.unshift([]);
+    value.unshift([]);
+    let m = primary.length;
+    let dp = Array.from(new Array(m+1),()=>new Array(money+1).fill(0));
+    for(let i = 1 ;i<=m;i++){
+        for(let j = 1;j <= money;j++){
+            for(let k = 0; k<price[i].length;k++){
+                if(price[i][k]<=j){
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i-1][j-price[i][k]] + value[i][k]);
+                }
+            }
+        }
+    }
+    print(dp[m][money])
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>

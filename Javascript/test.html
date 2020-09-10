@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="https://cdn.shopify.com/s/files/1/1545/3617/files/SH01_User_Manaul.pdf" download="test.pdf" onclick="download">download</a>
+  <script>
+    var isSupportDownload = 'download' in document.createElement('a');
+    console.log(isSupportDownload)
+    console.log('㇓'.charCodeAt(0).toString(16))
+    function exchangeElement(curElement,upperElement){
+      let r = curElement;
+      curElement = upperElement;
+      upperElement = r;
+    }
+    let arr = [{1:'l',2:'k'},{3:'p'},{4:'j'}];
+    console.log(arr)
+    exchangeElement(arr[1],arr[2]);
+    console.log(arr)
+    let r = arr[1];
+    arr[1] = arr[2];
+    arr[2] = r;
+    console.log(arr)
+  </script>
+  <script src="http://music.163.com/api/song/lyric/?id=1305035065&lv=-1&csrf_token="></script>
+</body>
+</html>

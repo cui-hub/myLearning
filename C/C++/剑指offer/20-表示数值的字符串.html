@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function isNum(str){
+      if(str.length == 0){
+        return true;
+      }
+      let i = 0;
+      let len = str.length;
+      let result = scanInteger(str,i);
+      let isNumber = result[0];
+      i = result[1];
+      if(str[i] == '.'){
+        i++;
+        result = scanUnsignedIntger(str,i);
+        isNumber = isNumber || result[0];
+        i = result[1];
+      }
+      if(str[i] == 'e' || str[i] == 'E'){
+        i++;
+        result = scanInteger(str,i);
+        isNumber = isNumber && result[0];
+        i = result[1];
+      }
+      return isNumber && i==len;
+    }
+
+    function scanInteger(str,i){
+      if(str[i] == '+' || str[i] == '-'){
+        i++;
+      }
+      return scanUnsignedIntger(str,i);
+    }
+
+    function scanUnsignedIntger(str ,i){
+      let before = i;
+      while(str[i] && parseInt(str[i]) >= 0 && parseInt(str[i])<=9){
+        i++;
+      }
+      return [i>before,i];
+    }
+    // console.log(scanUnsignedIntger('12',0))
+    console.log(isNum('+100'));
+    console.log(isNum('5e2'));
+    console.log(isNum('-123'));
+    console.log(isNum('3.1416'));
+    console.log(isNum('-1.1E-16'));
+    console.log(isNum('12e'));
+    console.log(isNum('1a3.14'));
+    console.log(isNum('1.2.3'));
+    console.log(isNum('+-5'));
+    console.log(isNum('12e+5.4'));
+  </script>
+</body>
+</html>

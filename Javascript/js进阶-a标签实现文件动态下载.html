@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">下载</button>
+  
+  <script>
+    // 借助Base64实现任意文件下载
+    var downloader = function(domImg,filename){
+      // 创建隐藏可下载链接
+      let eleLink = document.createElement('a');
+      eleLink.download = filename;
+      eleLink.style.display = 'none';
+
+      let canvas = document.createElement('canvas');
+      let context = canvas.getContext('2d')
+      let width = domImg.naturalWidth;
+      let height = domImg.naturalheight;
+      context.drawImage(domImg,0,0);
+      eleLink.href = canvas.toDataURL('image/jpg');
+      console.log(eleLink.href)
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      document.body.removeChild(eleLink);
+    }
+    
+    let url = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597764948090&di=aeacc2a34c4ab6ff09061e686ba445ee&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853'
+    let img = new Image();
+    // img.crossOrigin = '';
+    console.log(img.crossOrigin)
+    img.src = url;
+    img.onload = function (){
+      alert('成功')
+    }
+    document.getElementById('btn').onclick = function(){
+      // alert('1111')
+      downloader(img,'text.jpg')
+    }
+  </script>
+</body>
+</html>

@@ -10,12 +10,7 @@
 <body>
     Object.create()函数的作用：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create">MDN</a>
     <script>
-        //方法1：通过空对象+原型
-        function Create1(Fn) {
-            let obj = {};
-            obj.__proto__ = new Fn();
-            return obj;
-        }
+     
 
         //方法2：通过空函数+原型
         function Create2(Fn) {

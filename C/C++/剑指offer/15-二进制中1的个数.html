@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    // 常规解法 O(32)
+    function numberOf1(num){
+      if(num<0){
+        num = -num;
+      }
+      let count = 0;
+      let flag =1;
+      while(flag){
+        if(flag & num){
+          count++
+        }
+        flag = flag << 1;
+      }
+      return count;
+    }
+    console.log(numberOf1(8))
+
+
+    // 快捷解法 
+    function numberOf1_2(num){
+      if(num<0){
+        num = -num;
+      }
+      let count = 0;
+      while(num){
+        count++;
+        num = num & (num-1);
+      }
+      return count;
+    }
+    console.log(numberOf1_2(-9))
+  </script>
+</body>
+</html>

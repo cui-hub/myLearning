@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 纯递归
+    function printMaxToN(n){
+      if(n<=0){
+        return 'Illegal Input!'
+      }
+      let number = new Array(n).fill(0);
+      print1ToMaxN(number,n,0)
+      
+    }
+    function print1ToMaxN(number,length,index){
+      if(index>=length){
+        // console.log(number)
+        print(number);
+        return;
+      }
+      for(let i = 0;i<10;i++){
+        number[index]= i;
+        print1ToMaxN(number,length,index+1);
+      }
+    }
+    function print(number){
+      for(let item of number){
+        if(item != 0){
+          break;
+        }else{
+          number.shift();
+        }
+      }
+      console.log(number.join('')) ;
+    }
+
+    printMaxToN(2);
+    // print([1,0,1,2,3])
+
+    // 回溯算法
+    function printMaxToN2(n){
+      let number = new Array(n).fill(0);
+      function dfs(x){
+        if(x>=n){
+          print(number);
+          return;
+        }
+        for(let i = 0;i<10;i++){
+          number[x] = i;
+          dfs(x+1);
+        }
+      }
+      dfs(0);
+    }
+    printMaxToN2(2)
+  </script>
+</body>
+</html>
