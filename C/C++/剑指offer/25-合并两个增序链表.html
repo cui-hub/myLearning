@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function NodeList(val){
+      this.val = val;
+      this.next = null;
+    }
+    // 递归
+    function mergeList(headNode1,headNode2){
+      if(headNode1 == null){
+        return headnode2;
+      }
+      if(headnode2 == null){
+        return headNode1;
+      }
+      let headNode = new NodeList();
+      if(headNode1.val > headNode2.val){
+        headNode.val = headNode2.val;
+        headNode.next = mergeList(headNode1,headNode2.next);
+      }else{
+        headNode.val = headNode1.val;
+        headNode.next = mergeList(headNode1.next,headNode2);
+      }
+      return headNode;
+    }
+    // 循环
+    function mergeList2(headNode1,headNode2){
+      if(headNode1 == null){
+        return headnode2;
+      }
+      if(headnode2 == null){
+        return headNode1;
+      }
+      let n1 = headNode1;
+      let n2 = headNOde2;
+      let mergedHeadNode = new NodeList();
+      let curNode = mergedHeadNode;
+      while(n1 && n2){
+        if(n1.val < n2.val){
+          curNode.val = n1.val;
+          curNode.next = new NodeList();
+          curNode = curNode.next;
+          n1 = n1.next;
+        }else{
+          curNode.val = n2.val;
+          curNode.next = new NodeList();
+          curNode = curNode.next;
+          n2 = n2.next;
+        }
+      }
+      return mergedHeadNode;
+    }
+  </script>
+</body>
+</html>

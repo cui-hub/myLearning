@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function printMatrixClock(matrix){
+      let rows = matrix.length;
+      if(rows<=0){
+        return;
+      }
+      let cols = matrix[0].length;
+      if(cols<= 0){
+        return;
+      }
+      let startPoint = 0;
+      while(rows>2*startPoint && cols > 2*startPoint){
+        printOneCircle(matrix,startPoint);
+        startPoint++;
+      }
+    }
+
+    function printOneCircle(matrix,start){
+      let rows = matrix.length;
+      let cols = matrix[0].length;
+      for(let i = start;i<=cols-1-start;i++){
+        console.log(matrix[start][i]);
+      }
+      
+      for(let i = start+1;i<=rows-1-start;i++){
+        console.log(matrix[i][cols-1-start]);
+      }
+      
+      if(rows-1-start*2>0){
+        for(let i = cols-2-start;i>=start;i--){
+          console.log(matrix[rows-1-start][i]);
+        }
+      }
+      if(cols-1-start*2>0){
+        for(let i = rows-2-start;i>=start+1;i--){
+          console.log(matrix[i][start])
+        }
+      }
+      
+    };
+    let matrix = [
+      [1,2,3,4,0],
+      [5,6,7,8,0],
+      [9,0,1,2,0],
+      [3,4,5,6,0]
+    ]
+    let matrix2 = [
+      [1,2,3],
+      [4,5,6],
+      [7,8,9],
+      [0,1,2],
+      [3,4,5]
+    ]
+    let matrix = []
+    printMatrixClock(matrix)
+    // printMatrixClock(matrix2)
+  </script>
+</body>
+</html>

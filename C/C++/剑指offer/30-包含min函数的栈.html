@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Stack(){
+      this.stack = [];
+      this.push = function(){
+        let val = [].slice.call(arguments)[0];
+        this.stack.push(val);
+      }
+      this.pop = function(){
+        if(this.stack.length<=0){
+          throw 'The stack is empty';
+        }else{
+          return this.stack.pop();
+        }
+      }
+      this.length = function(){
+        return this.stack.length;
+      }
+    }
+    // let stack = new Stack();
+    
+    function StackWithMin(){
+      this.stack1 = new Stack();
+      this.mStck = new Stack();
+      this.push = function(){
+        let val = [].slice.call(arguments)[0];
+        this.stack1.push(val);
+        if(this.mStck.length()>0){
+          let min = this.mStck.pop();
+          this.mStck.push(min);
+          min = Math.min(min,val);
+          this.mStck.push(min);
+        }else{
+          this.mStck.push(val);
+        }
+      }
+      this.pop = function(){
+        let val = this.stack1.pop();
+        this.mStck.pop();
+        return val;
+      }
+      this.min = function(){
+        let val = this.mStck.pop();
+        this.mStck.push();
+        return val;
+      }
+    }
+
+    let stack = new StackWithMin();
+    stack.push(3);
+    stack.push(4);
+    stack.push(2);
+    stack.push(1);
+    stack.push(5);
+    console.log(stack.min());
+    console.log(stack.pop());
+    console.log(stack.min());
+    console.log(stack.pop());
+    console.log(stack.min());
+    console.log(stack.pop());
+    console.log(stack.min());
+    console.log(stack.pop());
+
+  </script>
+</body>
+</html>

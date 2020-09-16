@@ -4,18 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height:100px;
+            background-color: black;
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
+    <div class="box"></div>
     <div data-ppp="自定义属性" id='div'>ddd</div>
+    
     <script>
-        function show(val){
-            // console.log(val.getAttribute('data-ppp'))
-            console.log(val)
+        console.log(x);
+        var x = 10;
+
+        console.log(x)
+        x = 20;
+        function x(){console.log(555)};
+        console.log(x)
+
+
+        
+       (function add (x,y){
+            return x+y;
+        })
+        console.log(add(1,2))
+        if (true) {
+ 
+            function foo() {
+                alert(0);
+            }
+
+        } else {
+
+            function foo() {
+                alert(1);
+            }
+
         }
-        let div = document.getElementById('div');
-        div.onclick = function(e){
-            console.log(e)
-        }
+
+        foo(); // 1 or 0 ?实际在上不同环境下测试得出个结果不一样
     </script>
 </body>
 </html>

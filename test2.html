@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function bigIntPlus(str1,str2){
+      let len1 = str1.length;
+      let len2 = str2.length;
+     
+      if(len1>len2){
+        for(let i = len2; i<len1 ;i++){
+          str2 = '0'+ str2;
+        }
+      }else{
+        for(let i = len1; i<len2 ;i++){
+          str1 = '0'+ str1;
+        }
+      }
+      let len = str1.length;
+      let sum = '';
+      let needPlus1 = 0;
+      for(let i = len-1; i>=0 ;i--){
+        let s = parseInt(str1[i]) + parseInt(str2[i]);
+        if( s < 10){
+          sum = (s + needPlus1) + sum;
+          needPlus1 = 0;
+        }else{
+          sum = (s + needPlus1) % 10 + sum;
+          needPlus1 = 1;
+        }
+      }
+      if(needPlus1 == 1){
+        sum = '1' + sum;
+      }
+      return sum;
+    }
+    let str1 = '99999999';
+    let str2 = '77777777777';
+    console.log(bigIntPlus(str1,str2));
+  </script>
+</body>
+</html>

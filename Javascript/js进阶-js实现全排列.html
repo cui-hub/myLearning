@@ -11,6 +11,7 @@
     给定一个字符串，输出该字符串所有排列的可能。如输入“abc”，输出“abc,acb,bca,bac,cab,cba”。 7中排列算法：
     <a href="http://www.lingchenliang.com/post/134.html">7中排列算法</a>
     <script>
+        // 空间复杂度极高的算法
         function fullpermutate(str) {
             var result = [];
             //如果长度为1，直接返回原字符串
@@ -29,6 +30,30 @@
             return Array.from(new Set(result)); //利用Set去重
         };
         console.log(fullpermutate('lekk'));
+
+        // 回溯算法:
+        function fullpermutate2(str){
+            let len = str.length;
+            let arr = new Array(len).fill(0);
+            let resArr = [];
+            function dfs(res){
+                if(res.length == len){
+                    resArr.push(res)
+                    return;
+                }
+                for(let i=0;i<len;i++){
+                    if(arr[i] == 0){
+                        arr[i] = 1;
+                        dfs(res+str[i]);
+                        arr[i] = 0;
+                    }
+                }
+            }
+            dfs('')
+            resArr = Array.from(new Set(resArr))
+            console.log(resArr)
+        }
+        fullpermutate2('lekk')
     </script>
 </body>
 

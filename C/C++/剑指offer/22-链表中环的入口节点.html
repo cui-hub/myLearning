@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function listNode(val){
+      this.val = val;
+      this.next = null;
+    }
+    // 通过快慢指针找到环内的相遇节点
+    function findMeetingNode(headNode){
+      if(headNode == null){
+        return null;
+      }
+      let slowNode = headNode;
+      let fastNode = headnode.next;
+      while(slowNode != null && fastNode != null){
+        if(slowNode == fastNode){
+          return slowNode;
+        }
+        slowNode = slowNode.next;
+        fastNode = fastNode.next;
+        if(fastNode != null){
+          fastNode = fastNode.next;
+        }
+      }
+      return null;
+    }
+    // 算出环的节点长度k，后利用两个节点找到入口节点
+    function findEntryNode(headNode){
+      let meetingNode = findMeetingNode(headNode);
+      if(meetingNode == null){
+        return null;
+      }
+      // 得到环中的节点数
+      let loopNodeNum = 1;
+      let curNode = meetingNode.next;
+      while(curNode != meetingNode){
+        curNode = curNode.next;
+        loopNodeNum++;
+      }
+      // 得到入口节点
+      let preNode = headNode;
+      for(let i = 0; i<loopNodeNum ;i++){
+        preNode = preNode.next;
+      }
+      let afterNode = headnode;
+      while(afterNode != preNode){
+        preNode = preNode.next;
+        afterNode = afterNode.next;
+      }
+      return afterNode;
+    }
+  </script>
+</body>
+</html>

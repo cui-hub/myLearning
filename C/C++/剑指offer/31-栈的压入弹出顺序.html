@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function isPopOrder(pushArr,popArr){
+      let stack = []; // 模拟栈
+      for(let i = 0; i<popArr.length ;i++){
+        while(popArr[i] !=stack[0] && pushArr.length>0){
+          stack.unshift(pushArr.shift());
+        }
+        if(pushArr.length <=0 && popArr[i] !=stack[0]){
+          return false;
+        }else{
+          stack.shift();
+        }
+      }
+      return true;
+    }
+    let pushArr = [1,2,3,4,5];
+    let popArr = [4,5,3,2,1];
+    let popArr2 = [4,3,5,1,2];
+    console.log(isPopOrder(pushArr,popArr));
+    console.log(isPopOrder(pushArr,popArr2));
+  </script>
+</body>
+</html>

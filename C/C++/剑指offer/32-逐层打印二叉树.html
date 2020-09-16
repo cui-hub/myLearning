@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Btree(val){
+      this.val  = val;
+      this.left = this.right = null;
+    }
+    let queue = [];
+    function printBinaryTree(root){
+      if(!root){
+        console.log('empty !')
+        return ;
+      }
+      console.log(root.val);
+      if(root.left){
+        queue.push(root.left);
+      }if(root.right){
+        queue.push(root.right);
+      }
+      if(queue.length>0){
+        printBinaryTree(queue.shift());
+      }
+    }
+    function buildABtree(n){
+      let root = null;
+      if(n>0){
+        root = new Btree(n);
+        root.left = buildABtree(n-1);
+        root.right = buildABtree(n-1);
+        
+      }
+        return root;
+      
+    }
+    let root = buildABtree(4);
+    console.log(root);
+    printBinaryTree(root)
+  </script>
+</body>
+</html>

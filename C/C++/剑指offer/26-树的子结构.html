@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function bTree(val){
+      this.val = val;
+      this.left = this.right = null;
+    }
+    function hasSubTree(tree1,tree2){
+      let res = false;
+      if(tree1 != null && tree2 != null){
+        if(tree1.val == tree2.val){
+          res = ifTree1HasTree2(tree1,tree2);
+        }
+        if(!res){
+          res = hasSubTree(tree1.left,tree2)
+        }
+        if(!res){
+          res = hasSubTree(tree1.right,tree2)
+        }
+      }
+      return res;
+    }
+
+    function ifTree1HasTree2(tree1,tree2){
+      if(tree2 == null){
+        return true;
+      }
+      if(tree1 == null){
+        return false;
+      }
+      if(tree1.val != tree2.val){
+        return false;
+      }
+      return ifTree1HasTree2(tree1.left,tree2.left) && ifTree1HasTree2(tree1.right,tree2.right);
+    }
+  </script>
+</body>
+</html>
