@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function TreeNode(val){
+      this.val = val;
+      this.left = this.right = null;
+    }
+    function find(root,k){
+      function findKthValue(root){
+        if(root == null || k <= 0){
+          return null;
+        }
+        let target = null;
+        // 中序遍历左子树直接插到底
+        if(root.left){
+          target = findKthValue(root.left);
+        }
+        // 访问根节点并更新k
+        if(target == null){
+          if(k == 1){
+            target = root;
+          }
+          k--
+        }
+        // 访问右子树
+        if(target == null && root.right){
+          target = findKthValue(root.right);
+        }
+        return target;
+      }
+      let target = findKthValue(root);
+      return target.val;
+    }
+    
+
+    let A = new TreeNode(5);
+    let B = new TreeNode(3);
+    let C = new TreeNode(7);
+    let D = new TreeNode(2);
+    let E = new TreeNode(4);
+    let F = new TreeNode(6);
+    let G = new TreeNode(8);
+    A.left = B;
+    A.right = C;
+    B.left = D;
+    B.right = E;
+    C.left = F;
+    C.right = G;
+
+    console.log(find(A,4))
+
+  </script>
+</body>
+</html>

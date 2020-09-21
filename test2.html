@@ -7,40 +7,67 @@
 </head>
 <body>
   <script>
-    function bigIntPlus(str1,str2){
-      let len1 = str1.length;
-      let len2 = str2.length;
-     
-      if(len1>len2){
-        for(let i = len2; i<len1 ;i++){
-          str2 = '0'+ str2;
-        }
-      }else{
-        for(let i = len1; i<len2 ;i++){
-          str1 = '0'+ str1;
-        }
-      }
-      let len = str1.length;
-      let sum = '';
-      let needPlus1 = 0;
-      for(let i = len-1; i>=0 ;i--){
-        let s = parseInt(str1[i]) + parseInt(str2[i]);
-        if( s < 10){
-          sum = (s + needPlus1) + sum;
-          needPlus1 = 0;
-        }else{
-          sum = (s + needPlus1) % 10 + sum;
-          needPlus1 = 1;
-        }
-      }
-      if(needPlus1 == 1){
-        sum = '1' + sum;
-      }
-      return sum;
+    var count = 10;
+    function a() {
+        return count + 10;
     }
-    let str1 = '99999999';
-    let str2 = '77777777777';
-    console.log(bigIntPlus(str1,str2));
+    // let a = function(){
+    //   return count + 10;
+    // }
+    function b() {
+      function a() {
+        return count + 10;
+      }
+        var count = 20;
+        return a();
+    }
+    console.log(b()); 
+
+    function f() { console.log('I am outside!'); }
+    (function () {
+      if(true) {
+        // 重复声明一次函数f
+        function f() { console.log('I am inside!'); }
+      }
+      f();
+    }());
+    f()
+
+    var a = 1;
+    function fn() {
+      console.log(a);
+      var a = 2;
+    }
+    fn(); // undefined
+
+    function repeat(fn,times,interval){
+      return function(){
+        let args = [].slice.call(arguments);
+        let timeCount = 1;
+        let timer;
+        fn.apply(this,args);
+        timer = setInterval(()=>{
+          if(timeCount <=times-1){
+            fn.apply(this,args);
+            timeCount ++;
+          }else{
+            clearInterval(timer);
+          }
+        },interval)
+      }
+    }
+
+    
+    let obj = {
+      val:'123456',
+      caller:function(){
+        console.log(this)
+        console.log(this.val)
+      }
+    } 
+    obj.repeatFun = repeat(obj.caller,3,1000);
+    obj.repeatFun();
+
   </script>
 </body>
 </html>

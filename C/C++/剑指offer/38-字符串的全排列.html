@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 字符串的全排列
+    function permutation(str){
+      let res = [];
+      if(str.length == 1){
+        res.push(str);
+        return res;
+      }
+      for(let i =0;i<str.length;i++){
+        let leftStr = str.substring(0,i) + str.substring(i+1);
+        let restArr = permutation(leftStr);
+        restArr.forEach(item=>{
+          res.push(str[i] + item)
+        })
+      }
+      res = Array.from(new Set(res));
+      return res
+    }
+    console.log(permutation('abcdd'))
+
+    // 引申：字符的组合种类
+    function bindLetters(str){
+      let n = str.length;
+      for(let i = 1; i<=n ;i++){
+        let x = i;
+        function dfs(strX,startIndex){
+          if(strX.length>=x){
+            console.log(strX)
+            return;
+          }
+          for(let j = startIndex ; j<n ;j++){
+            strX += str[j];
+            dfs(strX,j+1);
+            strX = strX.substring(0,strX.length-1)
+          }
+        }
+        dfs('',0);
+      }
+    }
+    bindLetters('abcd0')
+  </script>
+</body>
+</html>

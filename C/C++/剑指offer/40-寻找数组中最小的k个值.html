@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 1.利用partition算法
+    function findTarget(arr,k){
+      let start = 0;
+      let n = arr.length;
+      let end =n - 1;
+      let targetIndex = k;
+      let index = partition(arr,start,end);
+      while(index != targetIndex){
+        if(index > targetIndex){
+          index = partition(arr,start,index-1);
+        }else{
+          index = partition(arr,index+1,end);
+        }
+      }
+      return arr.slice(0,index);
+
+    }
+
+    function partition(arr,start,end){
+      let val = arr[start];
+      while(start < end){
+        while(arr[end] >= val && start < end){
+          end--;
+        }
+        arr[start] = arr[end];
+        while(arr[start] <= val && start < end){
+          start++;
+        }
+        arr[end] = arr[start];
+      }
+      arr[start] = val;
+      return start;
+    }
+    let arr = [4,5,1,6,2,7,3,8,-1,9,8,9,8,11,23];
+    console.log(findTarget(arr,4));
+    console.log(arr)
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 1.利用partition算法:缺点不能检查非法输入（次数不超过一半）
+    function findTarget(arr){
+      let start = 0;
+      let n = arr.length;
+      let end =n - 1;
+      let targetIndex = n>>1;
+      let index = partition(arr,start,end);
+      while(index != targetIndex){
+        if(index > targetIndex){
+          index = partition(arr,start,index-1);
+        }else{
+          index = partition(arr,index+1,end);
+        }
+      }
+      return arr[targetIndex];
+
+    }
+
+    function partition(arr,start,end){
+      let val = arr[start];
+      while(start < end){
+        while(arr[end] >= val && start < end){
+          end--;
+        }
+        arr[start] = arr[end];
+        while(arr[start] <= val && start < end){
+          start++;
+        }
+        arr[end] = arr[start];
+      }
+      arr[start] = val;
+      return start;
+    }
+    let arr = [1,4,3,2,5,8,9];
+    let arr2 = [1,2,3,2,2,2,5,4,2]
+    // console.log(partition(arr,0,6));
+
+    // console.log(findTarget(arr));
+    // console.log(arr);
+    // console.log(findTarget(arr2));
+    // console.log(arr2);
+
+    // 借助额外空间，不影响原数组，同时可以检查非法输入;
+    function findTarget2(arr){
+      if(arr.length < 1){
+        return;
+      }
+      let n = arr.length;
+      let countObj = {};
+      for(let i = 0; i<n; i++){
+        countObj[arr[i]] = countObj[arr[i]] ? countObj[arr[i]]+1 : 1 ;
+        if(countObj[arr[i]] * 2 > n){
+          return arr[i];
+        }
+      }
+      return 'No satisfied target founded ! '
+    }
+    console.log(findTarget2(arr));
+    console.log(findTarget2(arr2));
+
+  </script>
+</body>
+</html>

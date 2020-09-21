@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function TreeNode(val){
+      this.val = val;
+      this.left = this.right = null;
+    }
+    let A = new TreeNode(5);
+    let B = new TreeNode(3);
+    let C = new TreeNode(7);
+    let D = new TreeNode(2);
+    let E = new TreeNode(4);
+    let F = new TreeNode(6);
+    let G = new TreeNode(8);
+    let H = new TreeNode(9);
+    let I = new TreeNode(10)
+    A.left = B;
+    A.right = C;
+    B.left = D;
+    B.right = E;
+    C.left = F;
+    C.right = G;
+    G.left = H;
+    // H.left = I
+    // 树的深度
+    function treeDepth(root){
+      if(root == null){
+        return 0;
+      }
+      let leftDepth = treeDepth(root.left);
+      let rightDepth = treeDepth(root.right)
+      return leftDepth > rightDepth ? leftDepth+1 : rightDepth+1;
+    }
+
+    // console.log(treeDepth(A))
+
+    // 判断是否是平衡二叉树(后序遍历)
+    function isBalanced(root){
+      let depth;
+      if(root == null){
+        return [true,0];
+      }
+      let left = isBalanced(root.left)
+      ,right = isBalanced(root.right);
+      if(left[0] && right[0]){
+        let diff = left[1] - right[1];
+        if(diff <=1 && diff>=-1){
+          depth = 1 + (left[1] > right[1] ? left[1]: right[1]);
+          return [true,depth];
+        }
+      }
+      return [false,depth];
+    }
+    console.log(isBalanced(A))
+
+  </script>
+</body>
+</html>

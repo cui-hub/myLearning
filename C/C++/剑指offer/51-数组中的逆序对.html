@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 基于归并排序的算法
+    function findReverseSubArrayNum(arr){
+      let n = arr.length;
+      let res = 0;
+      function devideArr(arr){
+        if(arr.length < 2){
+          return arr;
+        }
+        let mid = arr.length>1;
+        let left = arr.slice(0,mid);
+        let right = arr.slice(mid);
+        return mergeList(devideArr(left),devideArr(right));
+      }
+      function mergeList(left,right){
+        let l = left.length - 1;
+        let r = right.length - 1;
+        let mergedList = [];
+        while(l>=0 && r>=0){
+          while(left[l] <= right[r]){
+            mergedList.unshift(right[r])
+            r--;
+          }
+          if(r>=0){
+            res += r + 1;
+            mergedList.unshift(left[l])
+            l--;
+          }
+        }
+        if( l >= 0){
+          mergedList = left.slice(0,l+1).concat(mergedList)
+        }else{
+          mergedList = slice(0,r+1).concat(mergedList)
+        }
+        return mergedList;
+      }
+      devideArr(arr);
+      return res;
+    }
+    console.log(findReverseSubArrayNum([7,5,6,4]))
+  </script>
+</body>
+</html>

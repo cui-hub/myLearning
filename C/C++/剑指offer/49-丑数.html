@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 动态规划
+    function uglyNum(k){
+      let dp = new Array(k+1).fill(1);
+      for(let i = 1 ;i <= k ;i++){
+        let M = dp[i-1];
+        let indexOf2 = 0,
+        indexOf3 = 0,
+        indexOf5 = 0;
+        while(dp[indexOf2] * 2 <= M){
+          indexOf2++;
+        }
+        while(dp[indexOf3] * 3 <= M){
+          indexOf3++;
+        }
+        while(dp[indexOf5] * 5 <= M){
+          indexOf5++;
+        }
+        dp[i] = Math.min(dp[indexOf2]*2,dp[indexOf3]*3,dp[indexOf5]*5)
+      }
+      return dp[k]
+    }
+    console.log(uglyNum(1500))
+  </script>
+</body>
+</html>

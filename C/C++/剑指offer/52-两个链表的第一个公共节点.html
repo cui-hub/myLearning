@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function ListNode(val){
+      this.val = val;
+      this.next = null;
+    }
+    let A = new ListNode(1);
+    let B = new ListNode(2);
+    let C = new ListNode(3);
+    let D = new ListNode(4);
+    let E = new ListNode(5);
+    let F = new ListNode(6);
+    let G = new ListNode(7);
+    A.next = B;
+    B.next = C;
+    C.next = F;
+    F.next = G;
+    D.next = E;
+    E.next = F;
+
+    function findFirstPublicNode(head1,head2){
+      if(!head1 || !head2){
+        return null;
+      }
+      // 1.先统计出两个链表的长度
+      let len1 = 0;
+      let len2 = 0;
+      let curNode1 = head1;
+      let curNode2 = head2;
+      while(curNode1){
+        len1++;
+        curNode1 = curNode1.next;
+      }
+      while(curNode2){
+        len2++;
+        curNode2 = curNode2.next;
+      }
+      curNode1 = head1;
+      curNode2 = head2;
+      // 2. 较长的先走step步后，两个指针同时移动，遇到相同节点返回
+      if(len1 > len2){
+        let step = len1 - len2;
+        while(step>0){
+          curNode1 = curNode1.next;
+          step--;
+        }
+      }else{
+        let step = len2 - len1;
+        while(step>0){
+          curNode2 = curNode2.next;
+          step--;
+        }
+      }
+      while(curNode1 != curNode2 && curNode1 && curNode2){
+        curNode1 = curNode1.next;
+        curNode2 = curNode2.next;
+      }
+      if(curNode2 == null || curNode1 == null){
+        return 'No Shared Node !'
+      }else{
+        return curNode1;
+      }
+    }
+
+    console.log(findFirstPublicNode(A,D))
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function findSumNums(arr,s){
+      if(arr.length <= 1){
+        return 'Invalid Input'
+      }
+      let res = [];
+      let start = 0;
+      let end = arr.length - 1;
+      while(start < end){
+        if(arr[start] + arr[end] > s){
+          end --;
+        }else if (arr[start] + arr[end] < s){
+          start ++;
+        }else{
+          res.push([arr[start],arr[end]])
+          start++;
+          end--;
+        }
+      }
+      return res;
+    }
+    console.log(findSumNums([0,1,2,4,7,11,15],15))
+
+    // 题目二：和为s的连续正数序列
+    function findSumNums2(s){
+      let start = 1;
+      let end = 2;
+      let res = [];
+      if(start + end > s){
+        return 'S has no results'
+      }
+      while(start < end){
+        if((start + end)*(end - start + 1) / 2 > s){
+          start ++ ;
+        }else if((start + end)*(end - start + 1) / 2 < s){
+          end ++;
+        }else{
+          res.push(start + '~' + end);
+          end ++;
+          start ++;
+        }
+      }
+      return res;
+    }
+    console.log(findSumNums2(200000))
+  </script>
+</body>
+</html>

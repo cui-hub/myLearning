@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function numOf1(n){
+      let sum = 0;
+      let sN = String(n);
+      if(sN.length<=0){
+        return 0;
+      }
+      function numOf1Core(sN){
+        if(sN.length == 1){
+          sum += 1;
+          return;
+        }
+        if(sN[0] == '1'){
+          sum += Number(sN) - 10**(sN.length - 1) + 1;
+        }else{
+          sum += 10**(sN.length - 1);
+        }
+        sum += (sN.length - 1) * 10**(sN.length - 2) * Number(sN[0]);
+        numOf1Core(sN.substring(1))
+      }
+      numOf1Core(sN);
+      return sum;
+    }
+
+    console.log(numOf1(213459))
+  </script>
+</body>
+</html>

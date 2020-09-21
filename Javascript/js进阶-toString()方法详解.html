@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let int = 15695;
+    let bol = true;
+    let fn = function abc(){
+      return 222;
+    }
+    function def(){
+      return 000;
+    }
+    def.toString = function(){
+      return 'lsp'
+    }
+    let obj = {a:'jack',b:true,c:def}
+    obj.toString = function(){
+      return '更改'
+    }
+    console.log(fn) // abc(){return 222;}
+    console.log(fn.toString());// function abc(){return 222;}
+    console.log(Object.prototype.toString.call(fn));// [object Function]
+
+    console.log(def);
+    console.log(def.toString());
+    console.log(def.hasOwnProperty('toString'));
+
+    console.log(obj);
+    console.log(obj.toString());
+    console.log(obj.__proto__.hasOwnProperty('toString')) // true
+  </script>
+</body>
+</html>

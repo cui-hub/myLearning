@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function ListNode(val){
+      this.val = val;
+      this.next = null;
+      this.sibling = null; // 可以指向任意节点的指针
+    }
+    function copyComplicateList(head){
+      // 1.复制node
+      cloneNode(head);
+      // 2.设置复制后的node的sibling指针
+      setSibling(head);
+      // 3.拆分链表
+      return devideList(head);
+    }
+
+    function cloneNode(head){
+      if(head == null){
+        return null;
+      }
+      let curNode = head;
+      while(curNode){
+        let copyedNode = new ListNode(curNode.val);
+        copyedNode.next = curNode.next;
+        curNode.next = copyedNode;
+        curNode = copyedNode.next;
+      }
+    }
+
+    function setSibling(head){
+      let curNode = head;
+      let copyedCurNode = head.next;
+      while(copyedCurNode){
+        if(curNode.sibling){
+          copyedCurNode.sibling = curNode.sibling.next;
+        }
+        curNode = copyedCurNode.next;
+        copyedCurNode = curNode.next;
+      }
+    };
+
+    function devideList(head){
+      let copyedHead = head.next;
+      let curNode = head;6
+      let copyedCurNode = copyedHead;
+      while(copyedCurNode){
+        curNode.next = copyedCurNode.next;
+        curNode = curNode.next;
+        copyedCurNode.next = curNode.next;
+        copyedCurNode = copyedCurNode.next;
+      }
+      return copyedHead;
+    }
+  </script>
+</body>
+</html>

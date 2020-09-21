@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function getMinInt(arr){// 类似于冒泡排序
+      let n = arr.length;
+      for(let i = 0 ; i<n ;i++){
+        for(let j = 0; j<n-i-1; j++){
+          if(!isAhead(arr[j],arr[j+1])){
+            let temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
+          }
+        }
+      }
+      return arr.join('')
+    }
+
+    function isAhead(m,n){ // m是否应该排在n前面
+      let sM = String(m);
+      let sN = String(n);
+      let i = 0;
+      // let len = sM.length > sN.length ? sM.length : sN.length;
+      while(sM[i] && sN[i]){
+        if(sM[i] < sN[i]){
+          return true;
+        }else if(sM[i] > sN[i]){
+          return false;
+        }
+        i++;
+      }
+      if(sM[i]){
+        if(sM[i] <= sN[i-1]){
+          return true;
+        }else{
+          return false;
+        }
+      }else{
+        if(sM[i-1] <= sN[i]){
+          return true;
+        }else{
+          return false;
+        }
+      }
+    }
+
+    let arr = [3,32,321,21,12,14];
+    console.log(getMinInt(arr))
+    console.log(isAhead(12,14))
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 数组中只出现一次的一个数字（其他数字都是两次）
+    // 通过异或
+    function findUniqueNum(arr){
+      let num = 0;
+      arr.forEach(item=>{
+        num = num^item;
+      })
+      return num;
+    }
+    console.log(findUniqueNum([1,2,3,4,3,2,1]))
+
+    // 数组中只出现一次的两个数字（其他数字都是两次）
+    // 1.利用额外空间
+    function findUniqueNums(arr){
+      let obj = {};
+      arr.forEach(item=>{
+        if(obj[item]){
+          delete obj[item];
+        }else{
+          obj[item] = true;
+        }
+      })
+      for(let key in obj){
+        console.log(key)
+      }
+    }
+    findUniqueNums([1,2,3,4,5,3,2,1])
+
+    // 不用辅助空间
+    function findUniqueNums2(arr){
+      if(arr.length<2){
+        return 'Illegal input'
+      }
+      let num = 0;
+      arr.forEach(item=>{
+        num = num^item;
+      })
+      let firstIndexOf1 = findFirst1(num);
+      if(firstIndexOf1 == -1){
+        return 'Illegal input'
+      }
+      let num1 = 0;
+      let num2 = 0;
+      arr.forEach(item=>{
+        if(isBit1(item,firstIndexOf1)){
+          num1 = num1 ^ item;
+        }else{
+          num2 = num2 ^ item;
+        }
+      })
+      return [num1,num2]
+    }
+
+    function findFirst1(num){
+      if(num == 0){
+        return -1;
+      }
+      let res = 0;
+      while(num & 1 == 0){
+        num = num>>1;
+        res++;
+      }
+      return res;
+    }
+
+    function isBit1(num,firstIndexOf1){
+      num = num >> firstIndexOf1;
+      return (num & 1)
+    }
+    console.log(findUniqueNums2([1,2,3,4,5,3,2,1]))
+
+    // 题目二：如果出现三次，只有一个出现一次呢
+    function findUniqueNums3(arr){
+      if(arr.length <=0){
+        throw 'Invalid Input !'
+      }
+      let n = arr.length;
+      let bitArr = new Array(32).fill(0);
+      for(let i = 0; i < n; i++){
+        let bitMask = 1;
+        for(let j = 0; j<32 ;j++){
+          if((arr[i] & bitMask) != 0){
+            bitArr[j]++;
+          }
+          bitMask = bitMask << 1;
+        }
+      }
+      let result = 0;
+      for(let i = 32; i>=0; i--){
+        result = result << 1;
+        result += bitArr[i]%3
+      }
+      return result;
+    }
+    console.log(findUniqueNums3([1,1,2,2,2,3,3,3,5,5,5,4,1]))
+  </script>
+</body>
+</html>

@@ -6,26 +6,12 @@
   <title>Document</title>
 </head>
 <body>
-  <input type="input"  id="input">
-  <span id="span"></span>
   <script>
-    let data = {val:'somthing'};
-    let oInput = document.getElementById('input');
-    let oSpan = document.getElementById('span');
-    oInput.addEventListener('input',showInsSpan);
-    function showInsSpan(e){
-      console.log(e);
-      data.val = e.target.value;
-
+    let obj = {'测试':'ceshi',d:'a',b:'b',c:'c','1':'p',};
+    obj.b = obj.c+'d'
+    for(let key in obj){
+      console.log(obj[key])
     }
-    Object.defineProperty(data,'val',{
-      get:function(val){
-        return val;
-      },
-      set:function(newVal){
-        oSpan.innerText = newVal;
-      }
-    })
   </script>
 </body>
 </html>
