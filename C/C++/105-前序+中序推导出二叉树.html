@@ -21,7 +21,10 @@
          * @param {number[]} inorder
          * @return {TreeNode}
          */
-
+            function TreeNode(val){
+                this.val = val;
+                this.left = this.right = null;
+            }
         //递归:
         var buildTree = function(preorder, inorder) {
             if (preorder.length == 0) {
@@ -38,6 +41,22 @@
             return tree;
 
         };
+        let res = '';
+        function afetrOrder(root){
+            if(root == null){
+                return ;
+            }
+            if(root.left){
+                afetrOrder(root.left);
+            }if(root.right){
+                afetrOrder(root.right);
+            }
+            // console.log(root.val)
+            res = res + root.val;
+        }
+        let root = buildTree('135746','537146');
+        afetrOrder(root);
+        console.log(res)
     </script>
 </body>
 

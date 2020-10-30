@@ -150,7 +150,7 @@
             promises.forEach((item, index) => {
                 Promise.resolve(item).then( //给item包上一层promise使得接收的数组不一定非得是promise对象
                     value => {
-                        values[index] = value; //不能用push，否则就先成功的先放了
+                        values[index] = value; //不能用push，否则就先成功的先放进数组了
                         count++;
                         //如果全部成功，return的promise改为成功
                         if (count === promises.length) {

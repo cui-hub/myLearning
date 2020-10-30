@@ -7,11 +7,18 @@
 </head>
 <body>
   <script>
-    let obj = {'测试':'ceshi',d:'a',b:'b',c:'c','1':'p',};
-    obj.b = obj.c+'d'
-    for(let key in obj){
-      console.log(obj[key])
+    function sum(num1,num2){
+      let sum,carry;
+      while(num2){
+        sum = num1^num2;
+        carry = (num1&num2)<<1;
+        num1 = sum;
+        num2 = carry;
+      }
+      return num1;
     }
+
+    console.log(sum(5,17))
   </script>
 </body>
 </html>

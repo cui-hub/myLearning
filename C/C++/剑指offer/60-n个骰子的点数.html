@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 用2个数组分别存储n-1和n个骰子的和为index的次数
+    function printPosibility(n){
+      let posibility = new Array(2);
+      posibility[0] = new Array(n*6 + 1).fill(0);
+      posibility[1] = new Array(n*6 + 1).fill(0);
+      let changeFlag = 0;
+      for(let i = 1 ;i <=6 ;i++){
+        posibility[changeFlag][i] = 1;
+      }
+      for(let i = 2 ; i <= n; i++){
+        for(let g = 0; g<i ;g++){
+          posibility[1-changeFlag][g] = 0;
+        }
+        for(let j = i ; j <= 6*i ; j++){
+          posibility[1-changeFlag][j] = 0;
+          for(let k = 1; k<=6 && j>=k ;k++){
+            posibility[1-changeFlag][j] += posibility[changeFlag][j-k];
+          }
+        }
+        changeFlag = 1-changeFlag
+      }
+      let total = Math.pow(6,n);
+      let res = posibility[changeFlag].map((item)=>{
+        return (item/total).toFixed(4);
+      })
+      return res;
+    }
+
+    console.log(printPosibility(1))
+    console.log(printPosibility(2))
+    console.log(printPosibility(3))
+    console.log(printPosibility(4))
+    // console.log(printPosibility(4).reduce((x,y)=>{
+    //   return x + y;
+    // }))
+  </script>
+</body>
+</html>

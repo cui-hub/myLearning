@@ -218,7 +218,8 @@ class Observer {
             enumerable: true,
             configurable: false,
             get() {
-                //订阅数据初始化或者改变后 获取时，往dep中添加watcher观察者
+                //订阅数据初始化或者改变后 获取时，往dep中添加watcher订阅者
+                // 因为调用getVal的时候回触发getter，从而Dep.target 此时是该prop的watcher实例
                 Dep.target && dep.addSub(Dep.target);
                 // console.log(dep.target);
                 return value;

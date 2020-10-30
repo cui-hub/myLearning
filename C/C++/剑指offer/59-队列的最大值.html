@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 题目一：滑动窗口内的最大值k
+    function MaxValueInQueue(arr,k){
+      let window = [];
+      let res = [];
+      for(let i = 0; i<arr.length; i++){
+        if(window.length<=0){
+          window.push(i);
+        }else if(arr[i] >= arr[window[0]]){
+          window = [];
+          window.push(i);
+        }else if(arr[i] < arr[window[0]] && i - window[0] < k){
+          if(window.length == 1){
+            window.push(i);
+          }else if(arr[i] >= arr[window[1]]) {  
+            window.pop();
+            window.push(i)
+          }
+        }else{
+          window.shift();
+          if(arr[i] >= arr[window[0]]){
+            window = [];
+          } 
+          window.push(i)
+        }
+        if(i >= 2){
+          res.push(arr[window[0]])
+        }
+      }
+      return res;
+    }
+    console.log(MaxValueInQueue([2,3,4,2,6,2,5,1],3))
+
+    // 题目二：实现一个队列的数据结构，能够在O（1）内获得max值
+    function MyQueue(){
+      this.queue = [];
+      this.length = 0;
+      this.maxQueue = [];
+      this.max = 0;
+      this.push_back  = function(val){
+        this.queue.push(val);
+        this.updateLength();
+        if(this.maxQueue.length <= 0){
+          this.maxQueue.push(val)
+        }else if(val > this.maxQueue[0]){
+          this.maxQueue = [];
+          this.maxQueue.push(val);
+        }else if(val == this.maxQueue[0]){
+          this.maxQueue.unshift(val);
+        }else if(val == this.maxQueue[this.maxQueue.length - 1] ){
+          this.maxQueue.push(val);
+        }else if(val < this.maxQueue[0] && val > this.maxQueue[this.maxQueue.length - 1] ){
+          let lastIndex = this.maxQueue.lastIndexOf(this.maxQueue[0]);
+          this.maxQueue = this.maxQueue.slice(0,lastIndex + 1);
+          this.maxQueue.push(val);
+        }else if(val < this.maxQueue[0] && this.maxQueue[0] == this.maxQueue[this.maxQueue.length - 1] ){
+          this.maxQueue.push(val)
+        }
+        this.updateMax();
+      }
+      this.pop_font = function(){
+        if(this.queue.length == 0){
+          throw 'Error: This queue is already empty'
+        }
+        let val = this.queue.shift();
+        this.updateLength();
+        if(val == this.maxQueue[0]){  
+          this.maxQueue.shift();
+          this.updateMax();
+        }
+      }
+      this.updateLength = function(){
+        this.length = this.queue.length;
+      }
+      this.updateMax = function(){
+        if(this.maxQueue.length > 0){
+          this.max = this.maxQueue[0];
+        }else{
+          this.max = 0;
+        }
+
+      }
+    }
+
+    let queue = new MyQueue();
+
+    queue.push_back(2);
+    console.log(queue.max)
+    queue.push_back(3);
+    console.log(queue.max)
+    queue.push_back(4);
+    console.log(queue.max)
+    queue.push_back(2);
+    console.log(queue.max)
+    queue.push_back(6);
+    console.log(queue.max)
+    queue.push_back(2);
+    console.log(queue.maxQueue)
+    console.log('--------------------------------------')
+    queue.pop_font();
+    console.log(queue.max)
+    queue.pop_font();
+    console.log(queue.max)
+    queue.pop_font();
+    console.log(queue.max)
+    queue.pop_font();
+    console.log(queue.max)
+    queue.pop_font();
+    console.log(queue.max)
+    queue.pop_font();
+    console.log(queue.max)
+
+
+  </script>
+</body>
+</html>

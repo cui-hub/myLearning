@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 方式1：
+    function Universe(){
+      if(typeof Universe.instance == 'object'){
+        return Universe.instance;
+      }
+      this.start = 0;
+      this.bang = 'Big';
+      Universe.instance = this;
+    }
+    var nui1 = new Universe();
+    var nui2 = new Universe();
+    console.log(nui1===nui2)
+
+    // 方式2
+    function Universe(){
+      var instance;
+      this.start = 0;
+      this.bang = 'Big';
+      instance = this;
+      Universe = function(){
+        return instance;
+      }
+    }
+    var nui1 = new Universe();
+    var nui2 = new Universe();
+    console.log(nui1===nui2)
+  </script>
+</body>
+</html>

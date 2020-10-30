@@ -11,20 +11,22 @@
     <script>
         //ES5
         var obj = {
-            // data: 20
+            name1: 20
         };
-        Object.defineProperty(obj, 'data', {
+        Object.defineProperty(obj, 'name1', {
             get: function() {
-                return data;
+                console.log('aaaa')
+                return name1;
             },
             set: function(newVal) {
-                data = newVal
+                name1 = newVal
                 console.log('set:', newVal)
 
             }
         })
-        obj.data = 5; //set 5
-        console.log(obj.data); //如果没有get，就会显示undefined(不管obj定义时有没有data属性)
+        console.log(obj.name1);
+        obj.name1 = 5; //set 5
+        console.log(obj.name1); //如果没有get，就会显示undefined(不管obj定义时有没有data属性)
 
 
         let handler = {
@@ -53,9 +55,9 @@
         console.log(obj2.age);
         console.log(obj2.c);
         // 100
-        obj2.age = 'young';
+        // obj2.age = 'young';
         // 抛出异常: Uncaught TypeError: The age is not an integer
-        obj2.age = 300;
+        // obj2.age = 300;
         // 抛出异常: Uncaught RangeError: The age seems invalid
     </script>
 </body>

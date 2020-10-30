@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 版本1：JS里对观察者模式的实现是通过回调来实现的，我们来先定义一个pubsub对象，其内部包含了3个方法：订阅、退订、发布。
+    var pubsub = {};
+    (function(q){
+      var topics = {},
+        subUid = -1; // 每个订阅者的绑定ID，以便退订仅仅退订对应订阅者
+        // 发布者
+        q.publish = function(topic,args){
+          if(!topics[topic]){
+            throw 'Error:No subscribers'
+          }
+          setTimeout(function(){
+            var subscribers = topics[topic];
+            var len = subscribers ? subscribers.length : 0;
+
+            while(len--){
+              subscribers[len].func(args)
+            }
+          },0)
+        }
+        // 订阅者
+        q.subscribe = function(topic,func){
+          if(!topics[topic]){
+            topics[topic] = [];
+          }
+          var token = (++subUid).toString();
+          topics[topic].push({
+            token,
+            func
+          })
+          return token;
+        }
+
+        // 退订
+        q.unsubscribe = function(token){
+          for (var m in topics) {
+            if (topics[m]) {
+                for (var i = 0, j = topics[m].length; i < j; i++) {
+                    if (topics[m][i].token === token) {
+                        topics[m].splice(i, 1);
+                        return token;
+                    }
+                }
+            }
+          }
+          throw 'Error:No such subscriber found!';
+        }
+    })(pubsub)
+
+
+
+// 版本二：我们也可以利用原型的特性实现一个观察者模式，代码如下：
+function Observer() {
+    this.fns = [];
+}
+Observer.prototype = {
+    subscribe: function (fn) {
+        this.fns.push(fn);
+    },
+    unsubscribe: function (fn) {
+        this.fns = this.fns.filter(
+                        function (el) {
+                            if (el !== fn) {
+                                return el;
+                            }
+                        }
+                    );
+    },
+    update: function (o, thisObj) {
+        var scope = thisObj || window;
+        this.fns.forEach(
+                        function (el) {
+                            el.call(scope, o);
+                        }
+                    );
+    }
+};
+
+//测试
+var o = new Observer;
+var f1 = function (data) {
+    console.log('Robbin: ' + data + ', 赶紧干活了！');
+};
+
+var f2 = function (data) {
+    console.log('Randall: ' + data + ', 找他加点工资去！');
+};
+
+o.subscribe(f1);
+o.subscribe(f2);
+
+o.update("Tom回来了！")
+
+//退订f1
+o.unsubscribe(f1);
+//再来验证
+o.update("Tom回来了！");
+
+
+
+//版本三：如果想让多个对象都具有观察者发布订阅的功能，我们可以定义一个通用的函数，然后将该函数的功能应用到需要观察者功能的对象上，代码如下：
+
+  </script>
+</body>
+</html>

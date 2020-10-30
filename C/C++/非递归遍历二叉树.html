@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function TreeNode(val){
+      this.val = val;
+      this.left = this.right =null;
+    }
+    let A = new TreeNode(1);
+    let B = new TreeNode(2);
+    let C = new TreeNode(3);
+    let D = new TreeNode(4);
+    let E = new TreeNode(5);
+    let F = new TreeNode(6);
+    let G = new TreeNode(7);
+    let H = new TreeNode(8);
+    let I = new TreeNode(9);
+    A.left = B;
+    B.left = C;
+    B.right = D;
+    C.left = E;
+    C.right = F;
+    A.right = G;
+    G.left = H;
+    G.right = I;
+    // 中序遍历-->借用栈
+    function inOrderPath(tree){
+      let stack = [];
+      if(!tree){
+        return 'Invalid Input'
+      }
+      let p = tree;
+      while(stack.length>0 || p){
+        // 直接左子树到底
+        while(p){
+          stack.unshift(p);
+          p = p.left;
+        }
+        // 从底层右子树开始重复上述步骤
+        if(stack.length > 0){
+          p = stack.shift();
+          console.log(p.val);
+          p = p.right;
+        }
+      }
+    }
+    // inOrderPath(A)
+
+    // 前序遍历-->与中序遍历区别只是console的时机区别
+    function frontOrderPath(tree){
+      let stack = [];
+      if(!tree){
+        return 'Invalid Input'
+      }
+      let p = tree;
+      while(stack.length>0 || p){
+        // 直接左子树到底
+        while(p){
+          console.log(p.val);
+          stack.unshift(p);
+          p = p.left;
+        }
+        // 从底层右子树开始重复上述步骤
+        if(stack.length > 0){
+          p = stack.shift();
+          p = p.right;
+        }
+      }
+    }
+    // frontOrderPath(A)
+
+    // 后序遍历的难点在于：需要判断上次访问的节点是位于左子树，还是右子树。若是位于左子树，则需跳过根节点，先进入右子树，再回头访问根节点；若是位于右子树，则直接访问根节点。直接看代码，代码中有详细的注释。
+    function afterOrderPath(tree){
+      let stack = [];
+      let lastVist = null;
+      if(!tree){
+        return 'Invalid Input'
+      }
+      let p = tree;
+      while(p){
+        stack.unshift(p);
+        p = p.left;
+      }
+      while(stack.length>0){
+        p = stack.shift();
+        // 根节点的右子树不存在或者右子树已经被访问过
+        if(p.right == null || p.right == lastVist){
+          console.log(p.val);
+          lastVist = p;
+        }else{ // 否则继续遍历右子树(先把根节点再次入栈)
+          stack.unshift(p);
+          p = p.right;
+          while(p){
+            stack.unshift(p);
+            p = p.left;
+          }
+        }
+      }
+    }
+    afterOrderPath(A)
+  </script>
+</body>
+</html>

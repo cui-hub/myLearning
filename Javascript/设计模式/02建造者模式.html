@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 建造者模式更加类似于封装。建造者模式可以将一个复杂对象的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。也就是说如果我们用了建造者模式，那么用户就需要指定需要建造的类型就可以得到它们，而具体建造的过程和细节就不需要知道了。
+    function getBeerById(id,callback){
+      // callback相当于表相，具有灵活性
+      asyncRequest('get','beer.url?id' + id, function(res){
+        // ...
+        callback(res.responseText)
+      })
+    }
+
+    // 具体表相构建
+    function getBeerByIdBrige(e){
+      getBeerById(this.id, function(beer){
+        console.log('Requested Beer:' + beer)
+      })
+    }
+  </script>
+</body>
+</html>

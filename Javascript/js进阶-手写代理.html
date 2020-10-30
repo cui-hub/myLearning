@@ -17,7 +17,7 @@
         function myDelegate(supElement,selector,eventname,callback){
             //考虑兼容性
             if(supElement.addEventListener){
-                supElement.addEventListener(eventname,eventfn);
+                supElement.addEventListener(eventname, eventfn);
             }else{
                 supElement.attachEvent('on'+eventname,eventfn);
             }

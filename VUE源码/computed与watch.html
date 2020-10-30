@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+  <div id='app'>
+    <p>{{fullName}}</p>
+    <input type="text" v-model="fullName">
+    <input type="input" v-model="a">
+    <input type="input" v-model="b">
+    <p>{{c.n.o}}</p>
+    <p>{{c.prop}}</p>
+    <button @click="addProp">添加</button>
+    <button @click="changeProp">修改</button>
+    <input type="input" v-model="val">
+    <p>{{d[1]}}</p>
+    <div v-for="(item,index) in d">
+      <p>{{item}}</p>
+    </div>
+    <input type="input" v-model="val">
+    <button @click="addElement">添加</button>
+    <button @click="changeElement">修改</button>
+  </div>
+  <script>
+    
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        firstName:'cui',
+        lastName:'yongliang',
+        a:'a',
+        b:2,
+        c:{m:'m',n:{o:'o'}},
+        d:[4,3,9,6],
+        val:''
+      },
+      watch:{
+        a:function(val,oldVal){
+          console.log(`val:${val},oldVal:${oldVal}`)
+        },
+        b:'watchB',
+        c:{
+          handler:function(val,oldVal){
+            console.log(`val:${val},oldVal:${oldVal}`)
+          },
+          deep:true,
+          immediate:true
+        },
+        d:{
+          handler:function(val,oldVal){
+            console.log(`val:${val},oldVal:${oldVal}`)
+          },
+          deep:true,
+          immediate:true
+        }
+      },
+      computed:{
+        fullName:{
+          get(){
+            return this.firstName + ' ' + this.lastName;
+          },
+          set(val){
+            console.log(val)
+            this.firstName = val.split(' ')[0];
+            this.lastName = val.split(' ')[1] ;
+          }
+        }
+      },
+      methods:{
+        watchB(val,oldVal){
+          console.log(`val:${val},oldVal:${oldVal}`)
+        },
+        addElement(){
+          this.d.push(this.val)
+        },
+        changeElement(){
+          this.$set(this.d,0,this.val)
+        },
+        changeProp(){
+          this.c.n.o = this.val
+        },
+        addProp(){
+          console.log('emited')
+          // this.c.prop = 0;
+          this.$set(this.c,'prop',this.val)
+          // this.c.prop = this.val
+        }
+      }
+    })
+  </script>
+</body>
+</html>
