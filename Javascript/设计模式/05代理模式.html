@@ -210,6 +210,61 @@ var proxy = {
   // 虚拟代理，根据需要创建开销很大的对象，通过它来存放实例化需要很长时间的真实对象，比如浏览器的渲染的时候先显示问题，而图片可以慢慢显示（就是通过虚拟代理代替了真实的图片，此时虚拟代理保存了真实图片的路径和尺寸。
   // 安全代理，用来控制真实对象访问时的权限，一般用于对象应该有不同的访问权限。
   // 智能指引，只当调用真实的对象时，代理处理另外一些事情。例如C#里的垃圾回收，使用对象的时候会有引用次数，如果对象没有引用了，GC就可以回收它了
+
+
+  // 抽象类Movable
+  function Movable(){};
+  Movable.prototype.move = function(){
+      throw new Error('此方法必须重写！')
+  }
+
+  // 坦克tank类继承于Movable
+  function Tank(){
+      Movable.call(this);
+  }
+  Tank.prototype = new Movable();
+  Tank.prototype.move = function(){
+      console.log('Tank moving.......')
+      randomTime = Math.random() * 10000;
+      let time = Date.now();
+      while(Date.now() - time < randomTime){};
+      return ;
+    
+  }
+
+
+  function sleep(time){
+      return new Promise((resolve)=>{
+          setTimeout(resolve,time);
+      })
+  }
+  // 坦克运行计时器代理
+  function TankTimeProxy(oMovable){
+    Movable.call(this);
+    this.m = oMovable;
+  }
+  TankTimeProxy.prototype = new Movable();
+  TankTimeProxy.prototype.move = function(){
+      let start = Date.now();
+      this.m.move();
+      let end = Date.now();
+      console.log(end - start);
+  }
+
+
+  // 坦克运行计日志代理
+  function TankLogProxy(oMovable){
+    Movable.call(this);
+    this.m = oMovable;
+  }
+  TankLogProxy.prototype = new Movable();
+  TankLogProxy.prototype.move = function(){
+      console.log('Tank start moving....')
+      this.m.move();
+      console.log('Tank end moving....')
+  }
+
+  new TankLogProxy(new TankTimeProxy(new Tank())).move();
 </script>
 </body>
 </html>

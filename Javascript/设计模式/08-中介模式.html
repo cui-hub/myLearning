@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="result"></div>
+  <script>
+    function Player(name){
+      this.point = 0;
+      this.name = name;
+    }
+    Player.prototype.play = function(){
+      this.point += 1;
+      mediator.played();
+    }
+
+
+    // 显示器对象
+    var scoreBoard = {
+      element:document.getElementById('result'),
+      update(score){
+        var msg = '';
+        for(let i in score){
+          if(score.hasOwnProperty(i)){
+            msg += '<p><strong>' + i + '</strong>:';
+            msg += score[i];
+            msg += '</p>'
+          }
+        }
+        this.element.innerHTML = msg;
+      }
+    }
+
+    // 中介
+    var mediator = {
+      players:{},
+
+      setup(){
+        var players = this.players;
+        players.home = new Player('Home');
+        players.guest = new Player('Guest');
+      },
+
+      // 处理显示面板更新的逻辑
+      played(){
+        var players = this.players;
+        score = {
+          Home:players.home.point,
+          Guest:players.guest.point
+        }
+        scoreBoard.update(score);
+      },
+      // 处理用户按键交互
+      keypress(e){
+        e = e || window.event;
+        if(e.keyCode == 49){
+          mediator.players.home.play();
+          return ;
+        }
+        if(e.keyCode == 48){
+          mediator.players.guest.play();
+          return ;
+        }
+      }
+    }
+
+    mediator.setup();// 初始化
+    window.onkeypress = mediator.keypress;
+
+    // 10秒以后结束
+    setTimeout(function () {
+      window.onkeypress = null;
+      console.log('Game over!');
+    }, 10000);
+  </script>
+</body>
+</html>

@@ -6,8 +6,18 @@
   <title>Document</title>
 </head>
 <body>
+  <button id="btn">button</button>
   <a href="https://cdn.shopify.com/s/files/1/1545/3617/files/SH01_User_Manaul.pdf" download="test.pdf" onclick="download">download</a>
   <script>
+    document.getElementById('btn').onclick = handler;
+    let eve = window.event;
+    console.log(eve)
+    function handler(e){
+      let eve = window.event;
+      console.log(e.target)
+      console.log(eve.target)
+
+    }
     var isSupportDownload = 'download' in document.createElement('a');
     console.log(isSupportDownload)
     console.log('㇓'.charCodeAt(0).toString(16))

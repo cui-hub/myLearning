@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 一个基于数组的容器对象
+    function ArrayList(n){
+      this.arr = new Array(n);
+      this.index = 0;
+    }
+    ArrayList.prototype.add = function(ele){
+      if(this.index >= this.arr.length){
+        this.arr = this.arr.concat(new Array(this.arr.length));
+      }
+      this.arr[this.index] = ele;
+      this.index++;
+    }
+    ArrayList.prototype.size = function(){
+      return this.index;
+    }
+
+    ArrayList.prototype.getIterator = function(){
+      let that = this;
+      return new ArrayListIterator(that);
+    }
+
+
+    // 定义迭代器（抽象）对象
+    function Iterator_(){};
+    Iterator_.prototype.hasNext = function(){
+      throw new Error('此方法必须被重写！')
+    };
+    Iterator_.prototype.next = function(){
+      throw new Error('此方法必须被重写！')
+    };
+
+    // 继承数组迭代器
+    function ArrayListIterator(o){
+      Iterator_.call(this);
+      this.curIndex = 0;
+      this.o = o;
+    }
+    ArrayListIterator.prototype = new Iterator_();
+    ArrayListIterator.prototype.hasNext = function(){
+      return this.curIndex < this.o.index;
+    }
+    ArrayListIterator.prototype.next = function(){
+      return this.o.arr[this.curIndex ++];
+    }
+    let a = new ArrayList(5);
+    a.add(1);
+    a.add(2);
+    a.add(3);
+    a.add(1);
+    a.add(2);
+    a.add(3);
+    console.log(a.size())
+    console.log(a.arr)
+    let i = a.getIterator();
+    while(i.hasNext()){
+      console.log(i.next())
+    }
+
+
+  </script>
+</body>
+</html>

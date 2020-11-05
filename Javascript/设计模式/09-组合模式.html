@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /** 
+    * 组合模式（Composite）将对象组合成树形结构以表示“部分-整体”的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。
+    * 举个例子，有家餐厅提供了各种各样的菜品，每个餐桌都有一本菜单，菜单上列出了该餐厅所偶的菜品，有早餐糕点、午餐、晚餐等等，每个餐都有各种各样的菜单项，假设不管是菜单项还是整个菜单都应该是可以打印的，而且可以添加子项，比如午餐可以添加新菜品，而菜单项咖啡也可以添加糖啊什么的。
+    *这种情况，我们就可以利用组合的方式将这些内容表示为层次结构了。我们来逐一分解一下我们的实现步骤。
+    **/
+
+
+    // 第一步 先实现“抽象类“函数MenuComponent(菜单和菜品单品都继承于此)：
+    function MenuComponent(){};
+
+    MenuComponent.prototype.getName = function(){ // 获取菜单或者菜品名
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.getDescription = function(){ // 获取菜单或者菜品名
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.getPrice = function(){ // 获取菜单或者菜品价格
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.isVegetarian = function(){ // 判断是不是素菜
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.print = function(){ 
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.add = function(){ 
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.remove = function(){ 
+      throw new Error('该方法必须重写！');
+    };
+
+    MenuComponent.prototype.getChild = function(){ 
+      throw new Error('该方法必须重写！');
+    };
+
+    // 第二步，创建“抽象”基本菜品单品(借助构造函数+原型链实现继承)：
+    function MenuItem(sName, sDescription, bVegetarin, nPrice){
+      MenuComponent.apply(this);
+      this.sName = sName;
+      this.sDescription = sDescription;
+      this.bVegetarin = bVegetarin;
+      this.nPrice = nPrice;
+    };
+    MenuItem.prototype = new MenuComponent();
+
+    MenuItem.prototype.getName = function(){
+      return this.sName;
+    };
+
+    MenuItem.prototype.getDescription = function(){
+      return this.sDescription;
+    };
+
+    MenuItem.prototype.getPrice = function(){
+      return this.nPrice;
+    };
+
+    MenuItem.prototype.isVegetarian = function(){
+      return this.bVegetarin;
+    };
+
+    MenuItem.prototype.print = function(depth=0){
+      let s = '';
+      for(let i = 0; i<depth; i++){
+        s += '---';
+      }
+      console.log(s + this.getName() + ':' + this.getDescription() + ',' + this.getPrice() + '$')
+    };
+
+
+    // 第三步，创建"抽象"菜单类：
+    function Menu(sName, sDescription){
+      MenuComponent.apply(this);
+      this.aMenuComponents = [];
+      this.sName = sName;
+      this.sDescription = sDescription;
+      this.createIterator = function(){
+        throw new Error('This method must be overwritten !')
+      }
+    };
+    Menu.prototype = new MenuComponent();
+
+    Menu.prototype.add = function(oMenuComponent){
+      //添加子菜单/菜品
+      if(this.aMenuComponents.indexOf(oMenuComponent) === -1){
+        this.aMenuComponents.push(oMenuComponent)
+      }
+      return ;
+    }
+
+    Menu.prototype.remove = function(oMenuComponent){
+      // 删除子菜单/菜品
+      let index = this.aMenuComponents.findIndex(item=>{
+        return item.getName() === oMenuComponent || item === oMenuComponent;
+      })
+      if(index != -1){
+        this.aMenuComponents.splice(index,1);
+      }else{
+        throw new Error('No such Menu exists !')
+      }
+    }
+
+    Menu.prototype.getName = function(){
+      return this.sName;
+    };
+
+    Menu.prototype.getDescription = function(){
+      return this.sDescription;
+    }
+
+    Menu.prototype.getChild = function(nIndex){
+      return this.aMenuComponents[nIndex];
+    }
+
+    Menu.prototype.print = function(depth=0){
+      // 打印从当前开始的菜单树
+      let s = '';
+      for(let i = 0; i<depth; i++){
+        s += '---';
+      }
+      console.log(s + this.getName() + ':' + this.getDescription());
+      this.aMenuComponents.forEach(item=>{
+        item.print(depth+1);
+      })
+    }
+
+    // 第四步，创建指定的菜单(比如晚餐、咖啡、糕点等等，其都是用Menu作为其原型，代码如下)：
+    function DinnerMenu(sName, sDescription){
+      Menu.call(this,sName, sDescription);
+    };
+    DinnerMenu.prototype = new Menu();
+    // let dinner = new DinnerMenu('pork','Test Healthy');
+    // console.log(dinner.getName());
+    // let pork1 = new MenuItem('EggPork','cheap and healthy',true,2.5)
+    // dinner.add(pork1);
+    // console.log(dinner.aMenuComponents)
+    // dinner.print()
+
+    function CafeMenu(sName, sDescription){
+      Menu.call(this,sName, sDescription);
+    };
+    CafeMenu.prototype = new Menu();
+
+    function PancakeHouseMenu(sName, sDescription){
+      Menu.call(this,sName, sDescription);
+    };
+    PancakeHouseMenu.prototype = new Menu();
+
+
+    // 第五步，创建最顶级的菜单容器——菜单本：
+    function Mattress(oMenuComponent){
+      this.oMenus = oMenuComponent;
+    }
+    Mattress.prototype.printMenu = function(){
+      this.oMenus.print();
+    }
+
+    // 调用使用
+    var oPanCakeHouseMenu = new Menu("Pancake House Menu", "Breakfast");
+    var oDinnerMenu = new Menu("Dinner Menu", "Lunch");
+    var oCoffeeMenu = new Menu("Cafe Menu", "Dinner");
+    var oAllMenus = new Menu("ALL MENUS", "All menus combined");
+
+    oAllMenus.add(oPanCakeHouseMenu);
+    oAllMenus.add(oDinnerMenu);
+
+    oDinnerMenu.add(new MenuItem("Pasta", "Spaghetti with Marinara Sauce, and a slice of sourdough bread", true, 3.89));
+    oDinnerMenu.add(oCoffeeMenu);
+
+    oCoffeeMenu.add(new MenuItem("Express", "Coffee from machine", false, 0.99));
+
+    var oMattress = new Mattress(oAllMenus);
+    console.log("---------------------------------------------");
+    oMattress.printMenu();
+    console.log("---------------------------------------------");
+
+
+
+  </script>
+</body>
+</html>
