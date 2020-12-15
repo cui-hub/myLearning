@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 使用场景一：图书管理系统
+
+    // Flyweight中有两个重要概念--内部状态intrinsic和外部状态extrinsic之分，
+    // 内部状态就是在对象里通过内部方法管理，而外部信息可以在通过外部删除或者保存。
+    // 说白点,就是先捏一个的原始模型，然后随着不同场合和环境,再产生各具特征的具体模型，
+    // 很显然,在这里需要产生不同的新对象，所以Flyweight模式中常出现Factory模式，
+    // Flyweight的内部状态是用来共享的，Flyweight factory负责维护一个Flyweight pool(模式池)来存放内部状态的对象。
+
+
+    // 未优化代码：
+    var Book = function( id, title, author, genre, pageCount,publisherID, ISBN, checkoutDate, checkoutMember, dueReturnDate,availability ){
+      this.id = id;
+      this.title = title;
+      this.author = author;
+      this.genre = genre;
+      this.pageCount = pageCount;
+      this.publisherID = publisherID;
+      this.ISBN = ISBN;
+      this.checkoutDate = checkoutDate;
+      this.checkoutMember = checkoutMember;
+      this.dueReturnDate = dueReturnDate;
+      this.availability = availability;
+    };
+    Book.prototype = {
+      getTitle:function(){
+          return this.title;
+      },
+      getAuthor: function(){
+          return this.author;
+      },
+      getISBN: function(){
+          return this.ISBN;
+      },
+    /*其它get方法在这里就不显示了*/
+
+    // 更新借出状态
+    updateCheckoutStatus: function(bookID, newStatus, checkoutDate,checkoutMember, newReturnDate){
+      this.id  = bookID;
+      this.availability = newStatus;
+      this.checkoutDate = checkoutDate;
+      this.checkoutMember = checkoutMember;
+      this.dueReturnDate = newReturnDate;
+    },
+    //续借
+    extendCheckoutPeriod: function(bookID, newReturnDate){
+        this.id =  bookID;
+        this.dueReturnDate = newReturnDate;
+    },
+    //是否到期
+    isPastDue: function(bookID){
+      var currentDate = new Date();
+      return currentDate.getTime() > Date.parse(this.dueReturnDate);
+    }
+  };
+  // 我们可以将数据分成内部和外部两种数据，
+  // 和book对象相关的数据（title, author 等）可以归结为内部属性，
+  // 而（checkoutMember, dueReturnDate等）可以归结为外部属性。
+  // 这样，如下代码就可以在同一本书里共享同一个对象了，
+  // 因为不管谁借的书，只要书是同一本书，基本信息是一样的：
+
+  // 优化后的代码：
+  /*享元模式优化代码*/
+  var Book = function(title, author, genre, pageCount, publisherID, ISBN){
+    this.title = title;
+    this.author = author;
+    this.genre = genre;
+    this.pageCount = pageCount;
+    this.publisherID = publisherID;
+    this.ISBN = ISBN;
+  };
+
+  // 让我们来定义一个基本工厂，用来检查之前是否创建该book的对象，
+  // 如果有就返回，没有就重新创建并存储以便后面可以继续访问，这确保我们为每一种书只创建一个对象：
+  /* Book工厂 单例 */
+  var BookFactory = (function(){
+    // 所有种类书籍存储池（一种书籍被借过后才会在存储池内存在）
+    var existingBooks = {};
+    return{
+        createBook: function(title, author, genre,pageCount,publisherID,ISBN){
+        /*查找之前是否创建*/
+            var existingBook = existingBooks[ISBN];
+            if(existingBook){
+                    return existingBook;
+                }else{
+                /* 如果没有，就创建一个，然后保存*/
+                var book = new Book(title, author, genre,pageCount,publisherID,ISBN);
+                existingBooks[ISBN] =  book;
+                return book;
+            }
+        }
+    }
+  });
+
+  // 外部状态，相对就简单了，除了我们封装好的book，其它都需要在这里管理：
+
+  /*BookRecordManager 借书管理类 单例*/
+  var BookRecordManager = (function(){
+    // 借书记录库
+    var bookRecordDatabase = {};
+    return{
+      /*添加借书记录*/
+      addBookRecord: function(id, title, author, genre,pageCount,publisherID,ISBN, checkoutDate, checkoutMember, dueReturnDate, availability){
+          var book = bookFactory.createBook(title, author, genre,pageCount,publisherID,ISBN);
+            bookRecordDatabase[id] = {
+              checkoutMember: checkoutMember,
+              checkoutDate: checkoutDate,
+              dueReturnDate: dueReturnDate,
+              availability: availability,
+              book: book
+          };
+      },
+      /*更新借书记录*/
+      updateCheckoutStatus: function(bookID, newStatus, checkoutDate, checkoutMember,     newReturnDate){
+          var record = bookRecordDatabase[bookID];
+          record.availability = newStatus;
+          record.checkoutDate = checkoutDate;
+          record.checkoutMember = checkoutMember;
+          record.dueReturnDate = newReturnDate;
+      },
+      /*延期还书*/
+      extendCheckoutPeriod: function(bookID, newReturnDate){
+          bookRecordDatabase[bookID].dueReturnDate = newReturnDate;
+      },
+      /*是否过期*/
+      isPastDue: function(bookID){
+          var currentDate = new Date();
+          return currentDate.getTime() > Date.parse(bookRecordDatabase[bookID].dueReturnDate);
+      }
+    };
+  });
+  // 通过这种方式，我们做到了将同一种图书的相同信息保存在一个bookmanager对象里，而且只保存一份；
+  // 相比之前的代码，就可以发现节约了很多内存。
+  </script>
+</body>
+</html>

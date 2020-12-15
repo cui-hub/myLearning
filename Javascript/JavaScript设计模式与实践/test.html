@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="div1">这是一个div</div>
+  <script>
+    let getId = document.getElementById;
+    // let d1 = getId('div1');
+    let d2 = getId.call(document,'div1')
+    // console.log(d1)
+    console.log(d2)
+
+    window.color = 'blue';
+    function O(){
+      this.color = 'red';
+      this.getColor = ()=>{
+        return this.color;
+      }
+    }
+    let o = new O();
+    console.log(o.getColor());
+    let getColor = o.getColor;
+    console.log(getColor())
+
+
+    function fun(a,b){};
+    console.log(fun.length)
+    console.log(Object.prototype.toString.call(fun))
+    Array.prototype.slice.call(fun)
+    console.log(fun.length)
+
+    console.log(Object.prototype.toString.call(fun))
+
+
+    function A (name){
+      this.name_ = name;
+
+    }
+    A.prototype = {
+      getName(){
+        return this.name_;
+      }
+    }
+
+    function B(){
+      A.apply(this,[].slice.call(arguments))
+    }
+    B.prototype = new A('c');
+    let a = new A('a');
+    // console.log(a.name);
+    console.log(a.getName())
+    let b = new B('b');
+    console.log(b.name_);
+    console.log(b.getName())
+
+  </script>
+</body>
+</html>

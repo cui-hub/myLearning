@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #box{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: brown;
+    position: absolute;
+    top: 200px;
+    left: 20px;
+  }
+</style>
+<body>
+  <button></button>
+  <button></button>
+  <button></button>
+  <button></button>
+  <button></button>
+  <button></button>
+  <div  id='box'></div>
+  <script src="./move.js"> </script>
+  <script >
+    // 经典面向对象的策略模式——根据表现发工资：
+    // 策略类对象:
+    var PerformanceS = function(){};
+    PerformanceS.prototype.calculate = function(salary){
+      return salary*4;
+    }
+
+    var PerformanceA = function(){};
+    PerformanceA.prototype.calculate = function(salary){
+      return salary*3;
+    }
+    
+    var PerformanceB = function(){};
+    PerformanceB.prototype.calculate = function(salary){
+      return salary*2;
+    }
+
+    // 环境类：
+    var Bonus = function(){
+      this.salary = null;
+      this.strategy = null;
+    }
+
+    Bonus.prototype.setSalary = function(salary){
+      this.salary = salary;
+    }
+    Bonus.prototype.setStrategy = function(strategy){
+      this.strategy = strategy;
+    }
+    Bonus.prototype.calculateSalary = function(){
+      if(!this.salary || !this.strategy){
+        throw new Error('信息不全，无法计算！')
+      }
+      return this.strategy.calculate(this.salary)
+    }
+
+    // 使用：
+    var bonus = new Bonus();
+    bonus.setSalary(10000);
+    bonus.setStrategy(new PerformanceS());
+    console.log(bonus.calculateSalary());
+    bonus.setStrategy(new PerformanceA());
+    console.log(bonus.calculateSalary());
+
+
+    // JS的策略模式
+    var strategies = {
+      'S':function(salary){return salary*4},
+      'A':function(salary){return salary*3},
+      'B':function(salary){return salary*2},
+    }
+    var calculateSalary = function(level,salary){
+      return strategies[level](salary)
+    };
+    console.log(calculateSalary('S',10000));
+    console.log(calculateSalary('A',10000));
+
+    
+
+
+    /** 使用策略模式实现小球的缓动动画类 **/
+
+
+    // 动画类Animate
+    class Animate{
+      constructor(dom, propertyName, endPos, duration){
+        this.dom = dom;  // 进行运动的dom
+        this.startTime = 0; // 动画开始时间
+        this.startPos = this.dom.getBoundingClientRect()[propertyName]; //dom的初始位置
+        this.endPos = endPos; // dom的结束位置
+        this.duration = duration; //动画时长
+        this.propertyName = propertyName; // dom操作属性名
+        this.easing = null; // 动画算法
+        this.timer = null;
+      }
+      // 设置easing
+      setEasing(easing){
+        this.easing = tween[easing];
+      }
+      // 启动
+      start( easing){
+        if(this.timer){
+          clearInterval(this.timer);
+        }
+        this.startTime = +new Date();
+        var self = this;
+        this.timer = setInterval(function(){
+          if(self.step() === false){
+            clearInterval(this.timer);
+          }
+        },19)
+      };
+
+      // 计算步骤
+      step(){
+        var t = +new Date();
+        if(t > this.startTime + this.duration ){
+          this.update(this.endPos);
+          return false;
+        }
+        var pos = this.easing(t - this.startTime, this.startPos, this.endPos-this.startPos, this.duration);
+        this.update(pos);
+      }
+
+      // 更新位置
+      update(pos){
+        this.dom.style[this.propertyName] = pos + 'px';
+      }
+    }
+
+    // 使用
+    var box = document.getElementById('box');
+    var a = new Animate(box,'left',200,1500);
+    let btnNameArr = Object.keys(tween);
+    let btnArr = document.getElementsByTagName('button');
+    console.log(btnNameArr)
+    for(let i = 0; i < btnArr.length; i++){
+      btnArr[i].innerHTML = btnNameArr[i];
+      btnArr[i].onclick = function(){
+        a.setEasing(btnNameArr[i]);
+        a.start();
+      }
+    }
+
+
+  </script>
+</body>
+</html>

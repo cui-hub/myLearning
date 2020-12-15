@@ -7,12 +7,15 @@
 </head>
 <body>
     <script>
-        function _new(fn,...args){
+        function _new(){
             let obj = {};
-            obj.__proto__ = fn.prototype;
-            // fn.apply(obj,args); // 等同于下面的写法
-            fn.prototype.constructor.apply(obj,args)
-            return obj;
+            let Constructor = [].shift.call(arguments);
+            obj.__proto__ = Constructor.prototype;
+            let res = Constructor.apply(obj,arguments);
+            // 错误返回值，因为构造函数可能会返回一个对象，这样就会出错
+            // return obj;
+            // 正确写法：
+            return typeof res == 'object' ? res : obj;
         }
 
         function Dog(name,food){
@@ -29,6 +32,8 @@
         b.eat()
         console.log(a);
         console.log(b)
+
+
     </script>
 </body>
 </html>

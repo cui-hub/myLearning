@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var myClass = (function(){
+      var key = Symbol('key');
+      function MyClass(privateData){
+        this[key] = privateData;
+      }
+      MyClass.prototype = {
+        doSomthing(){
+          return this[key];
+        }
+      }
+      return MyClass;
+    })();
+    // hello为私有变量，只能通过public的方法获取
+    let c= new myClass('hello');
+    console.log(c['key']); // undefined
+    console.log(c[Symbol('key')]); // undefined
+    console.log(c.doSomthing()); // hello
+  </script>
+</body>
+</html>

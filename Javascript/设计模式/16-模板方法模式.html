@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 模板方法（TemplateMethod）定义了一个操作中的算法的骨架，而将一些步骤延迟到子类中。
+    // 模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+    
+    // 举个例子，泡茶和泡咖啡有同样的步骤，比如烧开水（boilWater）、冲泡（brew）、倒在杯子里（pourOnCup），加小料（addCondiments）等等。
+    // 但每种饮料冲泡的方法以及所加的小料不一样，所以我们可以利用模板方法实现这个主要步骤。
+
+    function Drink(){};
+    Drink.prototype.prepareRecipe = function(){
+      this.boilWater();
+      this.brew();
+      this.pourOnCup();
+      if(this.customerWantsCondiments()){
+        this.addCondiments();
+      }
+    }
+    Drink.prototype.boilWater = function(){
+      console.log('将水烧开！')
+    }
+    Drink.prototype.pourOnCup = function(){
+      console.log('将饮料到再杯子里!')
+    }
+    Drink.prototype.brew = function(){
+      throw new Error('该方法必须重写！');
+    }
+    Drink.prototype.addCondiments = function(){
+      throw new Error('该方法必须重写！');
+    }
+    // 默认加上小料
+    Drink.prototype.customerWantsCondiments = function(){
+      return true;
+    }
+
+    // 咖啡
+    function Coffee(){
+      Drink.apply(this);
+    }
+    Coffee.prototype = new Drink();
+    Coffee.prototype.brew = function(){
+      console.log('从咖啡机想咖啡倒进去!');
+    }
+    Coffee.prototype.addCondiments = function(){
+      console.log('添加糖和牛奶!');
+    }
+    Coffee.prototype.customerWantsCondiments = function(){
+      return confirm("你想添加糖和牛奶吗？")
+    }
+
+    // 茶
+    function Tea(){
+      Drink.apply(this);
+    }
+    Tea.prototype = new Drink();
+    Tea.prototype.brew = function(){
+      console.log('泡茶叶!');
+    }
+    Tea.prototype.addCondiments = function(){
+      console.log('添加柠檬!');
+    }
+    Tea.prototype.customerWantsCondiments = function(){
+      return confirm("你想添加柠檬吗？")
+    }
+
+    // 应用
+    let cof = new Coffee();
+    let tea = new Tea();
+    cof.prepareRecipe();
+    tea.prepareRecipe();
+
+  </script>
+</body>
+</html>

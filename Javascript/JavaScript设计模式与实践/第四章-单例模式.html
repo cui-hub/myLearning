@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="login">登录</button>
+  <script>
+    // 1. 通过getInstance方法返回,不透明
+    var Singleton = function(name){
+      this.name = name;
+    }
+    Singleton.instance = null;
+    Singleton.getName = function(){
+      return this.name;
+    }
+    Singleton.getInstance = function(name){
+      if(!this.instance){
+        this.instance = new Singleton(name);
+      }
+      return this.instance;
+    }
+    let s1 = Singleton.getInstance('s1');
+    let s2 = Singleton.getInstance('s2');
+    console.log(s1 === s2); // true
+
+
+    // 利用自执行+闭包实现透明单例
+    var CreateDiv = (function(){
+      var instance ;
+      var CreateDiv = function(html){
+        if(instance){
+          return instance;
+        }
+        this.html = html;
+        this.init();
+        return instance = this;
+      }
+      CreateDiv.prototype.init = function(){
+        var div = document.createElement('div');
+        div.innerHTML = this.html;
+        document.body.appendChild(div);
+      }
+      return CreateDiv;
+    })()
+    var c1 = new CreateDiv('c1');
+    var c2 = new CreateDiv('c2');
+    console.log(c1 === c2);
+
+
+
+
+    // 用代理优化上述单例模式
+    // 先抽象出主要逻辑
+    var CreateDiv = function(html){
+      this.html = html;
+      this.init();
+    }
+    CreateDiv.prototype.init = function(){
+      var div = document.createElement('div');
+      div.innerHTML = this.html;
+      document.body.appendChild(div);
+    }
+
+      //单例代理
+      var ProxySingletonCreateDiv = (function(){
+        var instance;
+        return function(html){
+          if(!instance){
+            instance = new CreateDiv(html);
+          }
+          return instance;
+        }
+      })();
+      var c3 = new ProxySingletonCreateDiv('c3');
+      var c4 = new ProxySingletonCreateDiv('c4');
+      console.log(c3 === c4);
+
+
+      // javascript中的惰性单例（闭包）：
+      var CreateLoginLyer = (function(){
+        var div;
+        return function(){
+          if(!div){
+            div = document.createElement('div');
+            div.innerHTML = '我是登录浮窗';
+            div.style.display = 'none';
+            document.body.appendChild(div);
+          }
+          return div;
+        }
+      })()
+      document.getElementById('login').onclick = function(){
+        var loginLayer = CreateLoginLyer();
+        loginLayer.style.display = 'block'
+      }
+
+
+
+      // 将上述优化，将CreateLoginLyer的管理单例和创建节点的逻辑分离，更加符合单一职责原理
+      // 分离的管理单例逻辑
+      var getSingle = function(fn){
+        var obj;
+        return function(){
+          return obj || (obj = fn.apply(this,arguments));
+        }
+      }
+      // 创节点方法
+      var CreateDivObj = function(){
+        var div = document.createElement('div');
+        div.innerHTML = '我是登录浮窗';
+        div.style.display = 'none';
+        document.body.appendChild(div);
+        return div;
+      }
+      var CreateLoginLyer = getSingle(CreateDivObj);
+      document.getElementById('login').onclick = function(){
+        var loginLayer = CreateLoginLyer();
+        loginLayer.style.display = 'block'
+      }
+  </script>
+</body>
+</html>

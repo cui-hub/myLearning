@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 举个例子，就比如我们平时在下载东西，通常就会有好几个状态，
+    // 比如准备状态（ReadyState）、下载状态（DownloadingState）、
+    // 暂停状态（DownloadPausedState）、下载完毕状态（DownloadedState）、失败状态（DownloadFailedState），
+    // 也就是说在每个状态都只可以做当前状态才可以做的事情，而不能做其它状态能做的事儿。
+
+    // 这一模式的关键思想就是引入了一个叫做State的抽象类（或JS里的函数）来表示下载状态
+    class State{
+      download(){
+        throw new Error("该方法必须被重载!");
+      }
+      pause(){
+        throw new Error("该方法必须被重载!");
+      }
+      fail(){
+        throw new Error("该方法必须被重载!");
+      }
+      finish(){
+        throw new Error("该方法必须被重载!");
+      }
+    }
+
+    // Download对象用于控制状态的改变和获取（类似于中央控制器，让外部调用）
+    class Download{
+      constructor(){
+        // 当new出一个Download对象时，默认的state为readystate
+        this.oState = new ReadyState(this);
+      }
+      // 装换状态的方法
+      setState(state){
+        this.oState = state;
+      }
+
+      // 对外暴露的四个公共方法，以便外部调用
+      download(){
+        this.oState.download();
+      }
+      pause(){
+        this.oState.pause();
+      }
+      fail(){
+        this.oState.fail();
+      }
+      finish(){
+        this.oState.finish();
+      }
+
+      //获取各种状态，传入当前this对象
+      getReadyState(){
+        return new ReadyState(this);
+      }
+      getDownloadingState(){
+        return new DownloadingState(this)
+      }
+      getDownloadPausedState(){
+        return new DownloadPausedState(this);
+      }
+      getDownloadedState(){
+        return new DownloadedState(this);
+      }
+      getDownloadedFailedState(){
+        return new DownloadedFailedState(this);
+      }
+    }
+    // 5种状态继承于state
+    class ReadyState extends State{
+      // 传入Download对象使状态切换成一个链，有点像责任链
+      constructor(oDownload){
+        super();
+        this.oDownload = oDownload;
+      }
+      download(){
+        // readystate状态下的业务逻辑：
+        console.log('Start download......');
+
+        // 执行成功后切换状态
+        this.oDownload.setState(this.oDownload.getDownloadingState())
+      }
+      pause(){
+        throw new Error('还没开始下载，不能暂停!');
+      }
+      fail(){
+        throw new Error('文件还没开始下载，怎么能说失败呢!');
+      }
+      pause(){
+        throw new Error('文件还没开始下载，当然也不能结束了!');
+      }
+    }
+
+    class DownloadingState extends State{
+      constructor(oDownload){
+        super();
+        this.oDownload = oDownload;
+      }
+      download(){
+        throw new Error('文件已经正在下载中了!');
+      }
+      pause(){
+        console.log('Download pausing.......')
+        this.oDownload.setState(this.oDownload.getDownloadPausedState())
+      }
+      fail(){
+        console.log('Download failed.......')
+        this.oDownload.setState(this.oDownload.DownloadedFailedState())
+      }
+      finish(){
+        console.log('Download finished.......')
+        this.oDownload.setState(this.oDownload.DownloadedState())
+      }
+    }
+
+    class DownloadPausedState extends State{
+      constructor(oDownload){
+        super();
+        this.oDownload = oDownload;
+      }
+      download(){
+        console.log('重新下载。。。。。。')
+        this.oDownload.setState(this.oDownload.getDownloadingState())
+      }
+      pause(){
+        throw new Error("已经在暂停了，还暂停啥？");
+      }
+      fail(){
+        console.log('Download failed.......')
+        this.oDownload.setState(this.oDownload.DownloadedFailedState());
+      }
+      finish(){
+        console.log('Download finished.......')
+        this.oDownload.setState(this.oDownload.DownloadedState());
+      }
+    }
+
+    class DownloadedState extends State{
+      constructor(oDownload){
+        super();
+        this.oDownload = oDownload;
+      }
+      download(){
+        console.log('重新下载。。。。。。')
+        this.oDownload.setState(this.oDownload.getDownloadingState())
+      }
+      pause(){
+        throw new Error("已经下载完了，还暂停啥？");
+      }
+      fail(){
+        throw new Error("已经下载完了，还失败啥？");
+      }
+      finish(){
+        throw new Error("已经下载完了，没有再成功了。");
+      }
+    }
+
+    class DownloadFailedState  extends State{
+      constructor(oDownload){
+        super();
+        this.oDownload = oDownload;
+      }
+      download(){
+        console.log('尝试重新下载。。。。。。')
+        this.oDownload.setState(this.oDownload.getDownloadingState())
+      }
+      pause(){
+        throw new Error("失败的下载，也不能暂停!");
+      }
+      fail(){
+        throw new Error("失败的下载，不能再失败了。");
+      }
+      finish(){
+        throw new Error("已经失败了，不会成功了。");
+      }
+    }
+
+
+
+
+  </script>
+  <input type="button" value="开始下载" id="download_button" />
+  <input type="button" value="暂停" id="pause_button" />
+  <input type="button" value="重新下载" id="resume_button" />
+  <script>
+    window.onload = function(){
+      var download = new Download();
+      document.getElementById('download_button').onclick = function(){
+        download.download();
+      }
+      document.getElementById('pause_button').onclick = function(){
+        download.pause();
+      }
+      document.getElementById('resume_button').onclick = function(){
+        download.download();
+      }
+    }
+  </script>
+  
+</body>
+</html>

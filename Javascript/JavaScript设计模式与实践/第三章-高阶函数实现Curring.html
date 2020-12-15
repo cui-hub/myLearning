@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 柯里化：部分求值。当有参数传入时，不进行相应求职操作，不传参时在执行求职程序
+    function currying(fn){
+      var args = [];
+      return function(){
+        if(arguments.length == 0){
+          console.log('求值计算...')
+          return fn.apply(this,args);
+        }else{
+          [].push.apply(args,arguments);
+          console.log(args);
+          return arguments.callee;
+        }
+      }
+    }
+
+    //统计月底开销的函数
+    function cost(){
+      let money = 0;
+      for(let i = 0,l = arguments.length; i<l; i++){
+        money += arguments[i]
+      }
+      return money;
+    }
+
+    // 柯里化
+    cost = currying(cost);
+    cost(200);
+    cost(300);
+    cost(400);
+    cost(100)(200);
+    console.log(cost())
+
+
+
+
+    // uncurrying:
+    Function.prototype.uncurrying = function(){
+      let self = this;
+      return function(){
+        let obj = Array.prototype.shift.call(arguments);
+        return self.apply(obj,arguments);
+      }
+    }
+    // 更加简单的写法
+    Function.prototype.uncurrying = function(){
+      let self = this;
+      return function(){
+        return Function.prototype.call.apply(self,arguments)
+      }
+    }
+
+
+    // 使用
+    let push = Array.prototype.push.uncurrying();
+    let obj = {
+      length:1,
+      '0':1
+    }
+    push(obj,2);
+    console.log(obj)
+  </script>
+</body>
+</html>

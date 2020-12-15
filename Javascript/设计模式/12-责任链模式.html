@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 示例一：java中serverlet的过滤器处理request和response
+    // 抽象过滤器对象
+    class Filter{
+      constructor(){};
+      doFilter(request,response,filterChain){
+        throw new Error('本方法必须被重写！')
+      }
+    }
+    // 抽象消息类
+    class Msg{
+      constructor(str){
+        this.str = str;
+      }
+      get(){
+        return this.str;
+      }
+      set(newStr){
+        this.str = newStr;
+      }
+    }
+
+    class HTMLFilter extends Filter{
+      doFilter(request,response,filterChain){
+        let msg = request.get();
+        request.set(msg.replace(/</g,'[').replace(/>/g,']'));
+        console.log(request.get());
+        // 责任链递归，目的是filter的执行顺序--req-->f1-->f2--> {[Server]} --res-->f2-->f1-->
+        filterChain.doFilter(request,response);
+
+        response.set('msg from HTMLFilter...')
+        console.log(response.get());
+      }
+    }
+    class SensitiveFilter extends Filter{
+      doFilter(request,response,filterChain){
+        let msg = request.get();
+        request.set(msg.replace(/:\)/g,'^v^'));
+        console.log(request.get());
+        // 责任链递归，目的是filter的执行顺序--req-->f1-->f2--> {[Server]} --res-->f2-->f1-->
+        filterChain.doFilter(request,response);
+
+        response.set('msg from SensitiveFilter...')
+        console.log(response.get());
+      }
+    }
+
+    // 责任链对象
+    class FilterChain{
+      constructor(){
+        this.filters = [];
+        this.index = -1;
+      }
+      add(filter){
+        let that = this;
+        this.filters.push(filter);
+        return that;
+      }
+      doFilter(request,response){
+        let that = this;
+        if(this.index >= this.filters.length-1) return false;
+        this.index ++;
+        this.filters[this.index].doFilter(request,response,that);
+      }
+    }
+    class Request extends Msg{};
+    class Response extends Msg{};
+    let req = new Request('this is <a/> a request.:)');
+    let res = new Response('this is a response.');
+    let fc = new FilterChain();
+    fc.add(new HTMLFilter()).add(new SensitiveFilter());
+    fc.doFilter(req,res)
+
+
+    // 示例二：跟代理模式很像，只是责任链模式的链式传导可以做出在某一环节上停止或者跳出的能力
+    var NO_TOPIC = -1;
+    var Topic;
+
+    function Handler(s, t) {
+        this.successor = s || null;
+        this.topic = t || 0;
+    }
+
+    Handler.prototype = {
+        handle: function () {
+            if (this.successor) {
+                this.successor.handle()
+            }
+        },
+        has: function () {
+            return this.topic != NO_TOPIC;
+        }
+    };
+
+
+    // 使用
+    var app = new Handler({
+        handle: function () {
+            console.log('app handle');
+        }
+    }, 3);
+
+    var dialog = new Handler(app, 1);
+    dialog.handle = function () {
+        console.log('dialog before ...')
+        // 这里做具体的处理操作
+        Handler.prototype.handle.call(this); //继续往上走
+        console.log('dialog after ...')
+    };
+
+    var button = new Handler(dialog, 2);
+    button.handle = function () {
+        console.log('button before ...')
+        // 这里做具体的处理操作
+        Handler.prototype.handle.call(this);
+        console.log('button after ...')
+    };
+
+    button.handle();
+
+  </script>
+</body>
+</html>

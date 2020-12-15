@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function timeChunk(fn,elementArr,count,interval,parentNode){
+      let len = elementArr.length;
+      let obj,timer;
+      let start = function(){
+        for(let i = 0; i <Math.min(count || 1,elementArr.length);i++){
+          obj = elementArr.shift();
+          fn(obj,parentNode);
+        }
+      }
+
+      return function(){
+        t = setInterval(function(){
+          if(elementArr.length == 0){
+            clearInterval(t);
+          }
+          start();
+        },interval || 1000)
+      }
+    }
+    // 创建div的函数
+    function createDiv(n,parentNode = document.body){
+      let div = document.createElement('div');
+      div.innerHTML = n;
+      parentNode.appendChild(div);
+    }
+
+    // 1000个数据
+    let ary = [];
+    for(let i = 1; i <= 1000; i++){
+      ary.push(i)
+    }
+    let renderDivList = timeChunk(createDiv,ary,50,1000);
+    renderDivList();
+  </script>
+</body>
+</html>

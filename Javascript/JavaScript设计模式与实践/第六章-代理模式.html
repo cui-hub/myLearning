@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 虚拟代理实现图片预加载
+    var myImg = (function(){
+      var imgNode = document.createElement('img');
+      document.body.appendChild(imgNode);
+      return {
+        setSrc:function(src){
+          imgNode.src = src;
+        }
+      }
+    })();
+
+    var imgProxey = (function(){
+      // 虚拟代理作用：先新建一个img对象，借助监听img对象加载目标图片来实现真正的延后加载
+      
+      var img = new Image();
+      img.onload = function(){
+        myImg.setSrc(this.src) // src为img对象的src
+      }
+      return{
+        setSrc:function(src){
+          myImg.setSrc('../../images/bilibili.jpg') // 加载时等待图片
+          var timer = setTimeout(function(){
+            img.src = src;
+          },2000)
+        }
+      }
+    })()
+
+    imgProxey.setSrc('../../images/changcheng.jpg')
+  </script>
+</body>
+</html>
