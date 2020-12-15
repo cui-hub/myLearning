@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /****************例子：登录后不同功能模块刷新******************/
+    var login = (function(){
+      var cache = {};
+      var listener = function(key,fn){
+        if(!cache[key]){
+          cache[key] = []
+        }
+        cache[key].push(fn);
+      }
+      var trigger = function(){
+        var key = Array.prototype.shift.call(arguments);
+        if(!cache[key]){
+          throw new Error('No subscriber!')
+        }
+        for(let i = 0, l = cache[key].length; i < l; i++){
+          cache[key][i].apply(this,arguments)
+        }
+      }
+      return {
+        listener,
+        trigger
+      }
+    })()
+
+    /*******************不同模块的订阅者：*******************************/
+    var header = (function(){
+      login.listener('loginSuccess', function(data){
+        header.setAvater(data.avater);
+      })
+      return {
+        setAvater:function(avater){
+          console.log('首部设置头像成功。')
+        }
+      }
+    })()
+
+    var nav = (function(){
+      login.listener('loginSuccess', function(data){
+        nav.setAvater(data.avater);
+      })
+      return {
+        setAvater:function(avater){
+          console.log('导航栏设置头像成功。')
+        }
+      }
+    })()
+
+    var address = (function(){
+      login.listener('loginSuccess', function(data){
+        address.refresh(data.address);
+      })
+      return {
+        refresh:function(address){
+          console.log('地址刷新成功。')
+        }
+      }
+    })()
+
+    /*********************发布者：ajax请求成功后（jQuery）*****************************/
+    // $.ajax('http://xxx.com?login', function(data){
+    //   login.trigger('loginSuccess', data);
+    // })
+    var timer = setTimeout(function(){
+      login.trigger('loginSuccess',{avater:'111',address:'beijing'})
+      clearTimeout(timer)
+    },2000)
+
+  </script>
+</body>
+</html>

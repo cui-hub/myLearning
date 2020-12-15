@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var miniConsoleProxy = (function(){
+      var cache = [];
+      var handler = function(e){
+        if(e.keyCode === 113){
+          console.log(111)
+          var script = document.createElement('script');
+          script.onload = function(){
+            console.log(222)
+            for(let i = 0,fn;fn = cache[i++];){
+              fn();
+            }
+          }
+          script.src = './miniConsole.js';
+          document.getElementsByTagName('head')[0].appendChild(script);
+          document.body.removeEventListener('keydown',handler); //只加载一次miniConsole.js
+        }
+      }
+      document.body.addEventListener('keydown',handler,false);
+      return {
+        log:function(){
+          var args = arguments;
+          cache.push(function(){
+            return miniConsole.log.apply(miniConsole, args)
+          })
+        }
+      }
+    })();
+    miniConsoleProxy.log('这是打印的内容：')
+    miniConsoleProxy.log('1111111')
+    miniConsoleProxy.log('22222222')
+    miniConsoleProxy.log('333333333')
+    miniConsoleProxy.log('4444444444')
+  </script>
+</body>
+</html>

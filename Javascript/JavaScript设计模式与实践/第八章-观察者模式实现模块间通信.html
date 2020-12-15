@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id='btn'>点我</button>
+  <div id='box'></div>
+  <script>
+    /*****************利用观察者模式实现模块间通信,
+     * 但是不常用，
+     * 会模糊模块之间的关系，
+     * 因为你不知道来自谁的trigger，会不知道消息来源
+     * *************************/
+    var myEvent = (function(){
+      var cache = {};
+      var listener = function(key,fn){
+        if(!cache[key]){
+          cache[key] = []
+        }
+        cache[key].push(fn);
+      }
+      var trigger = function(){
+        var key = Array.prototype.shift.call(arguments);
+        if(!cache[key]){
+          throw new Error('No subscriber!')
+        }
+        for(let i = 0, l = cache[key].length; i < l; i++){
+          cache[key][i].apply(this,arguments)
+        }
+      }
+      return {
+        listener,
+        trigger
+      }
+    })()
+    /****************a与b模块间通信**********************/
+    var a  = (function(){
+      var button = document.getElementById('btn');
+      button.onclick = function(){
+        myEvent.trigger('add')
+      }
+    })()
+
+    var b = (function(){
+      var count = 0;
+      var div = document.getElementById('box');
+      myEvent.listener('add',function(){
+        div.innerHTML = ++count;
+      })
+    })()
+  </script>
+</body>
+</html>
