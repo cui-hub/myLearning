@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**********************核心思想是利用一个栈来缓存trigger的事件************************/
+    var myEvent = (function(){
+      var cache = {};
+      var stack = [];
+      var listener = function(key,fn){
+        if(!cache[key]){
+          cache[key] = [];
+          // 检查stack缓存的发布记录：
+          let i = 0;
+          while(i < stack.length){
+            if(key === stack[i].key){
+              fn.apply(this,stack[i].args);
+              stack.splice(i,1); // 删除该记录
+            }else{
+              i++;
+            }
+          }
+        }
+        cache[key].push(fn);
+      }
+      var trigger = function(){
+        var key = Array.prototype.shift.call(arguments);
+        if(!cache[key]){
+          stack.unshift({key,args:arguments});
+          return;
+        }
+        for(let i = 0, l = cache[key].length; i < l; i++){
+          cache[key][i].apply(this,arguments)
+        }
+      }
+      return {
+        listener,
+        trigger
+      }
+    })()
+
+
+    myEvent.trigger('showMsg','第1次发布。');
+    myEvent.trigger('showMsg','第2次发布。');
+    myEvent.trigger('showMsg','第3次发布。');
+
+    var timer = setTimeout(function(){
+      myEvent.listener('showMsg',function(msg){
+        console.log(msg);
+        clearTimeout(timer);
+      })
+    },2000)
+    var timer2 = setTimeout(function(){
+      myEvent.trigger('showMsg','第4次发布。');
+      clearTimeout(timer2);
+    },3000)
+    
+  </script>
+</body>
+</html>

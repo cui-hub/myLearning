@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /***************
+     * 扫描文件夹+删除文件夹内的对象文件
+     * 通过this.parent属性来保持对父文件夹的引用
+     * ************************/
+    class Folder{
+      constructor(name){
+        this.name = name;
+        this.parent = null;
+        this.files = [];
+      }
+      add(file){
+        file.parent = this;
+        this.files.push(file);
+      }
+      scan(){
+        console.log('开始扫描文件夹：' + this.name);
+        for(let i = 0 , file;file = this.files[i++]; ){
+          file.scan();
+        }
+      }
+      remove(){
+        if(!this.parent){
+          return;
+        }
+        var files = this.parent.files;
+        for(let l = files.length; l>= 0; l--){
+          if(files[l] === this){
+            files.splice(l, 1)
+          }
+        }
+      }
+    }
+
+    class File{
+      constructor(name){
+        this.name = name;
+        this.parent = null;
+      }
+      add(file){
+        throw new Error('文件类型不能再添加文件！')
+      }
+      scan(){
+        console.log('开始扫描文件：' + this.name);
+      }
+      remove(){
+        if(!this.parent){
+          return;
+        }
+        var files = this.parent.files;
+        for(let l = files.length; l>= 0; l--){
+          if(files[l] === this){
+            files.splice(l, 1)
+          }
+        }
+      }
+    }
+
+    /**************************使用：*****************************/
+
+    var folder = new Folder('学习资料');
+    var folder1 = new Folder('javascript');
+    var folder2 = new Folder('jQuery');
+    var folder3 = new Folder('Nodejs');
+
+    var file1 = new File('js设计模式与开发实践');
+    var m = new File('精通jQuery');
+    var file3 = new File('重构与模式');
+    var file4 = new File('深入浅出Node.js');
+    var file5 = new File('js语言精髓与编程实践');
+
+    folder1.add(file1);
+    folder2.add(file2);
+    folder.add(folder1);
+    folder.add(folder2);
+    folder.add(file3);
+    folder3.add(file4);
+    folder.add(folder3);
+    folder.add(file5)
+
+    folder.scan();
+    console.log('*********************************************************')
+    folder1.remove();
+    folder.scan();
+    console.log('*********************************************************')
+    file2.remove();
+    folder.scan();
+
+
+  </script>
+</body>
+</html>

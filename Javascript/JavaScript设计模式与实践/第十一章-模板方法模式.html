@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /******************传统面向对象的继承：******************/
+    /***抽象类***/
+    class Beverage{
+      boilWater(){
+        console.log("把水烧开");
+      }
+      brew(){
+        throw new Error('必须重写brew方法');
+      }
+      pourInCup(){
+        throw new Error('必须重写pourInCup方法');
+      }
+      addCondiments(){
+        throw new Error('必须重写addCondiments方法');
+      }
+      // 建立一个钩子方法，实现客户自己决定是否添加调料
+      customerWantsCondiments(){
+        return true; // 默认添加调料
+      }
+
+      init(){
+        this.boilWater();
+        this.brew();
+        this.pourInCup();
+        if(this.customerWantsCondiments()){
+          this.addCondiments();
+        }
+      }
+    }
+
+    /**具体类**/
+    class CoffeeWithHook extends Beverage{
+      brew(){
+        console.log('用沸水冲泡咖啡')
+      }
+      pourInCup(){
+        console.log('把咖啡倒入杯子')
+      }
+      addCondiments(){
+        console.log('添加牛奶和糖')
+      }
+      customerWantsCondiments(){
+        return window.confirm('请问需要调料吗？')
+      }
+    }
+
+    class TeaWithHook extends Beverage{
+      brew(){
+        console.log('用沸水冲泡茶')
+      }
+      pourInCup(){
+        console.log('把茶倒入杯子')
+      }
+      addCondiments(){
+        console.log('添加柠檬')
+      }
+      customerWantsCondiments(){
+        return window.confirm('请问需要调料吗？')
+      }
+    }
+    /**使用：**/
+    var coffee = new CoffeeWithHook();
+    coffee.init();
+    console.log('********************************');
+    var tea = new TeaWithHook();
+    tea.init();
+    console.log('********************************');
+
+
+
+
+
+    /******************javascript中模板方法的简单写法：传参******************/
+    var Beverage2 = function(param){
+
+      var boilWater =function(){
+        console.log("把水烧开");
+      }
+
+      var brew = param.brew || function(){
+        throw new Error('必须重写brew方法')
+      }
+
+      var pourInCup = param.pourInCup || function(){
+        throw new Error('必须重写pourInCup方法')
+      }
+
+      var addCondiments = param.addCondiments || function(){
+        throw new Error('必须重写addCondiments方法')
+      }
+
+      var customerWantsCondiments = param.customerWantsCondiments || function(){
+        return true
+      }
+
+      var F = function(){};
+      F.prototype.init = function(){
+        boilWater();
+        brew();
+        pourInCup();
+        if(customerWantsCondiments()){
+          addCondiments();
+        }
+      }
+
+      return F;
+    }
+
+    var Coffee = Beverage2({
+      brew(){
+        console.log('用沸水冲咖啡')
+      },
+      pourInCup(){
+        console.log('把咖啡倒入杯子')
+      },
+      addCondiments(){
+        console.log('添加牛奶和糖')
+      },
+      customerWantsCondiments(){
+        return window.confirm('请问需要调料吗？')
+      }
+    });
+    var Tea = Beverage2({
+      brew(){
+        console.log('用沸水冲泡茶')
+      },
+      pourInCup(){
+        console.log('把茶倒入杯子')
+      },
+      addCondiments(){
+        console.log('添加柠檬')
+      },
+      customerWantsCondiments(){
+        return window.confirm('请问需要调料吗？')
+      }
+    })
+    var coffee2 = new Coffee();
+    coffee2.init();
+    console.log('********************************');
+    var tea2 = new Tea();
+    tea2.init();
+
+  </script>
+</body>
+</html>

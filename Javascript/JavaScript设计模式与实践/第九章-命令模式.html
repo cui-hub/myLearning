@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="replay">回放</button>
+  <button id="pullback">撤销</button>
+  <p id="showMsg"></p>
+  <script>
+    var moves = {
+      attack:function(dom){
+        console.log('攻击');
+        dom.innerHTML = '攻击'
+      },
+      defense:function(dom){
+        console.log('防御');
+        dom.innerHTML = '防御'
+      },
+      jump:function(dom){
+        console.log('跳跃')
+        dom.innerHTML = '跳跃';
+      },
+      crouch:function(dom){
+        console.log('下蹲')
+        dom.innerHTML = '下蹲'
+      },
+    }
+
+    var box = document.getElementById('showMsg');
+    var makeCommand = function(receiver, move,dom){
+      return function(){
+        receiver[move](dom);
+      }
+    }
+
+    var commands = {
+      '119':'jump',
+      '115': 'crouch',
+      '97' :'defense',
+      '100':'attack'
+    }
+
+    var commandStack = [];
+
+    document.onkeypress = function(e){
+      var keyCode = e.keyCode;
+      if(commands[keyCode]){
+        command = makeCommand(moves,commands[keyCode],box);
+        command();
+        commandStack.push(command);
+      }
+    }
+
+    document.getElementById('replay').onclick = function(){
+      var command;
+      while(command = commandStack.shift()){
+        command();
+      }
+    }
+    document.getElementById('pullback').onclick = function(){
+      if(commandStack.length <= 0){
+        return;
+      }
+      commandStack.pop();
+      var command = commandStack[commandStack.length - 1];
+      if(command){
+        command();
+      }
+    }
+
+  </script>
+</body>
+</html>

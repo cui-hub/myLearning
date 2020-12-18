@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /************************写一个完整的Event，创建命名空间，避免命名冲突*******************************/
+    var myEvent = (function(){
+      var global = this,
+        Event,
+        _default = 'default';
+      Event = (function(){
+        var _listen,
+            _trigger,
+            _remove,
+            _create,
+            _slice = Array.prototype.slice,
+            _shift = Array.prototype.shift,
+            _unshift = Array.prototype.unshift,
+            namespaceCache = {},
+            find,
+            each = function(arr, fn){
+              var ret;
+              for(let i = 0, l = arr.length; i<l; i++){
+                var e = arr[i];
+                ret = fn.call(e, i, e)
+              }
+              return ret;
+            };
+        _listen = function(key,fn,cache){
+          if(!cache[key]){
+            cache[key] = [];
+          }
+          cache[key].push(fn);
+        }
+
+        _remove = function(key,cache, fn){
+          if(cache[key]){
+            if(fn){
+              for(let i = cache[key].length-1; i>=0;i--){
+                if(cache[key][i] === fn){
+                  cache[key].splice(i,1)
+                }
+              }
+            }else{
+              cache[key] = [];
+            }
+          }
+        }
+
+        _trigger = function(){
+          var cache = _shift.call(arguments),
+              key = _shift.call(arguments),
+              args = arguments,
+              _self = this,
+              ret,
+              stack = cache[key];
+          if(!stack || !stack.length){
+            return ;
+          }
+          return each(stack,function(){
+            return this.apply(_self, args)
+          })
+        }
+
+        /******************
+         * _create函数创造一个以namespace为名的命名空间
+         * 该空间内有自己的listen，trigger，可实现先发布再订阅
+         * *************************/
+        _create = function(name){
+          var namespace = name || _default;
+          var cache = {},
+              offlineStack = [],
+          ret = {
+            trigger:function(){
+              var fn,
+                  args,
+                  _self = this;
+              _unshift.call(arguments,cache);
+              args = arguments;
+              fn = function(){
+                return _trigger.apply(_self, args);
+              }
+              if(offlineStack){
+                offlineStack.push(fn);
+              }
+              return fn();
+            },
+            listen:function(key, fn, last){
+              _listen(key, fn, cache);
+              if(offlineStack === null){
+                return ;
+              }
+              if(last == 'last'){
+                offlineStack.length && offlineStack.pop()();
+              }else{
+                each(offlineStack,function(){
+                  this();
+                })
+              }
+              offlineStack = null;
+            },
+            one:function(key, fn, last){
+              _remove(key, cache);
+              this.listen(key, fn, last);
+            },
+            remove:function(key,fn){
+              _remove(key, cache, fn);
+            }
+          }
+          return namespace ? (namespaceCache[namespace] ? namespaceCache[namespace] : namespaceCache[namespace] = ret) : ret;
+        }
+        return {
+          create:_create,
+          one:function(key, fn ,last ){
+            let event = this.create(); // 假如直接用myEvent.one就在默认的命名空间上操作
+            event.one(key, fn ,last )
+          },
+          listen:function(key, fn ,last ){
+            let event = this.create(); 
+            event.listen(key, fn ,last )
+          },
+          trigger:function(){
+            let event = this.create(); 
+            event.trigger.apply(this, arguments)
+          }
+        }
+
+      })()
+
+      return Event;
+    })();
+
+    /********************使用：***************************/
+    myEvent.trigger('click','aaaaa');
+
+    myEvent.listen('click',function(data){
+      console.log(data);
+    })
+
+    myEvent.create('name1').listen('click',function(data){
+      console.log(data);
+    })
+    myEvent.create('name1').trigger('click','name1');
+
+    /************create换成connect比较好***************/
+
+    myEvent.create('name2').listen('click',function(data){
+      console.log(data);
+    })
+    myEvent.create('name2').trigger('click','name2');
+   
+  </script>
+</body>
+</html>
