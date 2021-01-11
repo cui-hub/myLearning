@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test"></div>
+  <div id="test2"></div>
+
+  <script type="text/javascript" src="./deps/17/react.development.17.js"></script>
+  <script type="text/javascript" src="./deps/17/react-dom.development.17.js"></script>
+  <script type="text/javascript" src="./deps/17/babel.min.js"></script>
+  <script type="text/javascript" src="./deps/17/prop-types.min.js"></script>
+  <!-- 新版本17版本中旧版本的钩子函数仍然能够使用，但是有三个名称改变了，要加上UNSAFE_前缀
+       在未来版本中预计会被移除，不建议使用
+   -->
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    class Add extends React.Component{
+      /*****最先调用的钩子*****/
+      constructor(props){
+        console.log('Add-constructor钩子函数');
+        super(props);
+      }
+      /*****将state与props绑定，state任何时候都取决于props，很鸡肋,必须写成静态方法，还必须返回状态对象或null*****/
+      static getDerivedStateFromProps(props,curState){
+        console.log('Add-getDerivedStateFromProps',props,curState);
+        // return props;
+        return null;
+      }
+
+      // UNSAFE_componentWillMount(){
+      //   console.log('Add-componentWillMount钩子函数');
+      // }
+      state = {
+        count:0,
+      }
+      add = ()=>{
+        const {count} = this.state;
+        this.setState({count:count+1})
+      }
+      death = ()=>{
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      force = ()=>{
+        this.forceUpdate();
+      }
+      /*****组件挂载*****/
+      render(){
+        console.log('Add-render钩子函数')
+        const {count} = this.state;
+        return (
+          <div>
+            <h2>当前求和为:{count}</h2> 
+            <button onClick={this.add}>点我+1</button>
+            <button onClick={this.death}>卸载</button>
+            <button onClick={this.force}>强制更新</button>
+          </div>
+        )
+      }
+      /*****组件挂载完毕的钩子*****/
+      componentDidMount(){
+        console.log('Add-componentDidMount钩子函数')
+      }
+      /*****组件挂载完毕的钩子*****/
+      componentWillUnmount(){
+        console.log('Add-componentWillUnmount钩子函数')
+      }
+
+
+      /*****1.组件正常更新也就是setState()后的控制阀门钩子,默认为true， 默认后面钩子执行*****/
+      shouldComponentUpdate(){
+        console.log('Add-shouldComponentUpdate钩子函数');
+        return true;
+      }
+      /*****2.组件强制更新也就是forceUpdate()后的钩子*****/
+     
+      /**********组件将要更新的钩子***********/
+      // UNSAFE_componentWillUpdate(){
+      //   console.log('Add-componentWillUpdate钩子函数');
+      // }
+
+      /**********必须返回一个值或者null作为快照值,并将该值传递给componentDidUpdate,一般用来保存更新dom前的一些参数，如鼠标位置等***********/
+      getSnapshotBeforeUpdate(){
+        console.log('Add-getSnapshotBeforeUpdate');
+        return 66;
+      }
+      /**********组件更新后的钩子***********/ 
+      componentDidUpdate(oldProps, oldState, valueOfSnapshot){
+        console.log('Add-componentDidUpdate钩子函数',oldProps,oldState,valueOfSnapshot);
+      }
+    }
+    
+    class A extends React.Component{
+      state = {
+        carName:'奔驰'
+      }
+      changCar = ()=>{
+        this.setState({carName:'宝马'})
+      }
+      render(){
+        const {carName} = this.state;
+        return (
+          <div>
+            <div>A组件</div>
+            <button onClick={this.changCar}>换车</button>
+            <B carName = {carName}/>
+          </div>
+        )
+      }
+    }
+
+    class B extends React.Component{
+      /********父组件render后(坑：只有父组件更新才会调用，初始渲染不算)，子组件的钩子函数**********/
+
+      /*****子组件将要接受新的props******/
+      UNSAFE_componentWillReceiveProps(){
+        console.log('B-componentWillReceiveProps')
+      }
+       /*****子组件将是否更新******/
+      shouldComponentUpdate(){
+        console.log('B-shouldComponentUpdate');
+        return true;
+      }
+      /**********组件将要更新的钩子***********/
+      componentWillUpdate(){
+        console.log('B-componentWillUpdate');
+      }
+      /**********组件更新后的钩子***********/
+      componentDidUpdate(){
+        console.log('B-componentDidUpdate');
+      }
+    
+      render(){
+        console.log('B-render')
+        return (
+          <div>
+             <div>B组件，收到的车名叫做：{this.props.carName}</div>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Add count={20}/>, document.getElementById('test'));
+    // ReactDOM.render(<A/>, document.getElementById('test2'));
+
+  </script>
+</body>
+</html>

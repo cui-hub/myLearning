@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    class Weather extends React.Component{
+      constructor(props){
+        super(props);
+        // 初始化状态
+        this.state = {
+          isHot:true,
+        }
+        this.changeWeather = this.changeWeather.bind(this); // 为了保留onClick绑定的函数的this到weather的实例对象
+      }
+      render(){
+        return <h1 onClick={this.changeWeather}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h1>
+      }
+      changeWeather(){
+        console.log(this); // undefined 因为是通过onClick调用的，而不是通过实例调用的
+
+        // !! 状态state不可直接更改，要借助setState,该方法挂载在Component的原型上
+        // this.state.isHot = !this.state.isHot;  // 无法响应
+        this.setState({
+          isHot : !this.state.isHot
+        })
+        console.log(this.state.isHot)
+      }
+    }
+    ReactDOM.render(<Weather/>, document.getElementById('test'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test">
+    
+  </div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    function MyComponent(){
+      console.log(this); // undefined 因为babel使用了严格模式
+      return <h1>函数式组件，适用于简单组件</h1>
+    }
+    // ReactDOM.render(MyComponent(), document.getElementById('test'));
+    //等同于
+    ReactDOM.render(<MyComponent/>, document.getElementById('test'));
+
+  </script>
+</body>
+</html>

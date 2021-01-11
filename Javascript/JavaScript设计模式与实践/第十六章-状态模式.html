@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*********************一盏有off-->弱光-->强光状态的灯************************/
+    // 未优化的代码
+    class SimpleLight{
+      constructor(){
+        this.state = 'off';
+        this.button = null;
+      }
+      init(){
+        var self = this,
+            button = document.createElement('button');
+        button.innerHTML = '开关';
+        this.button = document.body.appendChild(button);
+        this.button.onclick = function(){
+          self.buttonPressed();
+        }
+      }
+      buttonPressed(){
+        if(this.state === 'off'){
+          console.log('弱光');
+          this.state = 'weakLight';
+        }
+        else if(this.state === 'weakLight'){
+          console.log('强光');
+          this.state = 'strongLight';
+        }
+        else if(this.state === 'strongLight'){
+          console.log('关灯');
+          this.state = 'off';
+        }
+      }
+    }
+
+    var simpleLight = new SimpleLight();
+    simpleLight.init();
+
+
+    /******************************通过状态模式优化后：**********************/
+    /******不同的状态抽离出来，成为状态对象*******/
+    class OffLightState{
+      constructor(light){
+        this.light = light;
+      }
+      buttonPressed(){
+        console.log('弱光');
+        this.light.setState(this.light.weakLightState);
+      }
+    }
+
+    class WeakLightState{
+      constructor(light){
+        this.light = light;
+      }
+      buttonPressed(){
+        console.log('强光');
+        this.light.setState(this.light.strongLightState);
+      }
+    }
+
+    class StrongLightState{
+      constructor(light){
+        this.light = light;
+      }
+      buttonPressed(){
+        console.log('关灯');
+        this.light.setState(this.light.offLightState);
+      }
+    }
+
+    /***********定义上下文类Light*********************/
+    class Light{
+      constructor(){
+        this.offLightState = new OffLightState(this);
+        this.weakLightState = new WeakLightState(this);
+        this.strongLightState = new StrongLightState(this);
+        this.curState = null;
+        this.button = null;
+      }
+      init(){
+        var self = this,
+            button = document.createElement('button');
+        button.innerHTML = '开关';
+        this.curState = this.offLightState;
+        this.button = document.body.appendChild(button);
+        this.button.onclick = function(){
+          self.curState.buttonPressed(); // 真正的逻辑交给状态对象
+        }
+      }
+      setState(state){
+        this.curState = state;
+      }
+    }
+
+
+    var light = new Light();
+    light.init();
+  </script>
+</body>
+</html>

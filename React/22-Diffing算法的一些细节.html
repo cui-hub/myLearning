@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/javascript" src="./deps/17/react.development.17.js"></script>
+  <script type="text/javascript" src="./deps/17/react-dom.development.17.js"></script>
+  <script type="text/javascript" src="./deps/17/babel.min.js"></script>
+  <script type="text/javascript" src="./deps/17/prop-types.min.js"></script>
+  <!-- 新版本17版本中旧版本的钩子函数仍然能够使用，但是有三个名称改变了，要加上UNSAFE_前缀
+       在未来版本中预计会被移除，不建议使用
+   -->
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+  /****
+   * 1. 虚拟DOM中key的作用：
+   *      当状态中的数据发生变化时，react会根据【新数据】生成【新的虚拟DOM】，随后react会进行【新的虚拟DOM】与
+   *    【旧的虚拟DOM】进行diff比较，比较规则如下：
+   * 
+   *      （1）旧的虚拟DOM中找的了与新的虚拟DOM中相同的key：
+   *          1. 若虚拟DOM中的内容没变，则直接使用真实DOM
+   *          2. 若虚拟DOM中的内容变了，则生成新的DOM。替换原来的真实DOM
+   * 
+   *      （2）旧的虚拟DOM中没找到与新的虚拟DOM中相同的key：
+   *          根据数据创建新的真实DOM，然后渲染到页面上
+   * 
+   * 2. 用index作为key可能引发的问题：
+   *    （1）若对数据有逆序添加删除操作，会破坏index的顺序，影响大批key与数据的对应关系，产生没必要的页面更新，影响效率
+   *    （2）如果结构含有表单DOM，会产生错误的DOM更新，因为diff算法不会比较虚拟dom的表单value，只会比较标签、少量属性，因此会随key值产生错位
+   * 
+   * ****/
+    class Person extends React.Component{
+      state = {
+        persons : [
+          {id:1,name:'小李',age:18},
+          {id:2,name:'小王',age:19},
+        ]
+      }
+      add = ()=>{
+        const {persons} = this.state;
+        const p = {id:3, name:'小赵', age:20};
+        this.setState({persons:[p, ...persons]});
+      }
+      render(){
+        const {persons} = this.state;
+        return (
+          <div>
+            <h2>人员信息展示:</h2>
+            <button onClick={this.add}>添加一个小赵</button>
+            <h3>使用index索引值：所有li都得渲染，且input框错乱</h3>
+            <ul>
+              {
+                persons.map((person, index)=>{
+                  return <li key={index}>姓名：{person.name}---年龄：{person.age}<input type="text"/></li>;
+                })
+              }
+            </ul> 
+            <hr/>
+            <hr/> 
+            <h3>使用id唯一标识符：正常</h3>
+            <ul>
+              {
+                persons.map((person)=>{
+                  return <li key={person.id}>姓名：{person.name}---年龄：{person.age}<input type="text"/></li>;
+                })
+              }
+            </ul> 
+
+          </div>
+        )
+      }
+
+    }
+    ReactDOM.render(<Person/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

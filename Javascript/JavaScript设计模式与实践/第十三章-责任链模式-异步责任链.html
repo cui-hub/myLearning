@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*************三种购买模式的例子---异步优化，将next的控制权交给fn****************************/
+    var order500 = function(orderType, pay, stock){
+      var self = this;
+      if(orderType === 1 && pay === true){
+        console.log('500元定金预约，获得50元代金券。')
+      }else{
+        var timer = setTimeout(function(){
+          self.next();
+          clearTimeout(timer);
+        },1000)
+      }
+    }
+    var order200 = function(orderType, pay, stock){
+      var self = this;
+      if(orderType === 2 && pay === true){
+        console.log('200元定金预约，获得20元代金券。')
+      }else{
+        var timer = setTimeout(function(){
+          self.next();
+          clearTimeout(timer);
+        },1000)
+      }
+    }
+    var orderNormal = function(orderType, pay, stock){
+      if(stock > 0){
+        console.log('普通用户，无优惠券')
+      }else{
+        console.log('库存不足')
+      }
+    }
+
+    /***********************责任链抽象对象***********************/
+    class Chain{
+      constructor(fn){
+        this.fn = fn;
+        this.successor = null;
+        this.args = null;
+      }
+      setSuccessor(successor){
+        return  this.successor = successor;
+      }
+      passRequest(){
+        var res = this.fn.apply(this, arguments);
+        this.args = arguments;
+        return res;
+      }
+      next(){
+        this.successor && this.successor.passRequest.apply(this.successor, this.args)
+      }
+    }
+
+    /*****************************使用***************************/
+    var chainOrder500 = new Chain(order500);
+    var chainOrder200 = new Chain(order200);
+    var chainOrderNormal = new Chain(orderNormal);
+
+    chainOrder500.setSuccessor(chainOrder200);
+    chainOrder200.setSuccessor(chainOrderNormal);
+
+    // chainOrder500.passRequest(1, true, 500);
+    // chainOrder500.passRequest(2, true, 500);
+    // chainOrder500.passRequest(3, true, 500);
+    chainOrder500.passRequest(1, false, 0);
+
+
+  </script>
+  
+</body>
+</html>

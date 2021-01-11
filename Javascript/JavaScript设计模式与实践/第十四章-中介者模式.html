@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*****************************未优化的代码：*************************************/
+    var players = [];
+    class Player{
+      constructor(name, teamColor){
+        this.name = name;
+        this.teamColor = teamColor;
+        this.parteners = [];
+        this.enemies = [];
+        this.state = 'live';
+      }
+      win(){
+        console.log(`winner:${this.name}`)
+      }
+      lose(){
+        console.log(`loser:${this.name}`)
+      }
+      die(){
+        var all_dead = true;
+        this.state = 'dead';
+        for(let i = 0, partener; partener = this.parteners[i++];){
+          if(partener.state !== 'dead'){
+            all_dead = false;
+            break;
+          }
+        }
+        if(all_dead === true){ 
+          this.lose();
+          for(let i = 0, partener; partener = this.parteners[i++];){
+            partener.lose();
+          }
+          for(let i = 0, enemy; enemy = this.enemies[i++];){ // 队友全死，通知对手每个人胜利
+            enemy.win();
+          }
+        }
+      }
+    }
+
+    // 定义一个创建玩家的工厂
+    var playerFactory = function(name, teamColor){
+      var newPlayer = new Player(name, teamColor);
+      for(let i = 0, player; player = players[i++];){
+        if(player.teamColor === newPlayer.teamColor){
+          player.parteners.push(newPlayer);
+          newPlayer.parteners.push(player);
+        }else{
+          player.enemies.push(newPlayer);
+          newPlayer.enemies.push(player);
+        }
+      }
+      players.push(newPlayer);
+      return newPlayer;
+    }
+
+    // 游戏开始
+    var player1 = playerFactory('赵', 'red'),
+        player2 = playerFactory('钱', 'red'),
+        player3 = playerFactory('孙', 'red'),
+        player4 = playerFactory('李', 'red');
+
+    var player5 = playerFactory('周', 'blue'),
+        player6 = playerFactory('吴', 'blue'),
+        player7 = playerFactory('郑', 'blue'),
+        player8 = playerFactory('王', 'blue');
+
+    player1.die();
+    player2.die();
+    player3.die();
+    player4.die();
+
+
+    /************************************利用中介者模式改造游戏*****************************************************/
+    class NPlayer{
+      constructor(name, teamColor){
+        this.name = name;
+        this.teamColor = teamColor;
+        this.state = 'live';
+      }
+      win(){
+        console.log(`winner:${this.name}`)
+      }
+      lose(){
+        console.log(`loser:${this.name}`)
+      }
+      /*********玩家死亡**********/
+      die(){
+        this.state = 'dead';
+        playerDirector.receiveMsg('playerDead', this); // 给中介者发消息，一个玩家死亡
+      }
+      /*********移除玩家**********/
+      remove(){
+        playerDirector.receiveMsg('removePlayer', this); 
+      }
+      /*********玩家换队**********/
+      changeTeam(teamColor){
+        playerDirector.receiveMsg('changeTeam', this, teamColor); 
+      }
+    }
+
+    /********新的玩家工厂函数*******/
+    var NPlayerFactory = function(name, teamColor){
+      var newPlayer = new NPlayer(name, teamColor);
+      playerDirector.receiveMsg('addPlayer', newPlayer);
+      return newPlayer; 
+    }
+
+    /*************中介者*************/
+    var playerDirector = (function(){
+      var players = {},
+          options = {};
+
+      options.addPlayer = function(player){
+        var teamColor = player.teamColor;
+        players[teamColor] = players[teamColor] || [];
+        players[teamColor].push(player);
+      }
+
+      options.removePlayer = function(player){
+        var teamColor = player.teamColor;
+        var teamPlayers = players[teamColor] || [];
+        for(let i = 0; i < teamPlayers.length; i++){
+          if(teamPlayers[i] === player){
+            teamPlayers.splice(i, 1);
+          }
+        }
+      }
+
+      options.changeTeam = function(player, teamColor){
+        options.removePlayer(player);
+        player.teamColor = teamColor;
+        options.addPlayer(player);
+      }
+      
+      options.playerDead = function(player){
+        var teamColor = player.teamColor;
+        var teamPlayers = players[teamColor] || [];
+        var all_dead = true;
+        for(let i = 0; i < teamPlayers.length; i++){
+          if(teamPlayers[i].state !== 'dead'){
+            all_dead = false;
+            break;
+          }
+        }
+
+        if(all_dead === true){
+          for(let i = 0; i < teamPlayers.length; i++){
+            teamPlayers[i].lose();
+          }
+          for(let color in players){
+            if(color !== teamColor){
+              var teamPlayers = players[color] || [];
+              for(let i = 0, player; player = teamPlayers[i++];){
+                player.win();
+              }
+            }
+          }
+        }
+      }
+
+      var receiveMsg = function(){
+        var msg = [].shift.call(arguments);
+        options[msg].apply(this, arguments);
+      }
+
+      return {
+        receiveMsg
+      }
+    })()
+  
+    // 游戏开始
+    var nplayer1 = NPlayerFactory('赵', 'red'),
+        nplayer2 = NPlayerFactory('钱', 'red'),
+        nplayer3 = NPlayerFactory('孙', 'red'),
+        nplayer4 = NPlayerFactory('李', 'red');
+
+    var nplayer5 = NPlayerFactory('周', 'blue'),
+        nplayer6 = NPlayerFactory('吴', 'blue'),
+        nplayer7 = NPlayerFactory('郑', 'blue'),
+        nplayer8 = NPlayerFactory('王', 'blue');
+
+    nplayer1.remove();
+    nplayer2.changeTeam('blue');
+    nplayer3.die();
+    nplayer4.die();
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*************三种购买模式的例子****************************/
+    var order500 = function(orderType, pay, stock){
+      if(orderType === 1 && pay === true){
+        console.log('500元定金预约，获得50元代金券。')
+      }else{
+        return "nextSuccessor"
+      }
+    }
+    var order200 = function(orderType, pay, stock){
+      if(orderType === 2 && pay === true){
+        console.log('200元定金预约，获得20元代金券。')
+      }else{
+        return "nextSuccessor"
+      }
+    }
+    var orderNormal = function(orderType, pay, stock){
+      if(stock > 0){
+        console.log('普通用户，无优惠券')
+      }else{
+        console.log('库存不足')
+      }
+    }
+
+    /***********************责任链抽象对象***********************/
+    class Chain{
+      constructor(fn){
+        this.fn = fn;
+        this.successor = null;
+      }
+      setSuccessor(successor){
+        return  this.successor = successor;
+      }
+      passRequest(){
+        var res = this.fn.apply(this, arguments);
+        if(res === 'nextSuccessor'){
+          this.successor && this.successor.passRequest.apply(this.successor, arguments)
+        }
+        return res;
+      }
+    }
+
+    /*****************************使用***************************/
+    var chainOrder500 = new Chain(order500);
+    var chainOrder200 = new Chain(order200);
+    var chainOrderNormal = new Chain(orderNormal);
+
+    chainOrder500.setSuccessor(chainOrder200);
+    chainOrder200.setSuccessor(chainOrderNormal);
+
+    chainOrder500.passRequest(1, true, 500);
+    chainOrder500.passRequest(2, true, 500);
+    chainOrder500.passRequest(3, true, 500);
+    chainOrder500.passRequest(1, false, 0);
+
+
+    /******************利用JS的AOP实现责任链***************************/
+    Function.prototype.after = function(fn){
+      var self = this;
+      return function(){
+        var res = self.apply(this, arguments)
+        if(res === 'nextSuccessor'){
+          return fn.apply(this, arguments);
+        }
+        return res;
+      }
+    }
+
+    var order = order500.after(order200).after(orderNormal);
+    order(1, true, 500);
+    order(2, true, 500);
+    order(3, true, 500);
+    order(1, false, 0);
+
+  </script>
+  
+</body>
+</html>

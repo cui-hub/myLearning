@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+  <style>
+    .title{
+      background-color: aquamarine;
+    }
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    // 创建虚拟dom
+    const VDOM = (
+      <h1 id="title">
+        <span>Hello_React</span>  
+      </h1>
+    ) 
+
+
+    let myId = 'titlE';
+    let content = 'hello, React'
+    const VDOM2 = (
+      <div>
+        <h2 className="title" id={myId.toLocaleLowerCase()}>
+          <span style={{color:'blue',fontSize:'30px'}}>{content}</span>  
+        </h2>
+        <input type="text"/>
+      </div>
+    )
+    // 渲染虚拟dom
+    ReactDOM.render(VDOM2, document.getElementById('test'));
+
+    /*******
+     * JSX语法规则：
+     * 1.定义虚拟dom时不要写''
+     * 2.标签中混入js表达式时要用{}
+     * 3.标签中样式名用className
+     * 4.内联样式要用{{key:value}}的形式写
+     * 5.虚拟dom必须只有一个根标签
+     * 6.每一个标签必须闭合
+     * 7.标签首字母：
+     *    （1）小写字母开头，则转为html中元素，若无同名元素报错，但是会渲染成功
+     *    （2）若大写字母开头，则会查找组件，若找不到则报错，页面不会渲染
+     * 8.{}内部一定要是js表达式，不能是js语句如for和if等
+     * 9.JSX接收到一个数组会自动帮助遍历，对象则不行
+     * ********/
+  </script>
+</body>
+</html>

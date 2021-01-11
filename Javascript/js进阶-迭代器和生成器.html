@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*********提前终止的迭代器*************/
+    class Counter{
+      constructor(limit){
+        this.limit = limit;
+      }
+      [Symbol.iterator](){
+        let count = 1;
+        let limit = this.limit;
+        return {
+          next(){
+            if(count <= limit){
+              return {done:false, value: count++}
+            }else{
+              return {done:true}
+            }
+          },
+          return(){
+            console.log('提前退出');
+            return {done:true}
+          }
+        }
+      }
+    }
+
+    let counter = new Counter(5);
+
+    for(let i of counter){
+      console.log(i); // 1 2 3 4 5
+    }
+    for(let i of counter){
+      if(i > 3){
+        break;
+      }
+      console.log(i);  // 1 2 3 提前退出
+    }
+
+
+
+    /*************使用生成器yield*实现递归：验证随机双向图的是否连通*****************/
+    class Node{
+      constructor(id){
+        this.id = id;
+        this.neighbors = new Set();
+      }
+      connect(node){
+        this.neighbors.add(node);
+        node.neighbors.add(this);
+      }
+    }
+
+    class RandomGraph{
+      constructor(size){
+        this.nodes = new Set();
+        // 添加节点
+        for(let i = 0; i<size; i++){
+          this.nodes.add(new Node(i));
+        }
+        // 随机连接节点
+        const threshold = 1/size;
+        for(let x of this.nodes){
+          for(let y of this.nodes){
+            if(Math.random() < threshold && x !== y){
+              x.connect(y)
+            }
+          }
+        }
+      }
+
+      print(){
+        for(let node of this.nodes){
+          let ids = [...node.neighbors].map((node)=>node.id).join(',')
+
+          console.log(`${node.id} ：${ids}`)
+        }
+      }
+
+      /*******判断图是否连通********/
+      isConnected(){
+        const visitedNodes = new Set();
+
+        function *traverse(nodes){
+          for(let node of nodes){
+            if(!visitedNodes.has(node)){
+              yield node;
+              yield *traverse(node.neighbors)
+            }
+          }
+        }
+
+        // 取得集合中的第一个节点
+        let firstNode = this.nodes[Symbol.iterator]().next().value;
+
+        for(let node of traverse([firstNode])){
+          visitedNodes.add(node);
+        }
+
+        return visitedNodes.size === this.nodes.size;
+      }
+    }
+
+    const g = new RandomGraph(6);
+    g.print();
+    console.log(g.isConnected());
+  </script>
+</body>
+</html>

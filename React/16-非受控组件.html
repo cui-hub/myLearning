@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test">
+    
+  </div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+  <script type="text/javascript" src="./deps/prop-types.js"></script>
+
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    /***非受控组件：现用现取**/
+    class Login extends React.Component{
+      showInfo = (e)=>{
+        e.preventDefault(); // 阻止表单的默认提交
+        const {username, password} = this;
+        alert(`用户名是${username.value}，密码是${password.value}`)
+      }
+      render(){
+        return (
+          <form action="http://www.atguigu.com" onSubmit={this.showInfo}>
+            用户名：<input ref={(e)=>this.username = e} type="text" name="username"/>  
+            密码：<input ref={(e)=>this.password = e} type="password" name="password"/>  
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    // 渲染虚拟dom
+    ReactDOM.render(<Login/>, document.getElementById('test'));
+  </script>
+</body>
+</html>

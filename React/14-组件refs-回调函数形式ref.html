@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+  <script type="text/javascript" src="./deps/prop-types.js"></script>
+
+  <script type="text/babel"> // 加上type后才能识别JSX语法
+    class Demo extends React.Component{
+      showLeftMsg = ()=>{
+        const {input1} = this;
+        alert(input1.value);
+      }
+      showRightMsg = ()=>{
+        const {input2} = this;
+        alert(input2.value);
+      }
+      showMsg = ()=>{
+        const {input3} = this;
+        alert(input3.value);
+      }
+
+      saveInput3 = (e)=>{
+        this.input3 = e;
+      }
+      render(){
+        return (
+          <div>
+            <input ref={(e)=>{this.input1 = e}} type="text" placeholder="点击按钮提示数据"/>&nbsp;
+            <button onClick={this.showLeftMsg}>点我提示左侧消息</button>&nbsp;
+            <input ref={(e)=>{this.input2 = e}} type="text" placeholder="失去焦点提示数据" onBlur={this.showRightMsg}/> 
+            
+            <input ref={this.saveInput3} type="text" placeholder="失去焦点提示数据" onBlur={this.showMsg}/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Demo/>, document.getElementById('test'));
+    /**写成内联的回调函数存在的问题：
+     * 每次重新渲染（组件更新）的时候，会调用两次，（第一次加载调用一次），
+     * 这是因为内联回调无内存，更新时会被回收，再次渲染时候回再次给ref赋值，第一次传入null，第二次才会传入node对象
+     * 
+     * 为了避免这个问题，可以将回调函数保存成实例类的一个实例属性。
+     * 这样仅会在初始加载时调用一次，更新时不再调用
+     * 但是这种改进的方式对性能的影响无关紧要！！！！！！
+     * 
+     * **/
+  </script>
+</body>
+</html>

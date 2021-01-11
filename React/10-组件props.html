@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React_hello</title>
+</head>
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <div id="test3"></div>
+  <div id="test4"></div>
+
+  <script type="text/javascript" src="./deps/react.development.js"></script>
+  <script type="text/javascript" src="./deps/react-dom.development.js"></script>
+  <script type="text/javascript" src="./deps/babel.min.js"></script>
+
+  <script type="text/babel"> 
+  // props是外部的数据，不是内部状态
+    class Person extends React.Component{
+      render(){
+        const {name, sex, age} = this.props;
+        return(
+          <ul>
+            <li>姓名：{name}</li>  
+            <li>性别：{sex || "未知"}</li>  
+            <li>年龄：{age + 1}</li>  
+          </ul>
+        )
+      }
+    } 
+    ReactDOM.render(<Person name="tom" sex="男" age={18}/>, document.getElementById('test1'));  
+    ReactDOM.render(<Person name="jerry"  age={19}/>, document.getElementById('test2'));    
+    ReactDOM.render(<Person name="curry" sex="女" age={30}/>, document.getElementById('test3'));  
+    const p = {name:'老李', sex:'男', age:25}
+    // React和babel同时存在的情况下才能使用...obj来结构对象，只能用在组件批量添加props时
+    ReactDOM.render(<Person {...p}/>, document.getElementById('test4'));    
+
+
+      
+  </script>
+</body>
+</html>
