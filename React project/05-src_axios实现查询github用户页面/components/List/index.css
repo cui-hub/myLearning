@@ -1,0 +1,27 @@
+.row{
+  width: 100%;
+  padding-top: 20px;
+  /* background-color: beige; */
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+}
+.card{
+  margin-top: 5px;
+  border: 1px solid rgb(236, 236, 236);
+  width: 150px;
+  height: 150px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  transition: all ease 0.5s;
+}
+.card p {
+  padding:0;
+  margin: 0;
+}
+.card:hover{
+  background-color: #ddd;
+}
