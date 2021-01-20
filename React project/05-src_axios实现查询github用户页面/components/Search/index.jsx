@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import axios from '../../../06-src_发布订阅实现兄弟组件通信/components/Search/node_modules/axios'
+import axios from '../../../07-src_发布订阅实现兄弟组件通信/components/Search/node_modules/axios'
 
 export default class Search extends Component {
 
