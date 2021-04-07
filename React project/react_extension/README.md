@@ -122,3 +122,22 @@
   <A render={date => <B data={data}/>}/>
   A组件：{this.props.render(this.state.data)}
   B组件：可以获取A组件传入的数据{this.props.data}
+
+# 8. 错误边界
+  ## 理解
+    用来捕获后代组件的错误，并渲染出备用组件
+  ## 特点
+    只能捕获后代组件**生命周期**产生的错误，不能捕获自身组件产生的错误和其他组件在合成事件、定时器中的错误
+  ## 使用方式
+    两个错误相关的生命周期钩子函数的使用：*getDerivedStateFromError()*和*componentDidCtch()*
+
+    // 如果捕获到子组件报错，就会调用该钩子，并传入错误内容,返回新的状态对象
+    static getDerivedStateFromError(error){
+      console.log(error)
+      return {hasErr:error}
+    }
+
+    componentDidCatch(){
+      console.log('渲染组件时出错，一般用来统计错误数据，反馈给服务器')
+    }
+

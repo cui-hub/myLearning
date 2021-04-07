@@ -6,7 +6,7 @@ export default class Parent extends Component {
     hasErr:''
   }
 
-  // 如果捕获到子组件报错，就会调用该钩子，并传入错误内容
+  // 如果捕获到子组件报错，就会调用该钩子，并传入错误内容,返回状态对象
   static getDerivedStateFromError(error){
     console.log(error)
     return {hasErr:error}
